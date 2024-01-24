@@ -1,28 +1,21 @@
-package iesdoctorbalmis.daw2.voluntapp.modelos;
-
-import java.util.Set;
+package iesdoctorbalmis.daw2.voluntapp.dto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Entity @Data 
-@NoArgsConstructor @AllArgsConstructor
+@Data @Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class Usuarios {
-    
-    @Id @GeneratedValue
-    private long id;
+public class UsuariosDTO {
 
     @NotBlank(message = "El nombre no puede estar en blanco")
     private String nombre;
@@ -46,8 +39,5 @@ public class Usuarios {
 
     @NotBlank(message = "El rol no puede estar en blanco")
     private String rol;
-
-    @ManyToMany(mappedBy = "usuarios")
-    private Set<Eventos> eventos;
 
 }
