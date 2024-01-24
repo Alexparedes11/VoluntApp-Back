@@ -15,14 +15,14 @@ import lombok.NoArgsConstructor;
 @Entity @Data 
 @NoArgsConstructor @AllArgsConstructor
 @Builder
-public class Voluntarios {
+public class Usuarios {
     
     @Id @GeneratedValue
     private long id;
 
     private String nombre;
 
-    private String apellido;
+    private String apellidos;
 
     @Column(unique = true)
     private String dni;
@@ -36,7 +36,10 @@ public class Voluntarios {
 
     private String fotoPerfil;
 
-    @ManyToMany(mappedBy = "voluntarios")
+    @Column(nullable = false)
+    private String rol;
+
+    @ManyToMany(mappedBy = "usuarios")
     private Set<Eventos> eventos;
 
 }

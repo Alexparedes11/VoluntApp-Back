@@ -37,10 +37,10 @@ public class Eventos {
     @ManyToMany
     @JoinTable(
         name = "evento_voluntarios",
-        joinColumns = @JoinColumn(name = "voluntario_id"),
+        joinColumns = @JoinColumn(name = "usuario_id"),
         inverseJoinColumns = @JoinColumn(name="eventos_id")
     )
-    private Set<Voluntarios> voluntarios;
+    private Set<Usuarios> usuarios;
 
     @ManyToMany
     @JoinTable(
