@@ -19,7 +19,7 @@ public class ConfigSecurity {
 					.requestMatchers(AntPathRequestMatcher.antMatcher("/css/**")).permitAll()
 					.requestMatchers(AntPathRequestMatcher.antMatcher("/js/**")).permitAll()
 					.requestMatchers(AntPathRequestMatcher.antMatcher("/h2-console/**")).permitAll()
-					.requestMatchers(AntPathRequestMatcher.antMatcher("/")).permitAll()
+					.requestMatchers(AntPathRequestMatcher.antMatcher("/**")).permitAll()
 					.requestMatchers(AntPathRequestMatcher.antMatcher("/usuarios/**")).permitAll()
 					.anyRequest().authenticated()
 					);
