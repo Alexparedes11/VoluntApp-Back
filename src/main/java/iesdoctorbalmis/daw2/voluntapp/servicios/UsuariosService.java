@@ -3,6 +3,8 @@ package iesdoctorbalmis.daw2.voluntapp.servicios;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
@@ -39,4 +41,15 @@ public class UsuariosService {
     public Optional<Usuarios> buscarPorId(Long id) {
         return usuariosRepository.findById(id);
     }
+
+    // buscar usuarios por nombre
+    public Page<Usuarios> buscarPorNombre(String txt, Pageable pageable) {
+        return usuariosRepository.findByNombreContainsIgnoreCase(txt, pageable);
+    }
+
+    // obtener todos los usuarios pageable
+    public Page<Usuarios> ObtenerTodosPageable(Pageable pageable) {
+        return usuariosRepository.findAll(pageable);
+    }
+
 }

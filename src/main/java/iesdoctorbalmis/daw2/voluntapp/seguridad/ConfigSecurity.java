@@ -22,19 +22,19 @@ public class ConfigSecurity {
 					.requestMatchers(AntPathRequestMatcher.antMatcher("/")).permitAll()
 					.requestMatchers(AntPathRequestMatcher.antMatcher("/usuarios/**")).permitAll()
 					.anyRequest().authenticated()
-					)
-			
-			.formLogin(login -> login
-					.loginPage("/login")
-					.permitAll()
-					.defaultSuccessUrl("/web", true)
-					.loginProcessingUrl("/login-post")
-					)
-		
-			.logout(logout -> logout
-						.logoutUrl("/logout")
-						.logoutSuccessUrl("/login")
 					);
+			
+			// .formLogin(login -> login
+			// 		.loginPage("/login")
+			// 		.permitAll()
+			// 		.defaultSuccessUrl("/web", true)
+			// 		.loginProcessingUrl("/login-post")
+			// 		)
+		
+			// .logout(logout -> logout
+			// 			.logoutUrl("/logout")
+			// 			.logoutSuccessUrl("/login")
+			// 		);
 		
 		http.csrf(csrf -> csrf.disable());
 		http.headers(headers -> headers.frameOptions( frame -> frame.disable()));
