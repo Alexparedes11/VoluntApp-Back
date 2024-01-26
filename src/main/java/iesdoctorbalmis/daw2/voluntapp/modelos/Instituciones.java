@@ -2,6 +2,8 @@ package iesdoctorbalmis.daw2.voluntapp.modelos;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,6 +32,7 @@ public class Instituciones {
     @Column(nullable = false)
     private String fotoInstitucion;
 
+    @JsonBackReference
     @ManyToMany(mappedBy="instituciones")
     private Set<Eventos> eventos;
 }

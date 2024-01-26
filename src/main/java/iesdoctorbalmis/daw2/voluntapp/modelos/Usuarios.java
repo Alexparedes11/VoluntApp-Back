@@ -6,9 +6,13 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
@@ -21,8 +25,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Usuarios {
     
-    @Id @GeneratedValue
-    private long id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotBlank(message = "El nombre no puede estar en blanco")
     private String nombre;
@@ -47,6 +51,7 @@ public class Usuarios {
     @NotBlank(message = "El rol no puede estar en blanco")
     private String rol;
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "usuarios")
     private Set<Eventos> eventos;
 

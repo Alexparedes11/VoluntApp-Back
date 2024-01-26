@@ -3,6 +3,8 @@ package iesdoctorbalmis.daw2.voluntapp.modelos;
 import java.sql.Date;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -42,6 +44,7 @@ public class Eventos {
     )
     private Set<Usuarios> usuarios;
 
+    @JsonManagedReference
     @ManyToMany
     @JoinTable(
         name = "evento_instituciones",

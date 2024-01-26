@@ -83,6 +83,7 @@ public class UsuariosController {
     @PostMapping("/usuarios")
     public ResponseEntity<Usuarios> nuevoUsuario(@RequestBody Usuarios nuevo) {
 
+        System.out.println(nuevo);
         Usuarios nuevoUsuario = usuariosService.guardar(nuevo);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoUsuario);
 
