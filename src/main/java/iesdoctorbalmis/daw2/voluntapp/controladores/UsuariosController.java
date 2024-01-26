@@ -7,6 +7,7 @@ import iesdoctorbalmis.daw2.voluntapp.dto.UsuariosDTO;
 import iesdoctorbalmis.daw2.voluntapp.dto.converter.UsuarioDTOConverter;
 import iesdoctorbalmis.daw2.voluntapp.error.SearchUsuarioNoResultException;
 import iesdoctorbalmis.daw2.voluntapp.error.UsuariosNotFoundException;
+import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
 import iesdoctorbalmis.daw2.voluntapp.servicios.UsuariosService;
 import jakarta.servlet.http.HttpServlet;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.catalina.connector.Response;
@@ -37,7 +39,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UsuariosController {
 
     private final UsuariosService usuariosService;
-    private final UsuarioDTOConverter usuarioDTOConverter = new UsuarioDTOConverter(null);
+    private final UsuarioDTOConverter usuarioDTOConverter;
 
 
     // Obtencion de todos los usuarios
@@ -50,7 +52,9 @@ public class UsuariosController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No hay usuarios registrados");
         } else {
             // Falta la transformación a DTO (En caso de que sea necesaria)
-            return ResponseEntity.ok(listaUsuarios);
+            // return ResponseEntity.ok(listaUsuarios);
+            Page<UsuariosDTO> dtoList = listaUsuarios.map(usuarioDTOConverter::convertToDto);
+            return ResponseEntity.ok(dtoList);
         }
     }
 
@@ -74,7 +78,8 @@ public class UsuariosController {
         if (listaUsuarios.isEmpty()) {
             throw new SearchUsuarioNoResultException(txt);
         } else {
-            return ResponseEntity.ok(listaUsuarios);
+            Page<UsuariosDTO> dtoList = listaUsuarios.map(usuarioDTOConverter::convertToDto);
+            return ResponseEntity.ok(dtoList);
         }
     }
 
@@ -118,6 +123,20 @@ public class UsuariosController {
         
         usuariosService.eliminar(usuario);
         return ResponseEntity.noContent().build();
+    }
+
+    // Añadir evento a un Usuario
+    @CrossOrigin(origins = "http://localhost:9000")
+    @PostMapping("/usuarios/añadir-evento")
+    public ResponseEntity<Usuarios> añadirEvento(@RequestBody Eventos evento, @RequestBody Usuarios usuario, @PathVariable Long id) {
+        
+        Set<Eventos> eventoAñadir = usuario.getEventos();
+        eventoAñadir.add(evento);
+
+        return usuariosService.buscarPorId(id).map(p -> {
+            p.setEventos(eventoAñadir);
+            return ResponseEntity.ok(usuariosService.editar(usuario));
+        }).orElseThrow(() -> new UsuariosNotFoundException(id));
     }
     
 }

@@ -1,9 +1,12 @@
 package iesdoctorbalmis.daw2.voluntapp.modelos;
 
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +25,7 @@ import lombok.NoArgsConstructor;
 public class Eventos {
     
     @Id @GeneratedValue
-    private long id;
+    private Long id;
 
     private Date fInicio;
 
@@ -36,21 +39,22 @@ public class Eventos {
 
     private String fotoEvento;
 
+    @Builder.Default
     @ManyToMany
     @JoinTable(
         name = "evento_voluntarios",
         joinColumns = @JoinColumn(name = "usuario_id"),
         inverseJoinColumns = @JoinColumn(name="eventos_id")
     )
-    private Set<Usuarios> usuarios;
+    private Set<Usuarios> usuarios = new HashSet<>();
 
-    @JsonManagedReference
     @ManyToMany
+    @Builder.Default
     @JoinTable(
         name = "evento_instituciones",
         joinColumns = @JoinColumn(name = "institucion_id"),
         inverseJoinColumns = @JoinColumn(name = "eventos_id")
     )
-    private Set<Instituciones> instituciones;
+    private Set<Instituciones> instituciones = new HashSet<>();
 
 }

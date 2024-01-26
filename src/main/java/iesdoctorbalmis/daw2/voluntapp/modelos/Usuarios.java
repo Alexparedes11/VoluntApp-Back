@@ -1,16 +1,19 @@
 package iesdoctorbalmis.daw2.voluntapp.modelos;
 
+import java.util.HashSet;
 import java.util.Set;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,7 +21,9 @@ import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity @Data 
 @NoArgsConstructor @AllArgsConstructor
@@ -28,31 +33,31 @@ public class Usuarios {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "El nombre no puede estar en blanco")
+    @NonNull
     private String nombre;
 
-    @NotBlank(message = "Los apellidos no pueden estar en blanco")
+    @NonNull
     private String apellidos;
 
-    @NotBlank(message = "El DNI no puede estar en blanco")
-    @Size(min = 9, max = 9, message = "El DNI debe tener 9 caracteres")
+    @Column(unique = true)
+    @NonNull
     private String dni;
 
     private String direccion;
 
-    @NotBlank(message = "El email no puede estar en blanco")
-    @Email(message = "El formato del email no es válido")
+    @Column(unique = true)
+    @NonNull
     private String email;
 
     private String contraseña;
 
     private String fotoPerfil;
 
-    @NotBlank(message = "El rol no puede estar en blanco")
+    @NonNull
     private String rol;
 
-    @JsonBackReference
-    @ManyToMany(mappedBy = "usuarios")
-    private Set<Eventos> eventos;
+    @Builder.Default
+    @ManyToMany(mappedBy = "usuarios", fetch = FetchType.EAGER)
+    private Set<Eventos> eventos = new HashSet<>();
 
 }

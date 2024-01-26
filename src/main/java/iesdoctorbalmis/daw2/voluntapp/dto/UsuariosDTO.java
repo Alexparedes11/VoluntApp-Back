@@ -1,9 +1,11 @@
 package iesdoctorbalmis.daw2.voluntapp.dto;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
+import java.util.Set;
+
+import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
+import io.micrometer.common.lang.NonNull;
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,27 +19,23 @@ import lombok.Setter;
 @Builder
 public class UsuariosDTO {
 
-    @NotBlank(message = "El nombre no puede estar en blanco")
+    @NonNull
     private String nombre;
 
-    @NotBlank(message = "Los apellidos no pueden estar en blanco")
+    @NonNull
     private String apellidos;
 
-    @NotBlank(message = "El DNI no puede estar en blanco")
-    @Size(min = 9, max = 9, message = "El DNI debe tener 9 caracteres")
+    @Column(unique = true)
+    @NonNull
     private String dni;
 
-    private String direccion;
-
-    @NotBlank(message = "El email no puede estar en blanco")
-    @Email(message = "El formato del email no es válido")
+    @Column(unique = true)
+    @NonNull
     private String email;
 
-    private String contraseña;
-
-    private String fotoPerfil;
-
-    @NotBlank(message = "El rol no puede estar en blanco")
+    @NonNull
     private String rol;
+
+    private Set<String> eventosNombre;
 
 }
