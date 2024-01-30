@@ -57,4 +57,16 @@ public class Usuarios {
     )
     private Set<Eventos> eventos = new HashSet<>();
 
+    /**
+	 * Métodos helper
+	 */
+	public void addEventos(Eventos p) {
+		this.eventos.add(p);
+		p.getUsuarios().add(this);
+	}
+	
+	public void deleteEventos(Eventos p) {
+		this.eventos.remove(p);
+		p.getUsuarios().remove(this);
+	}
 }

@@ -36,4 +36,16 @@ public class Categorias {
     )
     private Set<Eventos> eventos = new HashSet<>();
 
+    /**
+	 * Métodos helper
+	 */
+	public void addEventos(Eventos p) {
+		this.eventos.add(p);
+		p.getCategorias().add(this);
+	}
+	
+	public void deleteEventos(Eventos p) {
+		this.eventos.remove(p);
+		p.getCategorias().remove(this);
+	}
 }

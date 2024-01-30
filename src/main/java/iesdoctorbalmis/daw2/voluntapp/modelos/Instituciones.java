@@ -43,4 +43,17 @@ public class Instituciones {
         inverseJoinColumns = @JoinColumn(name = "instituciones_id")
     )
     private Set<Eventos> eventos = new HashSet<>();
+
+    /**
+	 * Métodos helper
+	 */
+	public void addEventos(Eventos p) {
+		this.eventos.add(p);
+		p.getInstituciones().add(this);
+	}
+	
+	public void deleteEventos(Eventos p) {
+		this.eventos.remove(p);
+		p.getInstituciones().remove(this);
+	}
 }
