@@ -52,8 +52,8 @@ public class Usuarios {
     @ManyToMany
     @JoinTable(
         name = "usuario_eventos",
-        joinColumns = @JoinColumn(name = "eventos_id"),
-        inverseJoinColumns = @JoinColumn(name="usuarios_id")
+        joinColumns = @JoinColumn(name = "usuarios_id"),
+        inverseJoinColumns = @JoinColumn(name="eventos_id")
     )
     private Set<Eventos> eventos = new HashSet<>();
 

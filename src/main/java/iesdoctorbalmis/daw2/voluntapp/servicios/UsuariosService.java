@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import iesdoctorbalmis.daw2.voluntapp.dto.create.CreateUsuarioDTO;
+import iesdoctorbalmis.daw2.voluntapp.error.usuarios.UsuarioCreateException;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
 import iesdoctorbalmis.daw2.voluntapp.repositorios.UsuariosRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +18,26 @@ import lombok.RequiredArgsConstructor;
 public class UsuariosService {
     
     private final UsuariosRepository usuariosRepository;
+    private final EventosService eventosService;
 
+    public Usuarios nuevoUsuario(CreateUsuarioDTO nuevoUsuario) {
+
+        Usuarios l = Usuarios.builder()
+            .nombre(nuevoUsuario.getNombre())
+            .apellidos(nuevoUsuario.getApellidos())
+            .dni(nuevoUsuario.getDni())
+            .email(nuevoUsuario.getEmail())
+            .rol(nuevoUsuario.getRol())
+            .build();
+        
+            nuevoUsuario.getEventosId().stream()
+                .map(id -> {
+                    return eventosService.findByIdConUsuarios(id).orElseThrow(() -> new UsuarioCreateException());
+                })
+                .forEach(l::addEventos);
+            return guardar(l);
+    }
+    
     // guardar usuarios
     public Usuarios guardar(Usuarios usu) {
         return usuariosRepository.save(usu);

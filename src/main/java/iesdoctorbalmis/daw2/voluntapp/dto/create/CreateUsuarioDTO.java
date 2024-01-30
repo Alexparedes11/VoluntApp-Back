@@ -1,5 +1,7 @@
 package iesdoctorbalmis.daw2.voluntapp.dto.create;
 
+import java.util.Set;
+
 import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Column;
 import lombok.Getter;
@@ -25,5 +27,5 @@ public class CreateUsuarioDTO {
     @NonNull
     private String rol;
 
-    private Long eventosId;
+    private Set<Long> eventosId;
 }

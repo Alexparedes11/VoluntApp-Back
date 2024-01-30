@@ -2,6 +2,7 @@ package iesdoctorbalmis.daw2.voluntapp.controladores;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import iesdoctorbalmis.daw2.voluntapp.dto.UsuariosDTO;
 import iesdoctorbalmis.daw2.voluntapp.dto.converter.UsuarioDTOConverter;
@@ -10,6 +11,7 @@ import iesdoctorbalmis.daw2.voluntapp.error.usuarios.UsuariosNotFoundException;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
 import iesdoctorbalmis.daw2.voluntapp.servicios.UsuariosService;
+import iesdoctorbalmis.daw2.voluntapp.util.pagination.PaginationLinksUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
@@ -37,6 +39,7 @@ public class UsuariosController {
 
     private final UsuariosService usuariosService;
     private final UsuarioDTOConverter usuarioDTOConverter;
+    private final PaginationLinksUtils paginationLinksUtils;
 
 
     // Obtencion de todos los usuarios
@@ -44,12 +47,20 @@ public class UsuariosController {
     @GetMapping("/usuarios") 
     public ResponseEntity<?> TodosLosUsuarios(@PageableDefault(size = 10, page = 0) Pageable pageable, HttpServletRequest request) {
         Page<Usuarios> listaUsuarios = usuariosService.ObtenerTodosPageable(pageable);
+        System.out.println("La lista de usuarios es la siguiente: " + listaUsuarios);
 
         if (listaUsuarios.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No hay usuarios registrados");
         } else {
             Page<UsuariosDTO> dtoList = listaUsuarios.map(usuarioDTOConverter::convertToDto);
-            return ResponseEntity.ok(dtoList);
+
+            UriComponentsBuilder uriBuilder =
+					UriComponentsBuilder.fromHttpUrl(request.getRequestURL().toString());
+			
+			return ResponseEntity.ok().header("link", 
+					paginationLinksUtils.createLinkHeader(dtoList, uriBuilder)).body(listaUsuarios);
+            
+            //return ResponseEntity.ok(listaUsuarios);
         }
     }
 

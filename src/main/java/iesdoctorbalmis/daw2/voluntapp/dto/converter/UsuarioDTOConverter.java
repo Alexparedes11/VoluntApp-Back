@@ -23,8 +23,10 @@ public class UsuarioDTOConverter {
         while (iterador.hasNext()) {
             Eventos elemento = iterador.next();
             String eventosNombre = elemento.getNombre();
+            System.out.println("          El nombre del evento es el siguiente: " + eventosNombre);
             eventos.add(eventosNombre);
         }
+        System.out.println("          El nombre del evento es el siguiente: " + eventos);
                 
         return UsuariosDTO.builder()
             .nombre(usu.getNombre())
