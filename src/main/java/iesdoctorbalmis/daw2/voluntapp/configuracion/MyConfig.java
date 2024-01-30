@@ -24,7 +24,14 @@ public class MyConfig {
                         .allowedOrigins("http://localhost:9000")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .maxAge(3600);
+
+                registry.addMapping("/instituciones/**")
+                        .allowedOrigins("http://localhost:9000")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE")
+                        .maxAge(3600);
             }
+
         };
     }
+    
 }

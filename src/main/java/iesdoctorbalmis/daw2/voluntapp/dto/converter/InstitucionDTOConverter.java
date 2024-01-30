@@ -6,18 +6,18 @@ import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
-import iesdoctorbalmis.daw2.voluntapp.dto.UsuariosDTO;
+import iesdoctorbalmis.daw2.voluntapp.dto.InstitucionesDTO;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
-import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
+import iesdoctorbalmis.daw2.voluntapp.modelos.Instituciones;
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class UsuarioDTOConverter {
-
-    public UsuariosDTO convertToDto(Usuarios usu) {
+public class InstitucionDTOConverter {
+    
+    public InstitucionesDTO convertToDto(Instituciones instituciones) {
         
-        Iterator<Eventos> iterador = usu.getEventos().iterator();
+        Iterator<Eventos> iterador = instituciones.getEventos().iterator();
         Set<String> eventos = new HashSet<>();
 
         while (iterador.hasNext()) {
@@ -26,13 +26,12 @@ public class UsuarioDTOConverter {
             eventos.add(eventosNombre);
         }
                 
-        return UsuariosDTO.builder()
-            .nombre(usu.getNombre())
-            .apellidos(usu.getApellidos())
-            .dni(usu.getDni())
-            .email(usu.getEmail())
-            .rol(usu.getRol())
+        return InstitucionesDTO.builder()
+            .nombre(instituciones.getNombre())
+            .cif(instituciones.getCif())
+            .personaCargo(instituciones.getPersonaCargo())
             .eventosNombre(eventos)
             .build();
     }
+
 }

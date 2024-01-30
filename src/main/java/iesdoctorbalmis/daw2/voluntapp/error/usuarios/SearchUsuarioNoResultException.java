@@ -1,8 +1,7 @@
-package iesdoctorbalmis.daw2.voluntapp.error;
+package iesdoctorbalmis.daw2.voluntapp.error.usuarios;
 
 public class SearchUsuarioNoResultException extends RuntimeException{
     
-
     private static final long serialVersionUID = 4254760268350693633L;
 
     public SearchUsuarioNoResultException() {

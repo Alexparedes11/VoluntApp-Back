@@ -4,15 +4,10 @@ import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Eventos {
     
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Date fInicio;
@@ -40,21 +35,14 @@ public class Eventos {
     private String fotoEvento;
 
     @Builder.Default
-    @ManyToMany
-    @JoinTable(
-        name = "evento_voluntarios",
-        joinColumns = @JoinColumn(name = "usuario_id"),
-        inverseJoinColumns = @JoinColumn(name="eventos_id")
-    )
+    @ManyToMany(mappedBy = "eventos")
     private Set<Usuarios> usuarios = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "eventos")
     @Builder.Default
-    @JoinTable(
-        name = "evento_instituciones",
-        joinColumns = @JoinColumn(name = "institucion_id"),
-        inverseJoinColumns = @JoinColumn(name = "eventos_id")
-    )
     private Set<Instituciones> instituciones = new HashSet<>();
 
+    @ManyToMany(mappedBy = "eventos")
+    @Builder.Default
+    private Set<Categorias> categorias = new HashSet<>();
 }

@@ -1,6 +1,4 @@
-package iesdoctorbalmis.daw2.voluntapp.dto;
-
-import java.util.Set;
+package iesdoctorbalmis.daw2.voluntapp.dto.create;
 
 import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Column;

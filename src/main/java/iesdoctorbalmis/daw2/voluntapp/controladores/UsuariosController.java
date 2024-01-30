@@ -5,20 +5,17 @@ import org.springframework.web.server.ResponseStatusException;
 
 import iesdoctorbalmis.daw2.voluntapp.dto.UsuariosDTO;
 import iesdoctorbalmis.daw2.voluntapp.dto.converter.UsuarioDTOConverter;
-import iesdoctorbalmis.daw2.voluntapp.error.SearchUsuarioNoResultException;
-import iesdoctorbalmis.daw2.voluntapp.error.UsuariosNotFoundException;
+import iesdoctorbalmis.daw2.voluntapp.error.usuarios.SearchUsuarioNoResultException;
+import iesdoctorbalmis.daw2.voluntapp.error.usuarios.UsuariosNotFoundException;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
 import iesdoctorbalmis.daw2.voluntapp.servicios.UsuariosService;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-import org.apache.catalina.connector.Response;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -51,8 +48,6 @@ public class UsuariosController {
         if (listaUsuarios.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No hay usuarios registrados");
         } else {
-            // Falta la transformación a DTO (En caso de que sea necesaria)
-            // return ResponseEntity.ok(listaUsuarios);
             Page<UsuariosDTO> dtoList = listaUsuarios.map(usuarioDTOConverter::convertToDto);
             return ResponseEntity.ok(dtoList);
         }
