@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -15,6 +16,7 @@ import lombok.Setter;
 
 @Getter @Setter
 @RequiredArgsConstructor @NoArgsConstructor
+@AllArgsConstructor
 public class ApiError {
 
     @NonNull

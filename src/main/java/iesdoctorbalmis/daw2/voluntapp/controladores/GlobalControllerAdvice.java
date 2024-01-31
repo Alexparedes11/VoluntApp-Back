@@ -1,5 +1,7 @@
 package iesdoctorbalmis.daw2.voluntapp.controladores;
 
+import java.time.LocalDateTime;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,13 +20,13 @@ public class GlobalControllerAdvice extends ResponseEntityExceptionHandler{
     
     @ExceptionHandler({UsuariosNotFoundException.class, SearchUsuarioNoResultException.class, UsuarioCreateException.class})
     public ResponseEntity<ApiError> handleUsuarioNoEncontrado(Exception ex) {
-        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, ex.getMessage());
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, LocalDateTime.now(), ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
     }
 
     @ExceptionHandler({InstitucionesNotFoundException.class, SearchInstitucionesNoRestultException.class})
     public ResponseEntity<ApiError> handleInstitucoinesNoEncontrado(Exception ex) {
-        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, ex.getMessage());
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, LocalDateTime.now(), ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
     }
 

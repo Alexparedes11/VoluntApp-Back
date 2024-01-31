@@ -1,13 +1,18 @@
 package iesdoctorbalmis.daw2.voluntapp.dto.create;
 
-import java.util.Set;
-
-import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Column;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
-@Getter @Setter
+@Data @Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class CreateUsuarioDTO {
     
     @NonNull
@@ -16,9 +21,18 @@ public class CreateUsuarioDTO {
     @NonNull
     private String apellidos;
 
+    @NonNull
+    private String contraseña;
+
     @Column(unique = true)
     @NonNull
     private String dni;
+
+    @NonNull
+    private String direccion;
+
+    @NonNull
+    private String fotoPerfil;
 
     @Column(unique = true)
     @NonNull
@@ -26,6 +40,4 @@ public class CreateUsuarioDTO {
 
     @NonNull
     private String rol;
-
-    private Set<Long> eventosId;
 }

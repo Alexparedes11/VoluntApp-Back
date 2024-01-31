@@ -20,23 +20,23 @@ public class UsuariosService {
     private final UsuariosRepository usuariosRepository;
     private final EventosService eventosService;
 
-    public Usuarios nuevoUsuario(CreateUsuarioDTO nuevoUsuario) {
+    // public Usuarios nuevoUsuario(CreateUsuarioDTO nuevoUsuario) {
 
-        Usuarios l = Usuarios.builder()
-            .nombre(nuevoUsuario.getNombre())
-            .apellidos(nuevoUsuario.getApellidos())
-            .dni(nuevoUsuario.getDni())
-            .email(nuevoUsuario.getEmail())
-            .rol(nuevoUsuario.getRol())
-            .build();
+    //     Usuarios l = Usuarios.builder()
+    //         .nombre(nuevoUsuario.getNombre())
+    //         .apellidos(nuevoUsuario.getApellidos())
+    //         .dni(nuevoUsuario.getDni())
+    //         .email(nuevoUsuario.getEmail())
+    //         .rol(nuevoUsuario.getRol())
+    //         .build();
         
-            nuevoUsuario.getEventosId().stream()
-                .map(id -> {
-                    return eventosService.findByIdConUsuarios(id).orElseThrow(() -> new UsuarioCreateException());
-                })
-                .forEach(l::addEventos);
-            return guardar(l);
-    }
+    //         nuevoUsuario.getEventosId().stream()
+    //             .map(id -> {
+    //                 return eventosService.findByIdConUsuarios(id).orElseThrow(() -> new UsuarioCreateException());
+    //             })
+    //             .forEach(l::addEventos);
+    //         return guardar(l);
+    // }
     
     // guardar usuarios
     public Usuarios guardar(Usuarios usu) {

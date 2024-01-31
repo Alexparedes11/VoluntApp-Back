@@ -17,14 +17,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import iesdoctorbalmis.daw2.voluntapp.dto.InstitucionesDTO;
 import iesdoctorbalmis.daw2.voluntapp.dto.converter.InstitucionDTOConverter;
-import iesdoctorbalmis.daw2.voluntapp.error.usuarios.SearchUsuarioNoResultException;
-import iesdoctorbalmis.daw2.voluntapp.error.usuarios.UsuariosNotFoundException;
+import iesdoctorbalmis.daw2.voluntapp.dto.create.CreateInstitucionDTO;
+import iesdoctorbalmis.daw2.voluntapp.error.instituciones.InstitucionesNotFoundException;
+import iesdoctorbalmis.daw2.voluntapp.error.instituciones.SearchInstitucionesNoRestultException;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Instituciones;
 import iesdoctorbalmis.daw2.voluntapp.servicios.InstitucionesService;
+import iesdoctorbalmis.daw2.voluntapp.util.pagination.PaginationLinksUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
@@ -34,96 +37,114 @@ public class InstitucionesController {
     
     private final InstitucionesService institucionesService;
     private final InstitucionDTOConverter institucionDTOConverter;
+    private final PaginationLinksUtils paginationLinksUtils;
 
-    // Obtencion de todas las instituciones
+
+    // Obtención de todos los Instituciones
     @CrossOrigin(origins = "http://localhost:9000")
     @GetMapping("/instituciones") 
-    public ResponseEntity<?> TodosLosUsuarios(@PageableDefault(size = 10, page = 0) Pageable pageable, HttpServletRequest request) {
+    public ResponseEntity<?> todasLasInstituciones(@PageableDefault(size = 10, page = 0) Pageable pageable, HttpServletRequest request) {
         Page<Instituciones> listaInstituciones = institucionesService.ObtenerTodosPageable(pageable);
-
         if (listaInstituciones.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No hay usuarios registrados");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No hay instituciones registradas");
         } else {
             Page<InstitucionesDTO> dtoList = listaInstituciones.map(institucionDTOConverter::convertToDto);
-            return ResponseEntity.ok(dtoList);
+
+            UriComponentsBuilder uriBuilder =
+					UriComponentsBuilder.fromHttpUrl(request.getRequestURL().toString());
+			
+			return ResponseEntity.ok().header("link", 
+					paginationLinksUtils.createLinkHeader(dtoList, uriBuilder)).body(dtoList);
+            
         }
     }
 
 
-    // Encontrar al usuarios por la ID (Sin DTO)
+    // Encontrar al Instituciones por la ID (con DTO)
     @CrossOrigin(origins = "http://localhost:9000")
     @GetMapping("/instituciones/{id}")
-    public Instituciones obtenerUno(@PathVariable Long id) {
-        return institucionesService.buscarPorId(id)
+    public InstitucionesDTO obtenerUno(@PathVariable Long id) {
+
+        Instituciones instituciones = institucionesService.buscarPorId(id)
             .orElseThrow(() -> // No lanza la excepción
-             new UsuariosNotFoundException(id));
+            new InstitucionesNotFoundException(id));
+
+        return institucionDTOConverter.convertToDto(instituciones);
     }
 
 
-    // Filtrado por el nombre de la institución
+    // Filtrado por el nombre de institución ( NO FUNCIONA )
     @CrossOrigin(origins = "http://localhost:9000")
     @GetMapping(value="/instituciones", params = "nombre")
-        public ResponseEntity<?> buscarInstitucionPorNombre(@RequestParam("nombre") String txt, Pageable pageable, HttpServletRequest request) {
+        public ResponseEntity<?> buscarInstitucionesPorNombre(@RequestParam("nombre") String txt, Pageable pageable, HttpServletRequest request) {
         Page<Instituciones> listaInstituciones = institucionesService.buscarPorNombre(txt, pageable);
 
         if (listaInstituciones.isEmpty()) {
-            throw new SearchUsuarioNoResultException(txt);
+            throw new SearchInstitucionesNoRestultException(txt);
         } else {
             Page<InstitucionesDTO> dtoList = listaInstituciones.map(institucionDTOConverter::convertToDto);
             return ResponseEntity.ok(dtoList);
         }
     }
 
-    // Añadir institución a la base de datos (Sin DTO)
-    @CrossOrigin(origins = "http://localhost:9000")
-    @PostMapping("/instituciones")
-    public ResponseEntity<Instituciones> nuevaInstitucion(@RequestBody Instituciones nuevo) {
 
-        System.out.println(nuevo);
-        Instituciones nuevaInstitucion = institucionesService.guardar(nuevo);
+    // Añadir Instituciones a la base de datos
+    @CrossOrigin(origins = "http://localhost:9000")
+    @PostMapping("/Instituciones")
+    public ResponseEntity<Instituciones> nuevoUsuario(@RequestBody CreateInstitucionDTO nuevo) {
+
+        Instituciones institucionesNuevo =  Instituciones.builder()
+                                    .nombre(nuevo.getNombre())
+                                    .cif(nuevo.getCif())
+                                    .personaCargo(nuevo.getPersonaCargo())
+                                    .fotoInstitucion(nuevo.getFotoInstitucion())
+                                    .build();
+
+        Instituciones nuevaInstitucion = institucionesService.guardar(institucionesNuevo);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaInstitucion);
 
     }
 
-    // Editar institución de la base de datos
+    // Editar instituciones de la base de datos
     @CrossOrigin(origins = "http://localhost:9000")
-    @PutMapping("/instituciones/{id}")
-    public ResponseEntity<Instituciones> editarInstitucion(@RequestBody Instituciones editarInstituciones, @PathVariable Long id) {
+    @PutMapping("/Instituciones/{id}")
+    public ResponseEntity<Instituciones> editaInstitucion(@RequestBody CreateInstitucionDTO editaInstitucion, @PathVariable Long id) {
 
         return institucionesService.buscarPorId(id).map(p -> {
-            p.setNombre(editarInstituciones.getNombre());
-            p.setCif(editarInstituciones.getCif());
-            p.setPersonaCargo(editarInstituciones.getPersonaCargo());
-            p.setFotoInstitucion(editarInstituciones.getFotoInstitucion());
-            p.setEventos(editarInstituciones.getEventos());
+            p.setNombre(editaInstitucion.getNombre());
+            p.setCif(editaInstitucion.getCif());
+            p.setFotoInstitucion(editaInstitucion.getFotoInstitucion());
+            p.setPersonaCargo(editaInstitucion.getPersonaCargo());
+            p.setEventos(p.getEventos());
+
             return ResponseEntity.ok(institucionesService.editar(p));
-        }).orElseThrow(() -> new UsuariosNotFoundException(id));
+        }).orElseThrow(() -> new InstitucionesNotFoundException(id));
     }
 
     // Eliminar institución de la base de datos
     @CrossOrigin(origins = "http://localhost:9000")
-    @DeleteMapping("/instituciones/{id}")
+    @DeleteMapping("/Instituciones/{id}")
     public ResponseEntity<?> eliminarInstitucion(@PathVariable Long id) {
 
         Instituciones instituciones = institucionesService.buscarPorId(id)
-                            .orElseThrow(() -> new UsuariosNotFoundException(id));
+                            .orElseThrow(() -> new InstitucionesNotFoundException(id));
         
         institucionesService.eliminar(instituciones);
         return ResponseEntity.noContent().build();
     }
 
-    // Añadir evento a una Institución
+    // Añadir evento a una Institución ( not works )
     @CrossOrigin(origins = "http://localhost:9000")
-    @PostMapping("/instituciones/añadir-evento")
-    public ResponseEntity<Instituciones> añadirEvento(@RequestBody Eventos evento, @RequestBody Instituciones instituciones, @PathVariable Long id) {
+    @PostMapping("/Instituciones/añadir-evento")
+    public ResponseEntity<Instituciones> añadirEvento(@RequestBody Eventos eventos, @RequestBody Instituciones instituciones) {
         
         Set<Eventos> eventoAñadir = instituciones.getEventos();
-        eventoAñadir.add(evento);
+        eventoAñadir.add(eventos);
 
-        return institucionesService.buscarPorId(id).map(p -> {
+        return institucionesService.buscarPorId(instituciones.getId()).map(p -> {
             p.setEventos(eventoAñadir);
             return ResponseEntity.ok(institucionesService.editar(instituciones));
-        }).orElseThrow(() -> new UsuariosNotFoundException(id));
+        }).orElseThrow(() -> new InstitucionesNotFoundException(instituciones.getId()));
     }
 
 }

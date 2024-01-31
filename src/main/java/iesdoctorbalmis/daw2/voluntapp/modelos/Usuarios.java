@@ -3,6 +3,8 @@ package iesdoctorbalmis.daw2.voluntapp.modelos;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,7 +17,9 @@ import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity @Data 
 @NoArgsConstructor @AllArgsConstructor
@@ -49,6 +53,8 @@ public class Usuarios {
     private String rol;
 
     @Builder.Default
+    @EqualsAndHashCode.Exclude @ToString.Exclude
+    @JsonManagedReference
     @ManyToMany
     @JoinTable(
         name = "usuario_eventos",
@@ -60,13 +66,13 @@ public class Usuarios {
     /**
 	 * Métodos helper
 	 */
-	public void addEventos(Eventos p) {
-		this.eventos.add(p);
-		p.getUsuarios().add(this);
+	public void addEventos(Eventos e) {
+		this.eventos.add(e);
+		e.getUsuarios().add(this);
 	}
 	
-	public void deleteEventos(Eventos p) {
-		this.eventos.remove(p);
-		p.getUsuarios().remove(this);
+	public void deleteEventos(Eventos e) {
+		this.eventos.remove(e);
+		e.getUsuarios().remove(this);
 	}
 }

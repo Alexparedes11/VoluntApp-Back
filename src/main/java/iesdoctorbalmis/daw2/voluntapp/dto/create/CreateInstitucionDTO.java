@@ -2,11 +2,18 @@ package iesdoctorbalmis.daw2.voluntapp.dto.create;
 
 
 import jakarta.persistence.Column;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 
-@Getter @Setter
+@Data @Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class CreateInstitucionDTO {
     
     @Column(unique = true)
@@ -17,6 +24,6 @@ public class CreateInstitucionDTO {
 
     private String nombre;
 
-    private Long eventosId;
+    private String fotoInstitucion;
 
 }

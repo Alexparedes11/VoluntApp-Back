@@ -6,6 +6,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import iesdoctorbalmis.daw2.voluntapp.dto.UsuariosDTO;
 import iesdoctorbalmis.daw2.voluntapp.dto.converter.UsuarioDTOConverter;
+import iesdoctorbalmis.daw2.voluntapp.dto.create.CreateUsuarioDTO;
 import iesdoctorbalmis.daw2.voluntapp.error.usuarios.SearchUsuarioNoResultException;
 import iesdoctorbalmis.daw2.voluntapp.error.usuarios.UsuariosNotFoundException;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
@@ -45,10 +46,8 @@ public class UsuariosController {
     // Obtencion de todos los usuarios
     @CrossOrigin(origins = "http://localhost:9000")
     @GetMapping("/usuarios") 
-    public ResponseEntity<?> TodosLosUsuarios(@PageableDefault(size = 10, page = 0) Pageable pageable, HttpServletRequest request) {
+    public ResponseEntity<?> todosLosUsuarios(@PageableDefault(size = 10, page = 0) Pageable pageable, HttpServletRequest request) {
         Page<Usuarios> listaUsuarios = usuariosService.ObtenerTodosPageable(pageable);
-        System.out.println("La lista de usuarios es la siguiente: " + listaUsuarios);
-
         if (listaUsuarios.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No hay usuarios registrados");
         } else {
@@ -58,24 +57,27 @@ public class UsuariosController {
 					UriComponentsBuilder.fromHttpUrl(request.getRequestURL().toString());
 			
 			return ResponseEntity.ok().header("link", 
-					paginationLinksUtils.createLinkHeader(dtoList, uriBuilder)).body(listaUsuarios);
+					paginationLinksUtils.createLinkHeader(dtoList, uriBuilder)).body(dtoList);
             
-            //return ResponseEntity.ok(listaUsuarios);
+            // return ResponseEntity.ok(listaUsuarios);
         }
     }
 
 
-    // Encontrar al usuarios por la ID (Sin DTO)
+    // Encontrar al usuarios por la ID (con DTO)
     @CrossOrigin(origins = "http://localhost:9000")
     @GetMapping("/usuarios/{id}")
-    public Usuarios obtenerUno(@PathVariable Long id) {
-        return usuariosService.buscarPorId(id)
+    public UsuariosDTO obtenerUno(@PathVariable Long id) {
+
+        Usuarios usuarios = usuariosService.buscarPorId(id)
             .orElseThrow(() -> // No lanza la excepción
-             new UsuariosNotFoundException(id));
+            new UsuariosNotFoundException(id));
+
+        return usuarioDTOConverter.convertToDto(usuarios);
     }
 
 
-    // Filtrado por el nombre del usuario (Sin DTO)
+    // Filtrado por el nombre del usuario ( NO FUNCIONA )
     @CrossOrigin(origins = "http://localhost:9000")
     @GetMapping(value="/usuarios", params = "nombre")
         public ResponseEntity<?> buscarUsuariosPorNombre(@RequestParam("nombre") String txt, Pageable pageable, HttpServletRequest request) {
@@ -89,13 +91,24 @@ public class UsuariosController {
         }
     }
 
-    // Añadir usuario a la base de datos (Sin DTO)
+
+    // Añadir usuarios a la base de datos
     @CrossOrigin(origins = "http://localhost:9000")
     @PostMapping("/usuarios")
-    public ResponseEntity<Usuarios> nuevoUsuario(@RequestBody Usuarios nuevo) {
+    public ResponseEntity<Usuarios> nuevoUsuario(@RequestBody CreateUsuarioDTO nuevo) {
 
-        System.out.println(nuevo);
-        Usuarios nuevoUsuario = usuariosService.guardar(nuevo);
+        Usuarios usuarioNuevo =  Usuarios.builder()
+                                    .apellidos(nuevo.getApellidos())
+                                    .contraseña(nuevo.getContraseña())
+                                    .direccion(nuevo.getDireccion())
+                                    .dni(nuevo.getDni())
+                                    .nombre(nuevo.getNombre())
+                                    .email(nuevo.getEmail())
+                                    .rol(nuevo.getRol())
+                                    .fotoPerfil(nuevo.getFotoPerfil())
+                                    .build();
+
+        Usuarios nuevoUsuario = usuariosService.guardar(usuarioNuevo);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoUsuario);
 
     }
@@ -103,7 +116,7 @@ public class UsuariosController {
     // Editar usuario de la base de datos
     @CrossOrigin(origins = "http://localhost:9000")
     @PutMapping("/usuarios/{id}")
-    public ResponseEntity<Usuarios> editarUsuario(@RequestBody Usuarios editarUsuario, @PathVariable Long id) {
+    public ResponseEntity<Usuarios> editarUsuario(@RequestBody CreateUsuarioDTO editarUsuario, @PathVariable Long id) {
 
         return usuariosService.buscarPorId(id).map(p -> {
             p.setNombre(editarUsuario.getNombre());
@@ -112,8 +125,8 @@ public class UsuariosController {
             p.setDireccion(editarUsuario.getDireccion());
             p.setDni(editarUsuario.getDni());
             p.setEmail(editarUsuario.getEmail());
-            p.setEventos(editarUsuario.getEventos());
             p.setFotoPerfil(editarUsuario.getFotoPerfil());
+            p.setEventos(p.getEventos());
             p.setRol(editarUsuario.getRol());
             return ResponseEntity.ok(usuariosService.editar(p));
         }).orElseThrow(() -> new UsuariosNotFoundException(id));
@@ -131,18 +144,18 @@ public class UsuariosController {
         return ResponseEntity.noContent().build();
     }
 
-    // Añadir evento a un Usuario
+    // Añadir evento a un Usuario ( not works )
     @CrossOrigin(origins = "http://localhost:9000")
     @PostMapping("/usuarios/añadir-evento")
-    public ResponseEntity<Usuarios> añadirEvento(@RequestBody Eventos evento, @RequestBody Usuarios usuario, @PathVariable Long id) {
+    public ResponseEntity<Usuarios> añadirEvento(@RequestBody Eventos eventos, @RequestBody Usuarios usuario) {
         
         Set<Eventos> eventoAñadir = usuario.getEventos();
-        eventoAñadir.add(evento);
+        eventoAñadir.add(eventos);
 
-        return usuariosService.buscarPorId(id).map(p -> {
+        return usuariosService.buscarPorId(usuario.getId()).map(p -> {
             p.setEventos(eventoAñadir);
             return ResponseEntity.ok(usuariosService.editar(usuario));
-        }).orElseThrow(() -> new UsuariosNotFoundException(id));
+        }).orElseThrow(() -> new UsuariosNotFoundException(usuario.getId()));
     }
     
 }

@@ -37,7 +37,7 @@ public class VoluntappApplication {
 	// 		Set<Eventos> listaEventosInstituciones = new HashSet<>();
 	// 		Set<Eventos> listaEventosCategorias = new HashSet<>();
 
-	// 		Eventos eventos = Eventos.builder()
+	// 		Eventos eventos1 = Eventos.builder()
 	// 			.fInicio(new Date(0))
 	// 			.fFin(new Date(0))
 	// 			.nombre("Evento de ejemplo")
@@ -48,11 +48,13 @@ public class VoluntappApplication {
 	// 			.instituciones(listaInstituciones)
 	// 			.categorias(listaCategorias)
 	// 			.build();
-	// 		eventosService.guardar(eventos);
-	// 		listaEventosUsuarios.add(eventos);
+	// 		eventosService.guardar(eventos1);
+	// 		listaEventosUsuarios.add(eventos1);
 	
+	// 		Usuarios usuario2 = new Usuarios(null, "Belen", "Arias", "DNI12", "ejemplo-direccion", "asd@example.com", "123", "/assets/imagen", "Admin", listaEventosUsuarios);
+	// 		usuariosService.guardar(usuario2);
 
-	// 		eventos = Eventos.builder()
+	// 		Eventos eventos2 = Eventos.builder()
 	// 			.fInicio(new Date(0))
 	// 			.fFin(new Date(0))
 	// 			.nombre("Evento de ejemplo 2")
@@ -62,24 +64,16 @@ public class VoluntappApplication {
 	// 			.usuarios(listaUsuarios)
 	// 			.instituciones(listaInstituciones)
 	// 			.categorias(listaCategorias)
+	// 			.creadoPorUsuarios(usuario2)
 	// 			.build();
-	// 		eventosService.guardar(eventos);
-	// 		listaEventosUsuarios.add(eventos);
+	// 		eventosService.guardar(eventos2);
+	// 		listaEventosUsuarios.add(eventos2);
 
 	// 		System.out.println(listaEventosUsuarios);
-
 
 	// 		Usuarios usuario = new Usuarios(null, "Iván", "Arias", "DNI123", "ejemplo-direccion", "ivanarias@example.com", "123", "/assets/imagen", "Admin", listaEventosUsuarios);
 	// 		usuariosService.guardar(usuario);
 
-	// 		usuario = new Usuarios(null, "Belen", "Arias", "DNI12", "ejemplo-direccion", "asd@example.com", "123", "/assets/imagen", "Admin", listaEventosUsuarios);
-	// 		usuariosService.guardar(usuario);
-
-
-
-			
-
-			
 
 	// 	};
 	// }
