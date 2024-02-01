@@ -1,12 +1,12 @@
-2024-02-01 12:03:40.629542+01:00 jdbc[3]: exception
+2024-02-01 12:08:52.698594+01:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
 The object is already closed [90007-224]
-2024-02-01 12:03:40.686540+01:00 jdbc[3]: exception
+2024-02-01 12:08:52.746486+01:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
 The object is already closed [90007-224]
-2024-02-01 12:03:40.694551+01:00 jdbc[3]: exception
+2024-02-01 12:08:52.752499+01:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
 The object is already closed [90007-224]
-2024-02-01 12:03:40.720540+01:00 jdbc[3]: exception
+2024-02-01 12:08:52.775918+01:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
 The object is already closed [90007-224]
