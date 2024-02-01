@@ -51,4 +51,8 @@ public class InstitucionesService {
     public Page<Instituciones> ObtenerTodosPageable(Pageable pageable) {
         return institucionesRepository.findAll(pageable);
     }
+
+    public Instituciones buscarPorNombre(String nombre) {
+        return institucionesRepository.findByNombre(nombre);
+    }
 }

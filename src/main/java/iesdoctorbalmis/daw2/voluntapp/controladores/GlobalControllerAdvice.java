@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import iesdoctorbalmis.daw2.voluntapp.error.ApiError;
+import iesdoctorbalmis.daw2.voluntapp.error.eventos.EventosCreateException;
+import iesdoctorbalmis.daw2.voluntapp.error.eventos.EventosNotFoundException;
+import iesdoctorbalmis.daw2.voluntapp.error.instituciones.InstitucionesCreateException;
 import iesdoctorbalmis.daw2.voluntapp.error.instituciones.InstitucionesNotFoundException;
 import iesdoctorbalmis.daw2.voluntapp.error.instituciones.SearchInstitucionesNoRestultException;
 import iesdoctorbalmis.daw2.voluntapp.error.usuarios.SearchUsuarioNoResultException;
@@ -24,8 +27,14 @@ public class GlobalControllerAdvice extends ResponseEntityExceptionHandler{
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
     }
 
-    @ExceptionHandler({InstitucionesNotFoundException.class, SearchInstitucionesNoRestultException.class})
-    public ResponseEntity<ApiError> handleInstitucoinesNoEncontrado(Exception ex) {
+    @ExceptionHandler({InstitucionesNotFoundException.class, InstitucionesCreateException.class, SearchInstitucionesNoRestultException.class})
+    public ResponseEntity<ApiError> handleInstitucionesNoEncontrado(Exception ex) {
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, LocalDateTime.now(), ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
+    }
+
+    @ExceptionHandler({EventosCreateException.class, EventosNotFoundException.class})
+    public ResponseEntity<ApiError> handleEventosNoEncontrado(Exception ex) {
         ApiError apiError = new ApiError(HttpStatus.NOT_FOUND, LocalDateTime.now(), ex.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
     }

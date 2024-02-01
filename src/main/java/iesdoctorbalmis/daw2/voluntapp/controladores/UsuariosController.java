@@ -98,11 +98,11 @@ public class UsuariosController {
     public ResponseEntity<Usuarios> nuevoUsuario(@RequestBody CreateUsuarioDTO nuevo) {
 
         Usuarios usuarioNuevo =  Usuarios.builder()
+                                    .nombre(nuevo.getNombre())
                                     .apellidos(nuevo.getApellidos())
                                     .contraseña(nuevo.getContraseña())
                                     .direccion(nuevo.getDireccion())
                                     .dni(nuevo.getDni())
-                                    .nombre(nuevo.getNombre())
                                     .email(nuevo.getEmail())
                                     .rol(nuevo.getRol())
                                     .fotoPerfil(nuevo.getFotoPerfil())

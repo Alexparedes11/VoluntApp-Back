@@ -10,4 +10,6 @@ public interface InstitucionesRepository extends JpaRepository<Instituciones, Lo
     
     Page<Instituciones> findByNombreContainsIgnoreCase(String txt, Pageable pageable);
 
+    Instituciones findByNombre(String nombre);
+
 }

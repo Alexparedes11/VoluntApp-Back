@@ -11,4 +11,6 @@ public interface UsuariosRepository extends JpaRepository<Usuarios, Long>, JpaSp
 
     Page<Usuarios> findByNombreContainsIgnoreCase(String txt, Pageable pageable);
 
+    Usuarios findByNombre(String nombre);
+
 }

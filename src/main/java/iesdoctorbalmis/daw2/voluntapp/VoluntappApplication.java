@@ -32,17 +32,11 @@ public class VoluntappApplication {
 	// 		Set<Categorias> listaCategorias = new HashSet<>();
 
 	// 		Set<Eventos> listaEventosUsuarios = new HashSet<>();
-	// 		Set<Eventos> listaEventosUsuarios2 = new HashSet<>();
-	// 		Set<Eventos> listaEventosUsuarios3 = new HashSet<>();
-	// 		Set<Eventos> listaEventosInstituciones = new HashSet<>();
-	// 		Set<Eventos> listaEventosCategorias = new HashSet<>();
 
 	// 		Eventos eventos1 = Eventos.builder()
 	// 			.fInicio(new Date(0))
 	// 			.fFin(new Date(0))
 	// 			.nombre("Evento de ejemplo")
-	// 			.rating(4.5f)
-	// 			.comentarios("Excelente evento")
 	// 			.fotoEvento("/assets/ejemplo")
 	// 			.usuarios(listaUsuarios)
 	// 			.instituciones(listaInstituciones)
@@ -58,8 +52,6 @@ public class VoluntappApplication {
 	// 			.fInicio(new Date(0))
 	// 			.fFin(new Date(0))
 	// 			.nombre("Evento de ejemplo 2")
-	// 			.rating(4.5f)
-	// 			.comentarios("Excelente evento")
 	// 			.fotoEvento("/assets/ejemplo")
 	// 			.usuarios(listaUsuarios)
 	// 			.instituciones(listaInstituciones)

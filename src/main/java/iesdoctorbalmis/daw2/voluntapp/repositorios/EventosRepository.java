@@ -14,6 +14,6 @@ public interface EventosRepository extends JpaRepository<Eventos, Long> {
         Page<Eventos> findByNombreContainsIgnoreCase(String txt, Pageable pageable);
 
         @Query("select p from Eventos p LEFT JOIN FETCH p.usuarios WHERE p.id = :id")
-	public Optional<Eventos> findByIdJoinFetch(Long id);
+	Optional<Eventos> findByIdJoinFetch(Long id);
 
 }

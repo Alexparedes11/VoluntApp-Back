@@ -25,6 +25,7 @@ public class InstitucionDTOConverter {
             String eventosNombre = elemento.getNombre();
             eventos.add(eventosNombre);
         }
+
                 
         return InstitucionesDTO.builder()
             .nombre(instituciones.getNombre())

@@ -32,9 +32,11 @@ public class Eventos {
 
     private String nombre;
 
-    private float rating;
+    private String descripcion;
 
-    private String comentarios;
+    private String ubicacion;
+    
+    private int maxVoluntarios;
 
     private String fotoEvento;
 
@@ -51,11 +53,21 @@ public class Eventos {
     @ManyToMany(mappedBy = "eventos")
     private Set<Usuarios> usuarios = new HashSet<>();
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "eventos")
     @Builder.Default
     private Set<Instituciones> instituciones = new HashSet<>();
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "eventos")
     @Builder.Default
     private Set<Categorias> categorias = new HashSet<>();
+
+
+    // Funciones de Eventos
+    public int usuariosSize() {
+
+        return usuarios.size();
+
+    }
 }
