@@ -22,19 +22,13 @@ public class MyConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/usuarios/**")
                         .allowedOrigins("http://localhost:9000")
-                        .allowedOrigins("http://10.100.21.1:4200")
-                        .allowedOrigins("http://10.100.22.1:4200")
-                        .allowedOrigins("http://10.100.23.1:4200")
-                        .allowedOrigins("http://10.100.24.1:4200")
+                        .allowedOrigins("http://localhost:4200")
+
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .maxAge(3600);
 
                 registry.addMapping("/instituciones/**")
                         .allowedOrigins("http://localhost:9000")
-                        .allowedOrigins("http://10.100.21.1:4200")
-                        .allowedOrigins("http://10.100.22.1:4200")
-                        .allowedOrigins("http://10.100.23.1:4200")
-                        .allowedOrigins("http://10.100.24.1:4200")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .maxAge(3600);
             }
