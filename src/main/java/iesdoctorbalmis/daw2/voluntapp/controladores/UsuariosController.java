@@ -44,7 +44,6 @@ public class UsuariosController {
 
 
     // Obtencion de todos los usuarios
-    @CrossOrigin(origins = "http://localhost:9000")
     @GetMapping("/usuarios") 
     public ResponseEntity<?> todosLosUsuarios(@PageableDefault(size = 10, page = 0) Pageable pageable, HttpServletRequest request) {
         Page<Usuarios> listaUsuarios = usuariosService.ObtenerTodosPageable(pageable);
@@ -65,7 +64,6 @@ public class UsuariosController {
 
 
     // Encontrar al usuarios por la ID (con DTO)
-    @CrossOrigin(origins = "http://localhost:9000")
     @GetMapping("/usuarios/{id}")
     public UsuariosDTO obtenerUno(@PathVariable Long id) {
 
@@ -78,7 +76,6 @@ public class UsuariosController {
 
 
     // Filtrado por el nombre del usuario ( NO FUNCIONA )
-    @CrossOrigin(origins = "http://localhost:9000")
     @GetMapping(value="/usuarios", params = "nombre")
         public ResponseEntity<?> buscarUsuariosPorNombre(@RequestParam("nombre") String txt, Pageable pageable, HttpServletRequest request) {
         Page<Usuarios> listaUsuarios = usuariosService.buscarPorNombre(txt, pageable);
@@ -93,7 +90,6 @@ public class UsuariosController {
 
 
     // Añadir usuarios a la base de datos
-    @CrossOrigin(origins = "http://localhost:9000")
     @PostMapping("/usuarios")
     public ResponseEntity<Usuarios> nuevoUsuario(@RequestBody CreateUsuarioDTO nuevo) {
 
@@ -115,7 +111,6 @@ public class UsuariosController {
     }
 
     // Editar usuario de la base de datos
-    @CrossOrigin(origins = "http://localhost:9000")
     @PutMapping("/usuarios/{id}")
     public ResponseEntity<Usuarios> editarUsuario(@RequestBody CreateUsuarioDTO editarUsuario, @PathVariable Long id) {
 
@@ -135,7 +130,6 @@ public class UsuariosController {
     }
 
     // Eliminar usuario de la base de datos
-    @CrossOrigin(origins = "http://localhost:9000")
     @DeleteMapping("/usuarios/{id}")
     public ResponseEntity<?> eliminarUsuario(@PathVariable Long id) {
 
@@ -147,7 +141,6 @@ public class UsuariosController {
     }
 
     // Añadir evento a un Usuario ( not works )
-    @CrossOrigin(origins = "http://localhost:9000")
     @PostMapping("/usuarios/añadir-evento")
     public ResponseEntity<Usuarios> añadirEvento(@RequestBody Eventos eventos, @RequestBody Usuarios usuario) {
         
