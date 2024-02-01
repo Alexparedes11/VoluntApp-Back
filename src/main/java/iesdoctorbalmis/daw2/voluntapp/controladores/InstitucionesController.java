@@ -41,7 +41,6 @@ public class InstitucionesController {
 
 
     // Obtención de todos los Instituciones
-    @CrossOrigin(origins = "http://localhost:9000")
     @GetMapping("/instituciones") 
     public ResponseEntity<?> todasLasInstituciones(@PageableDefault(size = 10, page = 0) Pageable pageable, HttpServletRequest request) {
         Page<Instituciones> listaInstituciones = institucionesService.ObtenerTodosPageable(pageable);
@@ -61,7 +60,6 @@ public class InstitucionesController {
 
 
     // Encontrar al Instituciones por la ID (con DTO)
-    @CrossOrigin(origins = "http://localhost:9000")
     @GetMapping("/instituciones/{id}")
     public InstitucionesDTO obtenerUno(@PathVariable Long id) {
 
@@ -74,7 +72,6 @@ public class InstitucionesController {
 
 
     // Filtrado por el nombre de institución ( NO FUNCIONA )
-    @CrossOrigin(origins = "http://localhost:9000")
     @GetMapping(value="/instituciones", params = "nombre")
         public ResponseEntity<?> buscarInstitucionesPorNombre(@RequestParam("nombre") String txt, Pageable pageable, HttpServletRequest request) {
         Page<Instituciones> listaInstituciones = institucionesService.buscarPorNombre(txt, pageable);
@@ -89,7 +86,6 @@ public class InstitucionesController {
 
 
     // Añadir Instituciones a la base de datos
-    @CrossOrigin(origins = "http://localhost:9000")
     @PostMapping("/Instituciones")
     public ResponseEntity<Instituciones> nuevoUsuario(@RequestBody CreateInstitucionDTO nuevo) {
 
@@ -106,7 +102,6 @@ public class InstitucionesController {
     }
 
     // Editar instituciones de la base de datos
-    @CrossOrigin(origins = "http://localhost:9000")
     @PutMapping("/Instituciones/{id}")
     public ResponseEntity<Instituciones> editaInstitucion(@RequestBody CreateInstitucionDTO editaInstitucion, @PathVariable Long id) {
 
@@ -122,7 +117,6 @@ public class InstitucionesController {
     }
 
     // Eliminar institución de la base de datos
-    @CrossOrigin(origins = "http://localhost:9000")
     @DeleteMapping("/Instituciones/{id}")
     public ResponseEntity<?> eliminarInstitucion(@PathVariable Long id) {
 
@@ -134,7 +128,6 @@ public class InstitucionesController {
     }
 
     // Añadir evento a una Institución ( not works )
-    @CrossOrigin(origins = "http://localhost:9000")
     @PostMapping("/Instituciones/añadir-evento")
     public ResponseEntity<Instituciones> añadirEvento(@RequestBody Eventos eventos, @RequestBody Instituciones instituciones) {
         
