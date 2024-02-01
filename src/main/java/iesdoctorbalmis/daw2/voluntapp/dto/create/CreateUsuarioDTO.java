@@ -31,7 +31,6 @@ public class CreateUsuarioDTO {
     @NonNull
     private String direccion;
 
-    @NonNull
     private String fotoPerfil;
 
     @Column(unique = true)
