@@ -100,7 +100,7 @@ public class UsuariosController {
                                     .direccion(nuevo.getDireccion())
                                     .dni(nuevo.getDni())
                                     .email(nuevo.getEmail())
-                                    .rol(nuevo.getRol())
+                                    .rol("Usuario")
                                     .telefono(nuevo.getTelefono())
                                     .fotoPerfil(nuevo.getFotoPerfil())
                                     .build();
