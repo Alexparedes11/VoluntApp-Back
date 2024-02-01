@@ -50,6 +50,9 @@ public class Usuarios {
     private String fotoPerfil;
 
     @NonNull
+    private String telefono;
+
+    @NonNull
     private String rol;
 
     @Builder.Default

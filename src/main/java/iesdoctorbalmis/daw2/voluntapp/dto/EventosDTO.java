@@ -25,8 +25,6 @@ public class EventosDTO {
 
     private String ubicacion;
 
-    private float rating;
-
     private String fotoEvento;
 
     private String creadoPorUsuario;

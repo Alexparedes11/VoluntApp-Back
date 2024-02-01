@@ -32,6 +32,7 @@ public class UsuarioDTOConverter {
             .dni(usu.getDni())
             .email(usu.getEmail())
             .rol(usu.getRol())
+            .telefono(usu.getTelefono())
             .eventosNombre(eventos)
             .build();
     }

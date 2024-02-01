@@ -56,6 +56,8 @@ public class EventosController {
     @GetMapping("/eventos") 
     public ResponseEntity<?> todosLosEventos(@PageableDefault(size = 10, page = 0) Pageable pageable, HttpServletRequest request) {
         Page<Eventos> listaEventos = eventosService.ObtenerTodosPageable(pageable);
+
+        System.out.println("                       La lista es: "+listaEventos);
         if (listaEventos.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No hay Eventos registrados");
         } else {
@@ -65,7 +67,7 @@ public class EventosController {
 					UriComponentsBuilder.fromHttpUrl(request.getRequestURL().toString());
 			
 			return ResponseEntity.ok().header("link", 
-					paginationLinksUtils.createLinkHeader(listaEventos, uriBuilder)).body(listaEventos);
+					paginationLinksUtils.createLinkHeader(dtoList, uriBuilder)).body(dtoList);
             
             // return ResponseEntity.ok(listaEventos);
         }

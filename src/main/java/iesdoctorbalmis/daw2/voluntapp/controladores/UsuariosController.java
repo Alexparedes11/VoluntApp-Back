@@ -105,6 +105,7 @@ public class UsuariosController {
                                     .dni(nuevo.getDni())
                                     .email(nuevo.getEmail())
                                     .rol(nuevo.getRol())
+                                    .telefono(nuevo.getTelefono())
                                     .fotoPerfil(nuevo.getFotoPerfil())
                                     .build();
 
@@ -125,6 +126,7 @@ public class UsuariosController {
             p.setDireccion(editarUsuario.getDireccion());
             p.setDni(editarUsuario.getDni());
             p.setEmail(editarUsuario.getEmail());
+            p.setTelefono(editarUsuario.getTelefono());
             p.setFotoPerfil(editarUsuario.getFotoPerfil());
             p.setEventos(p.getEventos());
             p.setRol(editarUsuario.getRol());

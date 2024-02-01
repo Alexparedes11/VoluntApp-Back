@@ -35,6 +35,9 @@ public class UsuariosDTO {
     @NonNull
     private String rol;
 
+    @NonNull
+    private String telefono;
+
     private Set<String> eventosNombre;
 
 }
