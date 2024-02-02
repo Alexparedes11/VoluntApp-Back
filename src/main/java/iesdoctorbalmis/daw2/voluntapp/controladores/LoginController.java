@@ -49,7 +49,7 @@ public class LoginController {
         return JwtUserResponse.jwtUserResponseBuilder()
             .nombre(usuario.getNombre())
             .email(usuario.getUsername())
-            .rol(usuario.getRol())
+            .password(usuario.getPassword())
             .token(jwt)
             .build();
     }

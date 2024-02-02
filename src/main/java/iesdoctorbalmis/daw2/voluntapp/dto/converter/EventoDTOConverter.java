@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 
 import iesdoctorbalmis.daw2.voluntapp.dto.EventosDTO;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
-import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -30,13 +29,14 @@ public class EventoDTOConverter {
         return EventosDTO.builder()
             .fInicio(eventos.getFInicio())
             .fFin(eventos.getFFin())
-            .fotoEvento(eventos.getFotoEvento())
+            .imagen(eventos.getImagen())
             .creadoPorUsuario(usuario)
             .creadoPorInstitucion(institucion)
             .descripcion(eventos.getDescripcion())
             .maxVoluntarios(eventos.getMaxVoluntarios())
-            .numUsuarios(usuarariosNumber)
-            .nombre(eventos.getNombre())
+            .numVoluntarios(usuarariosNumber)
+            .titulo(eventos.getTitulo())
+            .id(eventos.getId())
             .ubicacion(eventos.getUbicacion())
             .build();
     }

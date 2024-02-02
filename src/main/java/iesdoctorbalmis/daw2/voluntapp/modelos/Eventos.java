@@ -31,7 +31,7 @@ public class Eventos {
 
     private Date fFin;
 
-    private String nombre;
+    private String titulo;
 
     private String descripcion;
 
@@ -39,7 +39,7 @@ public class Eventos {
     
     private int maxVoluntarios;
 
-    private String fotoEvento;
+    private String imagen;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")

@@ -20,6 +20,7 @@ public class MyConfig {
             
             @Override
             public void addCorsMappings(CorsRegistry registry) {
+                
                 registry.addMapping("/usuarios/**")
                         .allowedOrigins("http://localhost:9000")
                         .allowedOrigins("http://localhost:4200")
@@ -29,6 +30,19 @@ public class MyConfig {
 
                 registry.addMapping("/instituciones/**")
                         .allowedOrigins("http://localhost:9000")
+                        .allowedOrigins("http://localhost:4200")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE")
+                        .maxAge(3600);
+
+                registry.addMapping("/eventos/**")
+                        .allowedOrigins("http://localhost:9000")
+                        .allowedOrigins("http://localhost:4200")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE")
+                        .maxAge(3600);
+
+                registry.addMapping("/login/**")
+                        .allowedOrigins("http://localhost:9000")
+                        .allowedOrigins("http://localhost:4200")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .maxAge(3600);
             }

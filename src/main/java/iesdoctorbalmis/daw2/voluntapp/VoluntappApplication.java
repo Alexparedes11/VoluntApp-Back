@@ -40,8 +40,8 @@ public class VoluntappApplication {
 	// 		Eventos eventos2 = Eventos.builder()
 	// 			.fInicio(new Date(0))
 	// 			.fFin(new Date(0))
-	// 			.nombre("Evento de ejemplo 2")
-	// 			.fotoEvento("/assets/ejemplo")
+	// 			.titulo("Evento de ejemplo 2")
+	// 			.imagen("/assets/ejemplo")
 	// 			.usuarios(listaUsuarios)
 	// 			.descripcion("Evento Buenardo")
 	// 			.ubicacion("Barcelona")
@@ -56,8 +56,8 @@ public class VoluntappApplication {
 	// 		Eventos eventos1 = Eventos.builder()
 	// 			.fInicio(new Date(0))
 	// 			.fFin(new Date(0))
-	// 			.nombre("Evento de ejemplo")
-	// 			.fotoEvento("/assets/ejemplo")
+	// 			.titulo("Evento de ejemplo")
+	// 			.imagen("/assets/ejemplo")
 	// 			.descripcion("Evento pocho")
 	// 			.ubicacion("Castilla la Mancha")
 	// 			.usuarios(listaUsuarios)
@@ -68,6 +68,21 @@ public class VoluntappApplication {
 	// 			.build();
 	// 		eventosService.guardar(eventos1);
 	// 		listaEventosUsuarios.add(eventos1);
+
+	// 		Eventos eventos3 = Eventos.builder()
+	// 			.fInicio(new Date(0))
+	// 			.fFin(new Date(0))
+	// 			.titulo("Evento de ejemplo")
+	// 			.imagen("/assets/images/rio.jpg")
+	// 			.descripcion("Evento pocho")
+	// 			.ubicacion("Castilla la Mancha")
+	// 			.usuarios(listaUsuarios)
+	// 			.instituciones(listaInstituciones)
+	// 			.categorias(listaCategorias)
+	// 			.creadoPorUsuarios(usuario2)
+	// 			.maxVoluntarios(50)
+	// 			.build();
+	// 		eventosService.guardar(eventos3);
 
 	// 		System.out.println(listaEventosUsuarios);
 

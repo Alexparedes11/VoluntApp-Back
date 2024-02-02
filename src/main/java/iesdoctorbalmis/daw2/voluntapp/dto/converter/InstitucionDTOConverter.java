@@ -22,7 +22,7 @@ public class InstitucionDTOConverter {
 
         while (iterador.hasNext()) {
             Eventos elemento = iterador.next();
-            String eventosNombre = elemento.getNombre();
+            String eventosNombre = elemento.getTitulo();
             eventos.add(eventosNombre);
         }
 

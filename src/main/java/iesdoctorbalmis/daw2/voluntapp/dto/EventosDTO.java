@@ -15,23 +15,25 @@ import lombok.Setter;
 @Builder
 public class EventosDTO {
 
+    private Long id;
+
     private Date fInicio;
 
     private Date fFin;
 
-    private String nombre;
+    private String titulo;
 
     private String descripcion;
 
     private String ubicacion;
 
-    private String fotoEvento;
+    private String imagen;
 
     private String creadoPorUsuario;
 
     private String creadoPorInstitucion;
 
-    private int numUsuarios;
+    private int numVoluntarios;
 
     private int maxVoluntarios;
 

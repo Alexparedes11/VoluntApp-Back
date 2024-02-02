@@ -16,8 +16,8 @@ public class JwtUserResponse extends LoginDTO {
     private String token;
 
     @Builder(builderMethodName = "jwtUserResponseBuilder")
-    public JwtUserResponse(String nombre, String email, String rol, String token) {
-        super(nombre, email, rol);
+    public JwtUserResponse(String nombre, String email, String password, String token) {
+        super(email, password, nombre);
         this.token = token;
     }
     

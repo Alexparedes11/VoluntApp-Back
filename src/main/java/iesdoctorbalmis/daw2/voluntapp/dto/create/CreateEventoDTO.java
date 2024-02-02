@@ -19,13 +19,13 @@ public class CreateEventoDTO {
 
     private Date fFin;
 
-    private String nombre;
+    private String titulo;
 
     private String descripcion;
 
     private String ubicacion;
 
-    private String fotoEvento;
+    private String imagen;
 
     private String creadoPorUsuario;
 

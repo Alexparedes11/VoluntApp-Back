@@ -22,10 +22,10 @@ public class LoginDTO {
     private String email;
 
     @NonNull
-    private String rol;
+    private String password;
 
     @NonNull
-    private String password;
+    private String nombre;
 
 
 }

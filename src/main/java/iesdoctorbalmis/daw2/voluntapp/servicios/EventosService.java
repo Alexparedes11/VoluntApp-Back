@@ -44,7 +44,7 @@ public class EventosService {
 
     // buscar usuarios por nombre
     public Page<Eventos> buscarPorNombre(String txt, Pageable pageable) {
-        return eventosRepository.findByNombreContainsIgnoreCase(txt, pageable);
+        return eventosRepository.findByTituloContainsIgnoreCase(txt, pageable);
     }
 
     // obtener todos los usuarios pageable

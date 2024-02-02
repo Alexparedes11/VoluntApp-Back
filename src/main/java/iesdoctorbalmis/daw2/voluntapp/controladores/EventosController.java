@@ -49,7 +49,6 @@ public class EventosController {
 
 
     // Obtencion de todos los Eventos
-    @CrossOrigin(origins = "http://localhost:9000")
     @GetMapping("/eventos") 
     public ResponseEntity<?> todosLosEventos(@PageableDefault(size = 10, page = 0) Pageable pageable, HttpServletRequest request) {
         Page<Eventos> listaEventos = eventosService.ObtenerTodosPageable(pageable);
@@ -72,7 +71,6 @@ public class EventosController {
 
 
     // Encontrar al Eventos por la ID (con DTO)
-    @CrossOrigin(origins = "http://localhost:9000")
     @GetMapping("/eventos/{id}")
     public EventosDTO obtenerUno(@PathVariable Long id) {
 
@@ -100,7 +98,6 @@ public class EventosController {
 
 
     // Añadir Eventos a la base de datos
-    @CrossOrigin(origins = "http://localhost:9000")
     @PostMapping("/eventos")
     public ResponseEntity<Eventos> nuevoEvento(@RequestBody CreateEventoDTO nuevo) {
 
@@ -108,8 +105,8 @@ public class EventosController {
         Usuarios creadoPorUsuarios = usuariosService.buscarPorUsername(nuevo.getCreadoPorUsuario()).orElse(null);
 
         Eventos eventoNuevo =  Eventos.builder()
-                                    .nombre(nuevo.getNombre())
-                                    .fotoEvento(nuevo.getFotoEvento())
+                                    .titulo(nuevo.getTitulo())
+                                    .imagen(nuevo.getImagen())
                                     .descripcion(nuevo.getDescripcion())
                                     .ubicacion(nuevo.getUbicacion())
                                     .fInicio(nuevo.getFInicio())
@@ -125,7 +122,6 @@ public class EventosController {
     }
 
     // Editar evento de la base de datos
-    @CrossOrigin(origins = "http://localhost:9000")
     @PutMapping("/eventos/{id}")
     public ResponseEntity<Eventos> editarevento(@RequestBody CreateEventoDTO editarevento, @PathVariable Long id) {
 
@@ -136,7 +132,6 @@ public class EventosController {
     }
 
     // Eliminar evento de la base de datos
-    @CrossOrigin(origins = "http://localhost:9000")
     @DeleteMapping("/Eventos/{id}")
     public ResponseEntity<?> eliminarevento(@PathVariable Long id) {
 
