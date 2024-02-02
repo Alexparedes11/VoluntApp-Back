@@ -2,6 +2,7 @@ package iesdoctorbalmis.daw2.voluntapp.modelos;
 
 import java.sql.Date;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;

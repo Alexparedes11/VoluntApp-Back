@@ -5,16 +5,19 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
 import iesdoctorbalmis.daw2.voluntapp.repositorios.UsuariosRepository;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class UsuariosService {
     
+    private final PasswordEncoder passwordEncoder;
     private final UsuariosRepository usuariosRepository;
 
     // public Usuarios nuevoUsuario(CreateUsuarioDTO nuevoUsuario) {
@@ -37,6 +40,7 @@ public class UsuariosService {
     
     // guardar usuarios
     public Usuarios guardar(Usuarios usu) {
+        usu.setPassword(passwordEncoder.encode(usu.getPassword()));
         return usuariosRepository.save(usu);
     }
 
@@ -70,8 +74,8 @@ public class UsuariosService {
         return usuariosRepository.findAll(pageable);
     }
 
-    public Usuarios buscarPorNombre(String nombre) {
-        return usuariosRepository.findByNombre(nombre);
+    public Optional<Usuarios> buscarPorUsername(String email) {
+        return usuariosRepository.findByUsername(email);
     }
 
 }

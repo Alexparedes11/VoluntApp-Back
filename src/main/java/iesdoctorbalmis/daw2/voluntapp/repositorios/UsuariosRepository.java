@@ -1,5 +1,7 @@
 package iesdoctorbalmis.daw2.voluntapp.repositorios;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,6 +13,6 @@ public interface UsuariosRepository extends JpaRepository<Usuarios, Long>, JpaSp
 
     Page<Usuarios> findByNombreContainsIgnoreCase(String txt, Pageable pageable);
 
-    Usuarios findByNombre(String nombre);
+    Optional<Usuarios> findByUsername(String email);
 
 }

@@ -18,6 +18,7 @@ import iesdoctorbalmis.daw2.voluntapp.util.pagination.PaginationLinksUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -104,7 +105,7 @@ public class EventosController {
     public ResponseEntity<Eventos> nuevoEvento(@RequestBody CreateEventoDTO nuevo) {
 
         Instituciones creadoPorInstituciones = institucionesService.buscarPorNombre(nuevo.getCreadoPorUsuario());
-        Usuarios creadoPorUsuarios = usuariosService.buscarPorNombre(nuevo.getCreadoPorUsuario());
+        Usuarios creadoPorUsuarios = usuariosService.buscarPorUsername(nuevo.getCreadoPorUsuario()).orElse(null);
 
         Eventos eventoNuevo =  Eventos.builder()
                                     .nombre(nuevo.getNombre())

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import iesdoctorbalmis.daw2.voluntapp.dto.EventosDTO;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
+import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -13,7 +14,8 @@ public class EventoDTOConverter {
     public EventosDTO convertToDto(Eventos eventos) {
         
         int usuarariosNumber = eventos.usuariosSize();
-        String usuario; String institucion;
+        String usuario;
+        String institucion;
 
         if (eventos.getCreadoPorInstituciones() != null) {
             usuario = null;
@@ -23,7 +25,7 @@ public class EventoDTOConverter {
             institucion = null;
         }
 
-        System.out.println("                Descripcion del evento: " +eventos.getDescripcion());;
+        System.out.println("                Descripcion del evento: " + eventos.getDescripcion());
                 
         return EventosDTO.builder()
             .fInicio(eventos.getFInicio())

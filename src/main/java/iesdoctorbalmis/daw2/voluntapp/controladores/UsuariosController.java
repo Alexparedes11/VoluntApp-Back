@@ -4,6 +4,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+
 import iesdoctorbalmis.daw2.voluntapp.dto.UsuariosDTO;
 import iesdoctorbalmis.daw2.voluntapp.dto.converter.UsuarioDTOConverter;
 import iesdoctorbalmis.daw2.voluntapp.dto.create.CreateUsuarioDTO;
@@ -11,9 +14,13 @@ import iesdoctorbalmis.daw2.voluntapp.error.usuarios.SearchUsuarioNoResultExcept
 import iesdoctorbalmis.daw2.voluntapp.error.usuarios.UsuariosNotFoundException;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
+import iesdoctorbalmis.daw2.voluntapp.seguridad.jwt.JwtProvider;
+import iesdoctorbalmis.daw2.voluntapp.seguridad.jwt.model.JwtUserResponse;
+import iesdoctorbalmis.daw2.voluntapp.seguridad.jwt.model.LoginRequest;
 import iesdoctorbalmis.daw2.voluntapp.servicios.UsuariosService;
 import iesdoctorbalmis.daw2.voluntapp.util.pagination.PaginationLinksUtils;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Set;
@@ -24,7 +31,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,7 +49,8 @@ public class UsuariosController {
     private final UsuariosService usuariosService;
     private final UsuarioDTOConverter usuarioDTOConverter;
     private final PaginationLinksUtils paginationLinksUtils;
-
+    private final AuthenticationManager authenticationManager;
+    private final JwtProvider tokenProvider;
 
     // Obtencion de todos los usuarios
     @GetMapping("/usuarios") 
@@ -88,7 +97,7 @@ public class UsuariosController {
         }
     }
 
-
+   
     // Añadir usuarios a la base de datos
     @PostMapping("/usuarios")
     public ResponseEntity<Usuarios> nuevoUsuario(@RequestBody CreateUsuarioDTO nuevo) {
@@ -96,10 +105,10 @@ public class UsuariosController {
         Usuarios usuarioNuevo =  Usuarios.builder()
                                     .nombre(nuevo.getNombre())
                                     .apellidos(nuevo.getApellidos())
-                                    .contraseña(nuevo.getContraseña())
+                                    .password(nuevo.getContraseña())
                                     .direccion(nuevo.getDireccion())
                                     .dni(nuevo.getDni())
-                                    .email(nuevo.getEmail())
+                                    .username(nuevo.getEmail())
                                     .rol("Usuario")
                                     .telefono(nuevo.getTelefono())
                                     .fotoPerfil(nuevo.getFotoPerfil())
@@ -117,10 +126,10 @@ public class UsuariosController {
         return usuariosService.buscarPorId(id).map(p -> {
             p.setNombre(editarUsuario.getNombre());
             p.setApellidos(editarUsuario.getApellidos());
-            p.setContraseña(editarUsuario.getContraseña());
+            p.setPassword(editarUsuario.getContraseña());
             p.setDireccion(editarUsuario.getDireccion());
             p.setDni(editarUsuario.getDni());
-            p.setEmail(editarUsuario.getEmail());
+            p.setUsername(editarUsuario.getEmail());
             p.setTelefono(editarUsuario.getTelefono());
             p.setFotoPerfil(editarUsuario.getFotoPerfil());
             p.setEventos(p.getEventos());

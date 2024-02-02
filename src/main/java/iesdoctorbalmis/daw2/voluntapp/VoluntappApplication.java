@@ -34,7 +34,7 @@ public class VoluntappApplication {
 	// 		Set<Eventos> listaEventosUsuarios = new HashSet<>();
 
 	
-	// 		Usuarios usuario2 = new Usuarios(null, "Josemiguel", "Muñoz", "DNI12", "ejemplo-direccion", "asd@example.com", "123", "/assets/imagen", "123213", "Admin", listaEventosUsuarios);
+	// 		Usuarios usuario2 = new Usuarios(null, "Josemiguel","asd@example.com", "Muñoz", "DNI12", "ejemplo-direccion", "123", "/assets/imagen", "123213", "Admin", listaEventosUsuarios);
 	// 		usuariosService.guardar(usuario2);
 
 	// 		Eventos eventos2 = Eventos.builder()
@@ -71,7 +71,7 @@ public class VoluntappApplication {
 
 	// 		System.out.println(listaEventosUsuarios);
 
-	// 		Usuarios usuario = new Usuarios(null, "Iván", "Arias", "DNI123", "ejemplo-direccion", "ivanarias@example.com", "123", "/assets/imagen","123213", "Admin", listaEventosUsuarios);
+	// 		Usuarios usuario = new Usuarios(null, "Iván", "ivanarias@example.com", "Arias", "DNI123", "ejemplo-direccion", "123", "/assets/imagen","123213", "Admin", listaEventosUsuarios);
 	// 		usuariosService.guardar(usuario);
 
 

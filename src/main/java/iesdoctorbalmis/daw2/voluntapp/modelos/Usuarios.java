@@ -1,7 +1,10 @@
 package iesdoctorbalmis.daw2.voluntapp.modelos;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -24,13 +27,16 @@ import lombok.ToString;
 @Entity @Data 
 @NoArgsConstructor @AllArgsConstructor
 @Builder
-public class Usuarios {
+public class Usuarios implements UserDetails{
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NonNull
     private String nombre;
+
+    @Column(name = "email", unique = true)
+    private String username;
 
     @NonNull
     private String apellidos;
@@ -41,11 +47,7 @@ public class Usuarios {
 
     private String direccion;
 
-    @Column(unique = true)
-    @NonNull
-    private String email;
-
-    private String contraseña;
+    private String password;
 
     private String fotoPerfil;
 
@@ -78,4 +80,37 @@ public class Usuarios {
 		this.eventos.remove(e);
 		e.getUsuarios().remove(this);
 	}
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        // TODO Auto-generated method stub
+        //throw new UnsupportedOperationException("Unimplemented method 'isAccountNonExpired'");
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        // TODO Auto-generated method stub
+        //throw new UnsupportedOperationException("Unimplemented method 'isAccountNonLocked'");
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        // TODO Auto-generated method stub
+        //throw new UnsupportedOperationException("Unimplemented method 'isCredentialsNonExpired'");
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        // TODO Auto-generated method stub
+        //throw new UnsupportedOperationException("Unimplemented method 'isEnabled'");
+        return true;
+    }
 }
