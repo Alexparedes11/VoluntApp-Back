@@ -29,6 +29,9 @@ public class InstitucionDTOConverter {
                 
         return InstitucionesDTO.builder()
             .nombre(instituciones.getNombre())
+            .nombreLegal(instituciones.getNombreLegal())
+            .telefono(instituciones.getTelefono())
+            .email(instituciones.getUsername())
             .cif(instituciones.getCif())
             .personaCargo(instituciones.getPersonaCargo())
             .eventosNombre(eventos)

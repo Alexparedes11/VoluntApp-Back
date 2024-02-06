@@ -93,6 +93,11 @@ public class InstitucionesController {
                                     .cif(nuevo.getCif())
                                     .personaCargo(nuevo.getPersonaCargo())
                                     .fotoInstitucion(nuevo.getFotoInstitucion())
+                                    .username(nuevo.getEmail())
+                                    .password(nuevo.getPassword())
+                                    .telefono(nuevo.getTelefono())
+                                    .nombreLegal(nuevo.getNombreLegal())
+                                    .personaCargo(nuevo.getPersonaCargo())
                                     .build();
 
         Instituciones nuevaInstitucion = institucionesService.guardar(institucionesNuevo);
@@ -106,6 +111,10 @@ public class InstitucionesController {
 
         return institucionesService.buscarPorId(id).map(p -> {
             p.setNombre(editaInstitucion.getNombre());
+            p.setNombreLegal(editaInstitucion.getNombreLegal());
+            p.setTelefono(editaInstitucion.getTelefono());
+            p.setUsername(editaInstitucion.getEmail());
+            p.setPassword(editaInstitucion.getPassword());
             p.setCif(editaInstitucion.getCif());
             p.setFotoInstitucion(editaInstitucion.getFotoInstitucion());
             p.setPersonaCargo(editaInstitucion.getPersonaCargo());

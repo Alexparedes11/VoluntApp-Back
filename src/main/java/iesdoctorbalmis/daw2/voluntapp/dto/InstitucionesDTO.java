@@ -17,16 +17,25 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class InstitucionesDTO {
-    
 
     @Column(unique = true)
     @NonNull
     private String cif;
 
+    @Column(unique = true)
+    @NonNull
+    private String email;
+
     private String personaCargo;
+
+    private String telefono;
+
+    private String nombreLegal;
 
     private String nombre;
 
     private Set<String> eventosNombre;
+
+
 
 }

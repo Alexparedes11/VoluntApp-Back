@@ -26,4 +26,11 @@ public class CreateInstitucionDTO {
 
     private String fotoInstitucion;
 
+    private String email;
+
+    private String telefono;
+
+    private String nombreLegal;
+
+    private String password;
 }

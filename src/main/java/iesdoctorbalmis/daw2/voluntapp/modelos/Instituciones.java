@@ -24,13 +24,24 @@ public class Instituciones {
     @Id @GeneratedValue
     private long id;
 
+    @Column(name = "email", unique = true)
+    private String username;
+
     @Column(unique = true)
     @NonNull
     private String cif;
 
+    @NonNull
+    private String nombreLegal;
+
+    @NonNull
+    private String telefono;
+
     private String personaCargo;
 
     private String nombre;
+
+    private String password;
 
     @Column(nullable = false)
     private String fotoInstitucion;
