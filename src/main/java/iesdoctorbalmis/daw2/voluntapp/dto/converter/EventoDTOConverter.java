@@ -24,6 +24,8 @@ public class EventoDTOConverter {
             institucion = null;
         }
 
+
+
         System.out.println("                Descripcion del evento: " + eventos.getDescripcion());
                 
         return EventosDTO.builder()
@@ -37,6 +39,7 @@ public class EventoDTOConverter {
             .numVoluntarios(usuarariosNumber)
             .titulo(eventos.getTitulo())
             .id(eventos.getId())
+            .estado(eventos.getEstado())
             .ubicacion(eventos.getUbicacion())
             .build();
     }

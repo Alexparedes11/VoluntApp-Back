@@ -1,6 +1,7 @@
 package iesdoctorbalmis.daw2.voluntapp.modelos;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -27,9 +28,9 @@ public class Eventos {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Date fInicio;
+    private LocalDateTime fInicio;
 
-    private Date fFin;
+    private LocalDateTime fFin;
 
     private String titulo;
 
@@ -38,6 +39,8 @@ public class Eventos {
     private String ubicacion;
     
     private int maxVoluntarios;
+
+    private String estado;
 
     private String imagen;
 
@@ -71,4 +74,6 @@ public class Eventos {
         return usuarios.size();
 
     }
+    
+    
 }

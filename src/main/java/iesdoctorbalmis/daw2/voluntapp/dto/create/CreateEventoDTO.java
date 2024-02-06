@@ -1,6 +1,7 @@
 package iesdoctorbalmis.daw2.voluntapp.dto.create;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,9 +16,9 @@ import lombok.Setter;
 @Builder
 public class CreateEventoDTO {
     
-    private Date fInicio;
+    private LocalDateTime fInicio;
 
-    private Date fFin;
+    private LocalDateTime fFin;
 
     private String titulo;
 
@@ -26,6 +27,8 @@ public class CreateEventoDTO {
     private String ubicacion;
 
     private String imagen;
+
+    private String estado;
 
     private String creadoPorUsuario;
 

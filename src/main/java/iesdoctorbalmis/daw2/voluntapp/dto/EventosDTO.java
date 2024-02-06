@@ -1,7 +1,13 @@
 package iesdoctorbalmis.daw2.voluntapp.dto;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
+import org.springframework.web.bind.annotation.RequestParam;
+
+import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
+import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,9 +23,9 @@ public class EventosDTO {
 
     private Long id;
 
-    private Date fInicio;
+    private LocalDateTime fInicio;
 
-    private Date fFin;
+    private LocalDateTime fFin;
 
     private String titulo;
 
@@ -28,6 +34,8 @@ public class EventosDTO {
     private String ubicacion;
 
     private String imagen;
+
+    private String estado;
 
     private String creadoPorUsuario;
 

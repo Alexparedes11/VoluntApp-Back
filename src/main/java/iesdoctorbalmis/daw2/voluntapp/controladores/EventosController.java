@@ -5,7 +5,9 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import iesdoctorbalmis.daw2.voluntapp.dto.EventosDTO;
+import iesdoctorbalmis.daw2.voluntapp.dto.IdEventoUsuarioDTO;
 import iesdoctorbalmis.daw2.voluntapp.dto.converter.EventoDTOConverter;
+import iesdoctorbalmis.daw2.voluntapp.dto.converter.UsuarioDTOConverter;
 import iesdoctorbalmis.daw2.voluntapp.dto.create.CreateEventoDTO;
 import iesdoctorbalmis.daw2.voluntapp.error.eventos.EventosNotFoundException;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
@@ -20,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -32,6 +35,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -45,6 +49,7 @@ public class EventosController {
 
     // Utils
     private final EventoDTOConverter eventoDTOConverter;
+    private final UsuarioDTOConverter usuarioDTOConverter;
     private final PaginationLinksUtils paginationLinksUtils;
 
 
@@ -53,7 +58,6 @@ public class EventosController {
     public ResponseEntity<?> todosLosEventos(@PageableDefault(size = 10, page = 0) Pageable pageable, HttpServletRequest request) {
         Page<Eventos> listaEventos = eventosService.ObtenerTodosPageable(pageable);
 
-        System.out.println("                       La lista es: "+listaEventos);
         if (listaEventos.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No hay Eventos registrados");
         } else {
@@ -79,6 +83,68 @@ public class EventosController {
             new EventosNotFoundException(id));
 
         return eventoDTOConverter.convertToDto(eventos);
+    }
+
+    // Devolver booleano en caso de que el usuario logueado este en el apuntado en el evento o no
+    @PostMapping("/eventos/isUserInEvento")
+    public Boolean isUserInEvento(@RequestBody IdEventoUsuarioDTO idEventoUsuarioDTO) {
+
+        Optional<Eventos> evento = eventosService.buscarPorId(idEventoUsuarioDTO.getId_evento());
+        Optional<Usuarios> usuarios = usuariosService.buscarPorId(idEventoUsuarioDTO.getId_usuario());
+
+        if (evento.isPresent()) {
+
+            for ( Usuarios usu : evento.get().getUsuarios()) {
+
+                if (usu.equals(usuarios.get())) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+
+    }
+
+    // Añadir usuario al evento
+    @PostMapping("/eventos/apuntar-usuario")
+    public ResponseEntity<?> apuntarUsuarioEvento(@RequestBody IdEventoUsuarioDTO idEventoUsuarioDTO) {
+        
+        Optional<Eventos> evento = eventosService.buscarPorId(idEventoUsuarioDTO.getId_evento());
+        Optional<Usuarios> usuarios = usuariosService.buscarPorId(idEventoUsuarioDTO.getId_usuario());
+
+        if (evento.isPresent()) {
+
+            usuarios.get().addEventos(evento.get());
+            usuariosService.editar(usuarios.get());
+
+            return ResponseEntity.ok(usuarioDTOConverter.convertToDto(usuarios.get()));
+
+        } else {
+            throw new EventosNotFoundException(idEventoUsuarioDTO.getId_evento());
+        }
+    }
+
+    // Desapuntar usuario del evento
+    @PostMapping("/eventos/desapuntar-usuario")
+    public ResponseEntity<?> desapuntarUsuarioEvento(@RequestBody IdEventoUsuarioDTO idEventoUsuarioDTO ) {
+
+        Optional<Eventos> evento = eventosService.buscarPorId(idEventoUsuarioDTO.getId_evento());
+        Optional<Usuarios> usuarios = usuariosService.buscarPorId(idEventoUsuarioDTO.getId_usuario());
+
+        if (evento.isPresent()) {
+
+            usuarios.get().deleteEventos(evento.get());
+            usuariosService.editar(usuarios.get());
+
+            return ResponseEntity.ok(usuarioDTOConverter.convertToDto(usuarios.get()));
+
+        } else {
+            throw new EventosNotFoundException(idEventoUsuarioDTO.getId_evento());
+        }
+
+
+        
     }
 
 
@@ -113,6 +179,7 @@ public class EventosController {
                                     .fFin(nuevo.getFFin())
                                     .creadoPorInstituciones(creadoPorInstituciones)
                                     .creadoPorUsuarios(creadoPorUsuarios)
+                                    .estado("Revisión")
                                     .maxVoluntarios(nuevo.getMaxVoluntarios())
                                     .build();
 
