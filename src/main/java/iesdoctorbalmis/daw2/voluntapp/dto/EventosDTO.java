@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
+import iesdoctorbalmis.daw2.voluntapp.modelos.Ubicacion;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,7 +32,7 @@ public class EventosDTO {
 
     private String descripcion;
 
-    private String ubicacion;
+    private Ubicacion ubicacion;
 
     private String imagen;
 

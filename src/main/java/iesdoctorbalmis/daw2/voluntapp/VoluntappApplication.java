@@ -13,8 +13,10 @@ import org.springframework.context.annotation.Bean;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Categorias;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Instituciones;
+import iesdoctorbalmis.daw2.voluntapp.modelos.Ubicacion;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
 import iesdoctorbalmis.daw2.voluntapp.servicios.EventosService;
+import iesdoctorbalmis.daw2.voluntapp.servicios.UbicacionService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.UsuariosService;
 
 @SpringBootApplication
@@ -25,7 +27,7 @@ public class VoluntappApplication {
 	}
 
 	// @Bean
-	// CommandLineRunner init(UsuariosService usuariosService, EventosService eventosService) {
+	// CommandLineRunner init(UsuariosService usuariosService, EventosService eventosService, UbicacionService ubicacionService) {
 	// 	return (args) -> {
 			
 	// 		LocalDateTime fechaInicio = LocalDateTime.of(2024, 2, 6, 15, 30);
@@ -37,7 +39,9 @@ public class VoluntappApplication {
 	// 		Set<Eventos> listaEventosUsuarios = new HashSet<>();
 	// 		Set<Eventos> listaEventosUsuarios2 = new HashSet<>();
 
-	
+	// 		Ubicacion ubicacion = new Ubicacion(null, "Calle De San Olegario, 28044 Madrid, Madrid, Spain", -3.7602838, 40.3699524);
+	// 		ubicacionService.guardar(ubicacion);
+
 	// 		Usuarios usuario2 = new Usuarios(null, "Josemiguel","asd@example.com", "Muñoz", "DNI12", "ejemplo-direccion", "123", "/assets/imagen", "123213", "Admin", listaEventosUsuarios);
 	// 		usuariosService.guardar(usuario2);
 
@@ -48,7 +52,7 @@ public class VoluntappApplication {
 	// 			.imagen("/assets/images/montana.jpg")
 	// 			.usuarios(listaUsuarios)
 	// 			.descripcion("Evento Buenardo")
-	// 			.ubicacion("Barcelona")
+	// 			.ubicacion(ubicacion)
 	// 			.estado("Disponible")
 	// 			.instituciones(listaInstituciones)
 	// 			.categorias(listaCategorias)
@@ -65,7 +69,7 @@ public class VoluntappApplication {
 	// 			.titulo("Evento de ejemplo")
 	// 			.imagen("/assets/images/cascada.jpg")
 	// 			.descripcion("Evento pocho")
-	// 			.ubicacion("Castilla la Mancha")
+	// 			.ubicacion(ubicacion)
 	// 			.estado("Finalizado")
 	// 			.usuarios(listaUsuarios)
 	// 			.instituciones(listaInstituciones)
@@ -82,7 +86,7 @@ public class VoluntappApplication {
 	// 			.titulo("Evento de ejemplo 3")
 	// 			.imagen("/assets/images/rio.jpg")
 	// 			.descripcion("Evento pocho")
-	// 			.ubicacion("Castilla la Mancha")
+	// 			.ubicacion(ubicacion)
 	// 			.estado("Revisión")
 	// 			.usuarios(listaUsuarios)
 	// 			.instituciones(listaInstituciones)
@@ -100,7 +104,7 @@ public class VoluntappApplication {
 	// 			.titulo("Evento de ejemplo 4")
 	// 			.imagen("/assets/images/rio.jpg")
 	// 			.descripcion("Evento pocho")
-	// 			.ubicacion("Castilla la Mancha")
+	// 			.ubicacion(ubicacion)
 	// 			.usuarios(listaUsuarios)
 	// 			.estado("Disponible")
 	// 			.instituciones(listaInstituciones)
@@ -117,7 +121,7 @@ public class VoluntappApplication {
 	// 			.titulo("Evento de ejemplo 5")
 	// 			.imagen("/assets/images/cascada.jpg")
 	// 			.descripcion("Evento pocho")
-	// 			.ubicacion("Castilla la Mancha")
+	// 			.ubicacion(ubicacion)
 	// 			.estado("En curso")
 	// 			.usuarios(listaUsuarios)
 	// 			.instituciones(listaInstituciones)
@@ -134,7 +138,7 @@ public class VoluntappApplication {
 	// 			.titulo("Evento de ejemplo 6")
 	// 			.imagen("/assets/images/montana.jpg")
 	// 			.descripcion("Evento pocho")
-	// 			.ubicacion("Castilla la Mancha")
+	// 			.ubicacion(ubicacion)
 	// 			.estado("Denegado")
 	// 			.usuarios(listaUsuarios)
 	// 			.instituciones(listaInstituciones)
@@ -150,7 +154,7 @@ public class VoluntappApplication {
 	// 			.titulo("Evento de ejemplo 7")
 	// 			.imagen("/assets/images/pellets.jpg")
 	// 			.descripcion("Evento pocho")
-	// 			.ubicacion("Castilla la Mancha")
+	// 			.ubicacion(ubicacion)
 	// 			.estado("Disponible")
 	// 			.usuarios(listaUsuarios)
 	// 			.instituciones(listaInstituciones)

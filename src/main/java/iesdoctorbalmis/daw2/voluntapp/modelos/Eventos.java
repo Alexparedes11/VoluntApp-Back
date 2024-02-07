@@ -6,6 +6,10 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
@@ -36,7 +40,9 @@ public class Eventos {
 
     private String descripcion;
 
-    private String ubicacion;
+    @JdbcTypeCode(SqlTypes.JSON)
+    @ManyToOne
+    private Ubicacion ubicacion;
     
     private int maxVoluntarios;
 
