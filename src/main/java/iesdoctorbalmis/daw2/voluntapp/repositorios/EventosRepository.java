@@ -1,5 +1,6 @@
 package iesdoctorbalmis.daw2.voluntapp.repositorios;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -15,5 +16,7 @@ public interface EventosRepository extends JpaRepository<Eventos, Long> {
 
         @Query("select p from Eventos p LEFT JOIN FETCH p.usuarios WHERE p.id = :id")
 	Optional<Eventos> findByIdJoinFetch(Long id);
+
+        List <Eventos> findByCreadoPorUsuariosId(Long id);
 
 }

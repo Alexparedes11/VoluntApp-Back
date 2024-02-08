@@ -17,7 +17,7 @@ public class ContactoService {
         message.setFrom("voluntapp.management@gmail.com");
         message.setTo("voluntapp.management@gmail.com");
         message.setSubject(contacto.getAsunto());
-        message.setText("Email: " + contacto.getEmail() + "\n"+"Consulta: " + contacto.getMensaje());
+        message.setText("Email: " + contacto.getEmail() + "\n"+ contacto.getMensaje());
         mailSender.send(message);
     }
 }

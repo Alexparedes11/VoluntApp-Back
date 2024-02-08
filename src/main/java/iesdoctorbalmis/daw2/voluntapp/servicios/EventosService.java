@@ -56,4 +56,7 @@ public class EventosService {
         return eventosRepository.findByIdJoinFetch(id);
     }
     
+    public List<Eventos> findByCreadoPorUsuariosId(Long id) {
+        return eventosRepository.findByCreadoPorUsuariosId(id);
+    }
 }
