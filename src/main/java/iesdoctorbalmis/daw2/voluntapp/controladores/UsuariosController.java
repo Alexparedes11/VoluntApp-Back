@@ -17,12 +17,14 @@ import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
 import iesdoctorbalmis.daw2.voluntapp.seguridad.jwt.JwtProvider;
 import iesdoctorbalmis.daw2.voluntapp.seguridad.jwt.model.JwtUserResponse;
 import iesdoctorbalmis.daw2.voluntapp.seguridad.jwt.model.LoginRequest;
+import iesdoctorbalmis.daw2.voluntapp.servicios.EventosService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.UsuariosService;
 import iesdoctorbalmis.daw2.voluntapp.util.pagination.PaginationLinksUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.domain.Page;
@@ -49,6 +51,8 @@ public class UsuariosController {
     private final PaginationLinksUtils paginationLinksUtils;
     private final AuthenticationManager authenticationManager;
     private final JwtProvider tokenProvider;
+
+    private final EventosService eventosService;
 
     // Obtencion de todos los usuarios
     @GetMapping("/usuarios")
@@ -161,6 +165,13 @@ public class UsuariosController {
     // Obtener eventos de un Usuario
     @GetMapping("/eventos/usuario/{id}")
     public ResponseEntity<?> obtenerEventos(@PathVariable Long id) {
+        Usuarios usuario = usuariosService.buscarPorId(id)
+                .orElseThrow(() -> new UsuariosNotFoundException(id));
+        return ResponseEntity.ok(usuario.getEventos());
+    }
+    //Obtener eventos creados por un usuario
+    @GetMapping("/eventos/usuario/creados/{id}")
+    public ResponseEntity<?> obtenerEventosCreados(@PathVariable Long id) {
         Usuarios usuario = usuariosService.buscarPorId(id)
                 .orElseThrow(() -> new UsuariosNotFoundException(id));
         return ResponseEntity.ok(usuario.getEventos());

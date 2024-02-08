@@ -20,6 +20,7 @@ import iesdoctorbalmis.daw2.voluntapp.util.pagination.PaginationLinksUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.catalina.connector.Response;
@@ -207,6 +208,15 @@ public class EventosController {
         
         eventosService.eliminar(evento);
         return ResponseEntity.noContent().build();
+    }
+        @GetMapping("/eventos/creadoPorUsuario/{usuarioId}")
+    public List<Eventos> obtenerEventosCreadosPorUsuario(@PathVariable Long usuarioId) {
+        // Utiliza el repositorio para obtener los eventos creados por el usuario
+        List<Eventos> eventos = eventosService.findByCreadoPorUsuariosId(usuarioId);
+
+        // Puedes agregar lógica adicional si es necesario
+
+        return eventos;
     }
     
 }
