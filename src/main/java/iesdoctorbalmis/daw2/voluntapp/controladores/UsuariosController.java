@@ -25,7 +25,6 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Set;
 
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -41,7 +40,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @RestController
 @RequiredArgsConstructor
 public class UsuariosController {
@@ -53,40 +51,39 @@ public class UsuariosController {
     private final JwtProvider tokenProvider;
 
     // Obtencion de todos los usuarios
-    @GetMapping("/usuarios") 
-    public ResponseEntity<?> todosLosUsuarios(@PageableDefault(size = 10, page = 0) Pageable pageable, HttpServletRequest request) {
+    @GetMapping("/usuarios")
+    public ResponseEntity<?> todosLosUsuarios(@PageableDefault(size = 10, page = 0) Pageable pageable,
+            HttpServletRequest request) {
         Page<Usuarios> listaUsuarios = usuariosService.ObtenerTodosPageable(pageable);
         if (listaUsuarios.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No hay usuarios registrados");
         } else {
             Page<UsuariosDTO> dtoList = listaUsuarios.map(usuarioDTOConverter::convertToDto);
 
-            UriComponentsBuilder uriBuilder =
-					UriComponentsBuilder.fromHttpUrl(request.getRequestURL().toString());
-			
-			return ResponseEntity.ok().header("link", 
-					paginationLinksUtils.createLinkHeader(dtoList, uriBuilder)).body(dtoList);
-            
+            UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(request.getRequestURL().toString());
+
+            return ResponseEntity.ok().header("link",
+                    paginationLinksUtils.createLinkHeader(dtoList, uriBuilder)).body(dtoList);
+
             // return ResponseEntity.ok(listaUsuarios);
         }
     }
-
 
     // Encontrar al usuarios por la ID (con DTO)
     @GetMapping("/usuarios/{id}")
     public UsuariosDTO obtenerUno(@PathVariable Long id) {
 
         Usuarios usuarios = usuariosService.buscarPorId(id)
-            .orElseThrow(() -> // No lanza la excepción
-            new UsuariosNotFoundException(id));
+                .orElseThrow(() -> // No lanza la excepción
+                new UsuariosNotFoundException(id));
 
         return usuarioDTOConverter.convertToDto(usuarios);
     }
 
-
     // Filtrado por el nombre del usuario ( NO FUNCIONA )
-    @GetMapping(value="/usuarios", params = "nombre")
-        public ResponseEntity<?> buscarUsuariosPorNombre(@RequestParam("nombre") String txt, Pageable pageable, HttpServletRequest request) {
+    @GetMapping(value = "/usuarios", params = "nombre")
+    public ResponseEntity<?> buscarUsuariosPorNombre(@RequestParam("nombre") String txt, Pageable pageable,
+            HttpServletRequest request) {
         Page<Usuarios> listaUsuarios = usuariosService.buscarPorNombre(txt, pageable);
 
         if (listaUsuarios.isEmpty()) {
@@ -97,22 +94,21 @@ public class UsuariosController {
         }
     }
 
-   
     // Añadir usuarios a la base de datos
     @PostMapping("/usuarios")
     public ResponseEntity<Usuarios> nuevoUsuario(@RequestBody CreateUsuarioDTO nuevo) {
 
-        Usuarios usuarioNuevo =  Usuarios.builder()
-                                    .nombre(nuevo.getNombre())
-                                    .apellidos(nuevo.getApellidos())
-                                    .password(nuevo.getContraseña())
-                                    .direccion(nuevo.getDireccion())
-                                    .dni(nuevo.getDni())
-                                    .username(nuevo.getEmail())
-                                    .rol("Usuario")
-                                    .telefono(nuevo.getTelefono())
-                                    .fotoPerfil(nuevo.getFotoPerfil())
-                                    .build();
+        Usuarios usuarioNuevo = Usuarios.builder()
+                .nombre(nuevo.getNombre())
+                .apellidos(nuevo.getApellidos())
+                .password(nuevo.getContraseña())
+                .direccion(nuevo.getDireccion())
+                .dni(nuevo.getDni())
+                .username(nuevo.getEmail())
+                .rol("Usuario")
+                .telefono(nuevo.getTelefono())
+                .fotoPerfil(nuevo.getFotoPerfil())
+                .build();
 
         Usuarios nuevoUsuario = usuariosService.guardar(usuarioNuevo);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoUsuario);
@@ -143,8 +139,8 @@ public class UsuariosController {
     public ResponseEntity<?> eliminarUsuario(@PathVariable Long id) {
 
         Usuarios usuario = usuariosService.buscarPorId(id)
-                            .orElseThrow(() -> new UsuariosNotFoundException(id));
-        
+                .orElseThrow(() -> new UsuariosNotFoundException(id));
+
         usuariosService.eliminar(usuario);
         return ResponseEntity.noContent().build();
     }
@@ -152,7 +148,7 @@ public class UsuariosController {
     // Añadir evento a un Usuario ( not works )
     @PostMapping("/usuarios/añadir-evento")
     public ResponseEntity<Usuarios> añadirEvento(@RequestBody Eventos eventos, @RequestBody Usuarios usuario) {
-        
+
         Set<Eventos> eventoAñadir = usuario.getEventos();
         eventoAñadir.add(eventos);
 
@@ -161,5 +157,12 @@ public class UsuariosController {
             return ResponseEntity.ok(usuariosService.editar(usuario));
         }).orElseThrow(() -> new UsuariosNotFoundException(usuario.getId()));
     }
-    
+
+    // Obtener eventos de un Usuario
+    @GetMapping("/eventos/usuario/{id}")
+    public ResponseEntity<?> obtenerEventos(@PathVariable Long id) {
+        Usuarios usuario = usuariosService.buscarPorId(id)
+                .orElseThrow(() -> new UsuariosNotFoundException(id));
+        return ResponseEntity.ok(usuario.getEventos());
+    }
 }
