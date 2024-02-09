@@ -13,9 +13,11 @@ import iesdoctorbalmis.daw2.voluntapp.error.eventos.EventosNotFoundException;
 import iesdoctorbalmis.daw2.voluntapp.error.usuarios.UsuariosNotFoundException;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Instituciones;
+import iesdoctorbalmis.daw2.voluntapp.modelos.Ubicacion;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
 import iesdoctorbalmis.daw2.voluntapp.servicios.EventosService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.InstitucionesService;
+import iesdoctorbalmis.daw2.voluntapp.servicios.UbicacionService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.UsuariosService;
 import iesdoctorbalmis.daw2.voluntapp.util.pagination.PaginationLinksUtils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -48,6 +50,7 @@ public class EventosController {
     private final EventosService eventosService;
     private final UsuariosService usuariosService;
     private final InstitucionesService institucionesService;
+    private final UbicacionService ubicacionService;
 
     // Utils
     private final EventoDTOConverter eventoDTOConverter;
@@ -169,22 +172,30 @@ public class EventosController {
     @PostMapping("/eventos")
     public ResponseEntity<Eventos> nuevoEvento(@RequestBody CreateEventoDTO nuevo) {
 
-        Instituciones creadoPorInstituciones = institucionesService.buscarPorNombre(nuevo.getCreadoPorUsuario());
-        Usuarios creadoPorUsuarios = usuariosService.buscarPorUsername(nuevo.getCreadoPorUsuario()).orElse(null);
+        //Instituciones creadoPorInstituciones = institucionesService.buscarPorNombre(nuevo.getCreadoPorUsuario());
+        Usuarios creadoPorUsuarios = usuariosService.buscarPorId(nuevo.getUsuarioId()).orElse(null);
+
+        Ubicacion u = Ubicacion.builder()
+                                    .id(null)
+                                    .nombre(nuevo.getNombreUbicacion())
+                                    .lat(nuevo.getLat())
+                                    .lon(nuevo.getLon())
+                                    .build();
 
         Eventos eventoNuevo =  Eventos.builder()
                                     .titulo(nuevo.getTitulo())
                                     .imagen(nuevo.getImagen())
                                     .descripcion(nuevo.getDescripcion())
-                                    .ubicacion(nuevo.getUbicacion())
+                                    .ubicacion(u)
                                     .fInicio(nuevo.getFInicio())
                                     .fFin(nuevo.getFFin())
-                                    .creadoPorInstituciones(creadoPorInstituciones)
+                                    .creadoPorInstituciones(null)
                                     .creadoPorUsuarios(creadoPorUsuarios)
                                     .estado("Revisión")
                                     .maxVoluntarios(nuevo.getMaxVoluntarios())
                                     .build();
 
+        ubicacionService.guardar(u);
         Eventos nuevoevento = eventosService.guardar(eventoNuevo);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoevento);
 

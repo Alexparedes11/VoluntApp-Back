@@ -25,13 +25,21 @@ public class CreateEventoDTO {
 
     private String descripcion;
 
-    private Ubicacion ubicacion;
+    //private Ubicacion ubicacion;
+
+    private String nombreUbicacion;
+
+    private double lat;
+
+    private double lon;
 
     private String imagen;
 
     private String estado;
 
-    private String creadoPorUsuario;
+    private String usuarioNombre;
+
+    private Long usuarioId;
 
     private String creadoPorIntitucion;
 
