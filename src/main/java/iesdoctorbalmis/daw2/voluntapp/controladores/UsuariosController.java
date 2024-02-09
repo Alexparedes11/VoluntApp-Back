@@ -165,15 +165,19 @@ public class UsuariosController {
     // Obtener eventos de un Usuario
     @GetMapping("/eventos/usuario/{id}")
     public ResponseEntity<?> obtenerEventos(@PathVariable Long id) {
-        Usuarios usuario = usuariosService.buscarPorId(id)
+        usuariosService.buscarPorId(id)
                 .orElseThrow(() -> new UsuariosNotFoundException(id));
-        return ResponseEntity.ok(usuario.getEventos());
+        return ResponseEntity.ok().build();
     }
+
     //Obtener eventos creados por un usuario
-    @GetMapping("/eventos/usuario/creados/{id}")
-    public ResponseEntity<?> obtenerEventosCreados(@PathVariable Long id) {
-        Usuarios usuario = usuariosService.buscarPorId(id)
-                .orElseThrow(() -> new UsuariosNotFoundException(id));
-        return ResponseEntity.ok(usuario.getEventos());
+    @GetMapping("/eventos/usuario/creado/{usuarioId}")
+    public ResponseEntity<?> obtenerEventosCreadosPorUsuario(@PathVariable Long usuarioId) {
+        List<Eventos> eventos = eventosService.findByCreadoPorUsuariosId(usuarioId);
+        if (eventos.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No hay eventos creados por el usuario");
+        } else {
+            return ResponseEntity.ok(eventos);
+        }
     }
 }

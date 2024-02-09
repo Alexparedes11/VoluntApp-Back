@@ -209,14 +209,10 @@ public class EventosController {
         eventosService.eliminar(evento);
         return ResponseEntity.noContent().build();
     }
-        @GetMapping("/eventos/creadoPorUsuario/{usuarioId}")
-    public List<Eventos> obtenerEventosCreadosPorUsuario(@PathVariable Long usuarioId) {
-        // Utiliza el repositorio para obtener los eventos creados por el usuario
-        List<Eventos> eventos = eventosService.findByCreadoPorUsuariosId(usuarioId);
-
-        // Puedes agregar lógica adicional si es necesario
-
-        return eventos;
+    @GetMapping("/eventos/creadoPorUsuario/{usuarioId}/{eventoId}")
+    public Eventos obtenerEventoCreadoPorUsuario(@PathVariable Long usuarioId, @PathVariable Long eventoId) {
+        Eventos evento = eventosService.findByIdConUsuarios(eventoId)
+                .orElseThrow(() -> new EventosNotFoundException(eventoId));
+        return evento;
     }
-    
 }
