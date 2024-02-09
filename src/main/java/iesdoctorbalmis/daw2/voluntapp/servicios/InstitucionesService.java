@@ -5,10 +5,13 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import iesdoctorbalmis.daw2.voluntapp.modelos.Instituciones;
+import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
 import iesdoctorbalmis.daw2.voluntapp.repositorios.InstitucionesRepository;
+import io.jsonwebtoken.security.Password;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -16,10 +19,12 @@ import lombok.RequiredArgsConstructor;
 public class InstitucionesService {
     
     private final InstitucionesRepository institucionesRepository;
+    private final PasswordEncoder passwordEncoder;
 
     // guardar usuarios
-    public Instituciones guardar(Instituciones insti) {
-        return institucionesRepository.save(insti);
+    public Instituciones guardar(Instituciones usu) {
+        usu.setPassword(passwordEncoder.encode(usu.getPassword()));
+        return institucionesRepository.save(usu);
     }
 
     // editar usuarios
@@ -54,5 +59,9 @@ public class InstitucionesService {
 
     public Instituciones buscarPorNombre(String nombre) {
         return institucionesRepository.findByNombre(nombre);
+    }
+
+    public Optional<Instituciones> buscarPorUsername(String email) {
+        return institucionesRepository.findByUsername(email);
     }
 }

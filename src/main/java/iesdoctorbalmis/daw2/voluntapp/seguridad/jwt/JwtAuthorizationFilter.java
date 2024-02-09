@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import iesdoctorbalmis.daw2.voluntapp.modelos.Instituciones;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
+import iesdoctorbalmis.daw2.voluntapp.seguridad.jwt.model.JwtUserType;
 import iesdoctorbalmis.daw2.voluntapp.servicios.UsuariosDetailsService;
 
 import jakarta.servlet.FilterChain;
@@ -36,11 +38,16 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 			
 			if(StringUtils.hasText(token) && tokenProvider.validateToken(token)) {
 				
-				Long userId = tokenProvider.getUserIdFromJWT(token);
-				Usuarios user = (Usuarios) userDetailsService.loadUserById(userId);
-				
-				UsernamePasswordAuthenticationToken authentication =
-						new UsernamePasswordAuthenticationToken(user, user.getRol(), user.getAuthorities());
+				JwtUserType jwtUserType = tokenProvider.getUserIdAndTypeFromJWT(token);
+				UsernamePasswordAuthenticationToken authentication = null;
+
+				if(jwtUserType.getType().equals("Usuario")){
+					Usuarios user = (Usuarios) userDetailsService.loadUserById(jwtUserType.getId()); //Tocar esto
+					authentication = new UsernamePasswordAuthenticationToken(user, user.getAuthorities());
+				}else if(jwtUserType.getType().equals("Institucion")){
+					Instituciones user = (Instituciones) userDetailsService.loadInstitucionById(jwtUserType.getId()); //Tocar esto
+					authentication = new UsernamePasswordAuthenticationToken(user, user.getAuthorities());
+				}
 				
 				// Establece detalles adicional de autenticación si los hubiera (no en nuestr caso)
 				authentication.setDetails(new WebAuthenticationDetails(request));	

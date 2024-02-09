@@ -1,7 +1,11 @@
 package iesdoctorbalmis.daw2.voluntapp.modelos;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,10 +23,10 @@ import lombok.NonNull;
 @Entity @Data
 @NoArgsConstructor @AllArgsConstructor
 @Builder
-public class Instituciones {
+public class Instituciones implements UserDetails{
     
     @Id @GeneratedValue
-    private long id;
+    private Long id;
 
     @Column(name = "email", unique = true)
     private String username;
@@ -67,4 +71,37 @@ public class Instituciones {
 		this.eventos.remove(p);
 		p.getInstituciones().remove(this);
 	}
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        // TODO Auto-generated method stub
+        //throw new UnsupportedOperationException("Unimplemented method 'isAccountNonExpired'");
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        // TODO Auto-generated method stub
+        //throw new UnsupportedOperationException("Unimplemented method 'isAccountNonLocked'");
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        // TODO Auto-generated method stub
+        //throw new UnsupportedOperationException("Unimplemented method 'isCredentialsNonExpired'");
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        // TODO Auto-generated method stub
+        //throw new UnsupportedOperationException("Unimplemented method 'isEnabled'");
+        return true;
+    }
 }

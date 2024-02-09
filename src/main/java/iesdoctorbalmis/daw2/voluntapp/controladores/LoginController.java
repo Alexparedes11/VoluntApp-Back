@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import iesdoctorbalmis.daw2.voluntapp.dto.converter.UsuarioDTOConverter;
+import iesdoctorbalmis.daw2.voluntapp.modelos.Instituciones;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
 import iesdoctorbalmis.daw2.voluntapp.seguridad.jwt.JwtProvider;
 import iesdoctorbalmis.daw2.voluntapp.seguridad.jwt.model.JwtUserResponse;
@@ -31,18 +32,37 @@ public class LoginController {
     private final JwtProvider tokenProvider;
 
      @PostMapping("/login")
-    public  ResponseEntity<JwtUserResponse> login(@Valid @RequestBody LoginRequest  loginRequest) {
+    public  ResponseEntity<?> login(@Valid @RequestBody LoginRequest  loginRequest) {
         //TODO: process POST request
         Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = null;
 
-        Usuarios usuario = (Usuarios) authentication.getPrincipal();
-        String jwt = tokenProvider.generateToken(authentication);
-        return ResponseEntity.status(HttpStatus.CREATED)
-            .body(convertUsuariosAndTokenToJwtUserResponse(usuario, jwt));    
+        if (authentication != null) {
+            Object principal = authentication.getPrincipal();
+
+            if (principal instanceof Usuarios) {
+                // El principal autenticado es una instancia de Usuarios
+                Usuarios usuario = (Usuarios) authentication.getPrincipal();
+                jwt = tokenProvider.generateUsuariosToken(authentication);
+                System.out.println("El principal autenticado no es una instancia de Usuarios");
+                return ResponseEntity.status(HttpStatus.CREATED)
+                        .body(convertUsuariosAndTokenToJwtUserResponse(usuario, jwt)); 
+            } else if (principal instanceof Instituciones) {
+                // El principal autenticado es una instancia de Instituciones
+                Instituciones institucion = (Instituciones) authentication.getPrincipal();
+                jwt = tokenProvider.generateInstitucionesToken(authentication);
+                System.out.println("El principal autenticado no es una instancia de Instituciones");
+                return ResponseEntity.status(HttpStatus.CREATED)
+                        .body(convertInstitucionAndTokenToJwtUserResponse(institucion, jwt)); 
+            }
+        }
+        
+        return null;
+           
     }
     
     private JwtUserResponse convertUsuariosAndTokenToJwtUserResponse(Usuarios usuario, String jwt) {
@@ -50,6 +70,15 @@ public class LoginController {
             .nombre(usuario.getNombre())
             .email(usuario.getUsername())
             .password(usuario.getPassword())
+            .token(jwt)
+            .build();
+    }
+
+    private JwtUserResponse convertInstitucionAndTokenToJwtUserResponse(Instituciones institucion, String jwt) {
+        return JwtUserResponse.jwtUserResponseBuilder()
+            .nombre(institucion.getNombre())
+            .email(institucion.getUsername())
+            .password(institucion.getPassword())
             .token(jwt)
             .build();
     }
