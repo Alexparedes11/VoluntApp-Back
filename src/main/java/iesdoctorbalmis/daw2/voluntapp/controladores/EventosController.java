@@ -10,6 +10,7 @@ import iesdoctorbalmis.daw2.voluntapp.dto.converter.EventoDTOConverter;
 import iesdoctorbalmis.daw2.voluntapp.dto.converter.UsuarioDTOConverter;
 import iesdoctorbalmis.daw2.voluntapp.dto.create.CreateEventoDTO;
 import iesdoctorbalmis.daw2.voluntapp.error.eventos.EventosNotFoundException;
+import iesdoctorbalmis.daw2.voluntapp.error.usuarios.UsuariosNotFoundException;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Instituciones;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
@@ -209,10 +210,19 @@ public class EventosController {
         eventosService.eliminar(evento);
         return ResponseEntity.noContent().build();
     }
-    @GetMapping("/eventos/creadoPorUsuario/{usuarioId}/{eventoId}")
-    public Eventos obtenerEventoCreadoPorUsuario(@PathVariable Long usuarioId, @PathVariable Long eventoId) {
-        Eventos evento = eventosService.findByIdConUsuarios(eventoId)
-                .orElseThrow(() -> new EventosNotFoundException(eventoId));
-        return evento;
+    // Obtener eventos de un Usuario
+    @GetMapping("/eventos/usuario/{id}")
+    public ResponseEntity<?> obtenerEventos(@PathVariable Long id) {
+        Usuarios usuario = usuariosService.buscarPorId(id)
+                .orElseThrow(() -> new UsuariosNotFoundException(id));
+        return ResponseEntity.ok(usuario.getEventos());
+    }
+    //Obtener lo eventos que ha creado un usuario
+    @GetMapping("/eventos/creadoPorUsuario/{usuarioId}")
+    public ResponseEntity<?> obtenerEventosCreadosPorUsuario(@PathVariable Long usuarioId) {
+        Usuarios usuario = usuariosService.buscarPorId(usuarioId)
+                .orElseThrow(() -> new UsuariosNotFoundException(usuarioId));
+        List<Eventos> eventos = eventosService.findByCreadoPorUsuariosId(usuarioId);
+        return ResponseEntity.ok(eventos);
     }
 }
