@@ -1,99 +1,45 @@
-2024-02-09 13:47:25.029491+01:00 jdbc[3]: exception
+2024-02-12 11:24:21.976872+01:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
 The object is already closed [90007-224]
-2024-02-09 13:47:25.031023+01:00 jdbc[3]: exception
+2024-02-12 11:24:21.997136+01:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
 The object is already closed [90007-224]
-2024-02-09 13:47:25.040299+01:00 jdbc[3]: exception
+2024-02-12 11:24:22.000081+01:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
 The object is already closed [90007-224]
-2024-02-09 13:47:25.045103+01:00 jdbc[3]: exception
+2024-02-12 11:24:22.000081+01:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
 The object is already closed [90007-224]
-2024-02-09 13:47:25.064859+01:00 jdbc[3]: exception
+2024-02-12 11:24:22.033870+01:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
 The object is already closed [90007-224]
-2024-02-09 13:47:25.109875+01:00 jdbc[3]: exception
+2024-02-12 11:24:22.039162+01:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
 The object is already closed [90007-224]
-2024-02-09 13:47:25.202480+01:00 jdbc[3]: exception
+2024-02-12 11:24:22.159444+01:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
 The object is already closed [90007-224]
-2024-02-09 13:47:25.298560+01:00 jdbc[3]: exception
+2024-02-12 11:24:22.255002+01:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
 The object is already closed [90007-224]
-2024-02-09 13:47:25.378963+01:00 jdbc[3]: exception
+2024-02-12 11:24:22.347079+01:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
 The object is already closed [90007-224]
-2024-02-09 13:47:25.392180+01:00 jdbc[3]: exception
+2024-02-12 11:24:22.358693+01:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
 The object is already closed [90007-224]
-2024-02-09 13:47:25.394211+01:00 jdbc[3]: exception
+2024-02-12 11:24:22.373997+01:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
 The object is already closed [90007-224]
-2024-02-09 13:47:25.409561+01:00 jdbc[3]: exception
+2024-02-12 11:24:22.384729+01:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
 The object is already closed [90007-224]
-2024-02-09 13:47:25.413105+01:00 jdbc[3]: exception
+2024-02-12 11:24:22.390921+01:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
 The object is already closed [90007-224]
-2024-02-09 13:47:25.416101+01:00 jdbc[3]: exception
+2024-02-12 11:24:22.401201+01:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
 The object is already closed [90007-224]
-2024-02-09 13:47:25.422486+01:00 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
-The object is already closed [90007-224]
-2024-02-09 13:50:01.278166+01:00 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
-The object is already closed [90007-224]
-2024-02-09 13:50:01.280167+01:00 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
-The object is already closed [90007-224]
-2024-02-09 13:50:18.049241+01:00 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
-The object is already closed [90007-224]
-2024-02-09 13:50:18.051240+01:00 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
-The object is already closed [90007-224]
-2024-02-09 13:50:24.150239+01:00 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
-The object is already closed [90007-224]
-2024-02-09 13:50:24.152248+01:00 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
-The object is already closed [90007-224]
-2024-02-09 13:51:19.322238+01:00 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
-The object is already closed [90007-224]
-2024-02-09 13:51:19.329952+01:00 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
-The object is already closed [90007-224]
-2024-02-12 09:13:34.516400+01:00 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
-The object is already closed [90007-224]
-2024-02-12 09:13:34.535565+01:00 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
-The object is already closed [90007-224]
-2024-02-12 10:00:03.739914+01:00 jdbc[13]: exception
-org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
-The object is already closed [90007-224]
-2024-02-12 10:00:03.758582+01:00 jdbc[13]: exception
-org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
-The object is already closed [90007-224]
-2024-02-12 10:03:34.219707+01:00 jdbc[13]: exception
-org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
-The object is already closed [90007-224]
-2024-02-12 10:03:34.222707+01:00 jdbc[13]: exception
-org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
-The object is already closed [90007-224]
-2024-02-12 10:06:39.630731+01:00 jdbc[13]: exception
-org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
-The object is already closed [90007-224]
-2024-02-12 10:06:39.630731+01:00 jdbc[13]: exception
-org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
-The object is already closed [90007-224]
-2024-02-12 10:30:30.060730+01:00 jdbc[24]: exception
-org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
-The object is already closed [90007-224]
-2024-02-12 10:31:03.567365+01:00 jdbc[24]: exception
+2024-02-12 11:24:22.414244+01:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLNonTransientException: El objeto ya está cerrado
 The object is already closed [90007-224]

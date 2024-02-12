@@ -244,7 +244,7 @@ public class EventosController {
         return evento.getCreadoPorUsuarios().getId().equals(usuarioId);
     }
     // Obtener los eventos por su estado
-    @GetMapping("/eventos/{estado}")
+    @GetMapping("/eventos/buscaporestado/{estado}")
     public ResponseEntity<?> obtenerEventosEnRevision( @PathVariable String estado, Pageable pageable) {
         Page<Eventos> eventos = eventosService.findByEstado(estado, pageable);
         return ResponseEntity.ok(eventos);
