@@ -191,7 +191,7 @@ public class EventosController {
                                     .fFin(nuevo.getFFin())
                                     .creadoPorInstituciones(null)
                                     .creadoPorUsuarios(creadoPorUsuarios)
-                                    .estado("Revisión")
+                                    .estado("revision")
                                     .maxVoluntarios(nuevo.getMaxVoluntarios())
                                     .build();
 
