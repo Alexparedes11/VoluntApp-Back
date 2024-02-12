@@ -60,7 +60,7 @@ public class EventosController {
 
     // Obtencion de todos los Eventos
     @GetMapping("/eventos") 
-    public ResponseEntity<?> todosLosEventos(@PageableDefault(size = 10, page = 0) Pageable pageable, HttpServletRequest request) {
+    public ResponseEntity<?> todosLosEventos(@PageableDefault(size = 9, page = 0) Pageable pageable, HttpServletRequest request) {
         Page<Eventos> listaEventos = eventosService.ObtenerTodosPageable(pageable);
 
         if (listaEventos.isEmpty()) {
@@ -235,5 +235,12 @@ public class EventosController {
                 .orElseThrow(() -> new UsuariosNotFoundException(usuarioId));
         List<Eventos> eventos = eventosService.findByCreadoPorUsuariosId(usuarioId);
         return ResponseEntity.ok(eventos);
+    }
+    //Obtener booleano para ver si un usuario es creador de un evento
+    @GetMapping("/eventos/esCreador/{usuarioId}/{eventoId}")
+    public boolean esCreadorEvento(@PathVariable Long usuarioId, @PathVariable Long eventoId) {
+        Eventos evento = eventosService.buscarPorId(eventoId)
+                .orElseThrow(() -> new EventosNotFoundException(eventoId));
+        return evento.getCreadoPorUsuarios().getId().equals(usuarioId);
     }
 }
