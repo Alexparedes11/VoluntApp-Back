@@ -60,7 +60,7 @@ public class EventosController {
 
     // Obtencion de todos los Eventos
     @GetMapping("/eventos") 
-    public ResponseEntity<?> todosLosEventos(@PageableDefault(size = 10, page = 0) Pageable pageable, HttpServletRequest request) {
+    public ResponseEntity<?> todosLosEventos(@PageableDefault(size = 9, page = 0) Pageable pageable, HttpServletRequest request) {
         Page<Eventos> listaEventos = eventosService.ObtenerTodosPageable(pageable);
 
         if (listaEventos.isEmpty()) {
