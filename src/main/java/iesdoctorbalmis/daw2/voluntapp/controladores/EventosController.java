@@ -243,4 +243,11 @@ public class EventosController {
                 .orElseThrow(() -> new EventosNotFoundException(eventoId));
         return evento.getCreadoPorUsuarios().getId().equals(usuarioId);
     }
+    // Obtener los eventos por su estado
+    @GetMapping("/eventos/{estado}")
+    public ResponseEntity<?> obtenerEventosEnRevision( @PathVariable String estado, Pageable pageable) {
+        Page<Eventos> eventos = eventosService.findByEstado(estado, pageable);
+        return ResponseEntity.ok(eventos);
+    }
+
 }

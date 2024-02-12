@@ -19,4 +19,6 @@ public interface EventosRepository extends JpaRepository<Eventos, Long> {
 
         List <Eventos> findByCreadoPorUsuariosId(Long id);
 
+        Page<Eventos> findByEstado(String estado, Pageable pageable);
+
 }
