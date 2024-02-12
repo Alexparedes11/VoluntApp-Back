@@ -197,6 +197,8 @@ public class EventosController {
 
         ubicacionService.guardar(u);
         Eventos nuevoevento = eventosService.guardar(eventoNuevo);
+        creadoPorUsuarios.addEventos(nuevoevento);
+        usuariosService.guardar(creadoPorUsuarios);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoevento);
 
     }
