@@ -197,6 +197,8 @@ public class EventosController {
 
         ubicacionService.guardar(u);
         Eventos nuevoevento = eventosService.guardar(eventoNuevo);
+        creadoPorUsuarios.addEventos(nuevoevento);
+        usuariosService.guardar(creadoPorUsuarios);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoevento);
 
     }
@@ -249,5 +251,13 @@ public class EventosController {
         Page<Eventos> eventos = eventosService.findByEstado(estado, pageable);
         return ResponseEntity.ok(eventos);
     }
-
+    //Actualizar estado del evento
+    @PutMapping("/eventos/{id}/estado")
+    public ResponseEntity<Eventos> actualizarEstadoEvento(@PathVariable Long id, @RequestBody String estado) {
+        Eventos evento = eventosService.buscarPorId(id)
+                .orElseThrow(() -> new EventosNotFoundException(id));
+        evento.setEstado(estado);
+        return ResponseEntity.ok(eventosService.editar(evento));
+    }
+    
 }
