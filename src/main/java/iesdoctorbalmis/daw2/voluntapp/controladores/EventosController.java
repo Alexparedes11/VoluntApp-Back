@@ -236,4 +236,11 @@ public class EventosController {
         List<Eventos> eventos = eventosService.findByCreadoPorUsuariosId(usuarioId);
         return ResponseEntity.ok(eventos);
     }
+    //Obtener booleano para ver si un usuario es creador de un evento
+    @GetMapping("/eventos/esCreador/{usuarioId}/{eventoId}")
+    public boolean esCreadorEvento(@PathVariable Long usuarioId, @PathVariable Long eventoId) {
+        Eventos evento = eventosService.buscarPorId(eventoId)
+                .orElseThrow(() -> new EventosNotFoundException(eventoId));
+        return evento.getCreadoPorUsuarios().getId().equals(usuarioId);
+    }
 }
