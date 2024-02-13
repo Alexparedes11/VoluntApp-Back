@@ -38,4 +38,24 @@ public class NoticiasService {
             .build();
         return noticiasRepository.save(noticias);
     }
+
+    public Noticias obtenerNoticiaPorTitulo(String titulo) {
+        return noticiasRepository.findByTitulo(titulo);
+    }
+    public void eliminarNoticiasPorId(Long id) {
+        noticiasRepository.deleteById(id);
+    }
+    public void eliminarNoticias(Long id) {
+        noticiasRepository.deleteById(id);
+    }
+
+    public Noticias editarNoticias(Long id, NoticiasDTO noticiasDTO) {
+        Noticias noticias = noticiasRepository.findById(id).orElseThrow();
+        noticias.setTitulo(noticiasDTO.getTitulo());
+        noticias.setContenido(noticiasDTO.getContenido());
+        noticias.setFecha(noticiasDTO.getFecha());
+        noticias.setAutor(noticiasDTO.getAutor());
+        noticias.setImagen(noticiasDTO.getImagen());
+        return noticiasRepository.save(noticias);
+    }
 }

@@ -34,7 +34,10 @@ public class UsuarioDTOConverter {
             .email(usu.getUsername())
             .rol(usu.getRol())
             .telefono(usu.getTelefono())
+            .direccion(usu.getDireccion())
+            .contraseña(usu.getPassword())
             .eventosNombre(eventos)
+            .direccion(usu.getDireccion())
             .build();
     }
 }
