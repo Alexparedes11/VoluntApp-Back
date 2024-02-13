@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -45,5 +46,12 @@ public class NoticiasController {
                         .body(dtoList);
                 }
     }
+    // Crear Noticias
+    // @PostMapping("/noticias/cearNoticias")
+    // public ResponseEntity<NoticiasDTO> crearNoticias(NoticiasDTO noticiasDTO) {
+    //     Noticias noticias = noticiasService.crearNoticias(noticiasDTO);
+    //     return ResponseEntity.status(HttpStatus.CREATED).body(noticiasDTOConverter.convertToDto(noticias));
+        
+    // }
     
 }
