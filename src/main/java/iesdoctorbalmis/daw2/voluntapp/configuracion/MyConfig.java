@@ -45,16 +45,18 @@ public class MyConfig {
                         .allowedOrigins("http://localhost:4200")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .maxAge(3600);
+
                 registry.addMapping("/noticias/**")
                         .allowedOrigins("http://localhost:9000")
                         .allowedOrigins("http://localhost:4200")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .maxAge(3600);
+
                 registry.addMapping("/contacto/**")
-                .allowedOrigins("http://localhost:9000")
-                .allowedOrigins("http://localhost:4200")
-                .allowedMethods("POST")
-                .maxAge(3600);
+                        .allowedOrigins("http://localhost:9000")
+                        .allowedOrigins("http://localhost:4200")
+                        .allowedMethods("POST")
+                        .maxAge(3600);
             }
 
         };

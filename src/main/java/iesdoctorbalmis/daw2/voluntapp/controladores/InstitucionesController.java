@@ -85,7 +85,7 @@ public class InstitucionesController {
 
 
     // Añadir Instituciones a la base de datos
-    @PostMapping("/Instituciones")
+    @PostMapping("/instituciones")
     public ResponseEntity<Instituciones> nuevoUsuario(@RequestBody CreateInstitucionDTO nuevo) {
 
         Instituciones institucionesNuevo =  Instituciones.builder()
@@ -97,7 +97,6 @@ public class InstitucionesController {
                                     .password(nuevo.getPassword())
                                     .telefono(nuevo.getTelefono())
                                     .nombreLegal(nuevo.getNombreLegal())
-                                    .personaCargo(nuevo.getPersonaCargo())
                                     .build();
 
         Instituciones nuevaInstitucion = institucionesService.guardar(institucionesNuevo);
@@ -106,7 +105,7 @@ public class InstitucionesController {
     }
 
     // Editar instituciones de la base de datos
-    @PutMapping("/Instituciones/{id}")
+    @PutMapping("/instituciones/{id}")
     public ResponseEntity<Instituciones> editaInstitucion(@RequestBody CreateInstitucionDTO editaInstitucion, @PathVariable Long id) {
 
         return institucionesService.buscarPorId(id).map(p -> {
@@ -125,7 +124,7 @@ public class InstitucionesController {
     }
 
     // Eliminar institución de la base de datos
-    @DeleteMapping("/Instituciones/{id}")
+    @DeleteMapping("/instituciones/{id}")
     public ResponseEntity<?> eliminarInstitucion(@PathVariable Long id) {
 
         Instituciones instituciones = institucionesService.buscarPorId(id)
@@ -136,7 +135,7 @@ public class InstitucionesController {
     }
 
     // Añadir evento a una Institución ( not works )
-    @PostMapping("/Instituciones/añadir-evento")
+    @PostMapping("/instituciones/añadir-evento")
     public ResponseEntity<Instituciones> añadirEvento(@RequestBody Eventos eventos, @RequestBody Instituciones instituciones) {
         
         Set<Eventos> eventoAñadir = instituciones.getEventos();
