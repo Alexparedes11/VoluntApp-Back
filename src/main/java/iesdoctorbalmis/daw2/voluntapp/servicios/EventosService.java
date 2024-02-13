@@ -1,5 +1,7 @@
 package iesdoctorbalmis.daw2.voluntapp.servicios;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,4 +66,16 @@ public class EventosService {
         return eventosRepository.findByCreadoPorUsuariosId(id);
     }
 
+    public Page<Eventos> findByFechaInicioBetween(LocalDateTime fInicio, LocalDateTime fFin, Pageable pageable) {
+        return eventosRepository.findByFechaInicioBetween(fInicio, fFin, pageable);
+    }
+
+    public Page<Eventos> findByEstadoAndFechaInicioBetween (String estado, LocalDateTime fInicio, LocalDateTime fFin, Pageable pageable) {
+        return eventosRepository.findByEstadoAndFechaInicioBetween(estado, fInicio, fFin, pageable);
+    }
+
+    //obtener eventos por ubicacion
+    public Page<Eventos> findByUbicacionContainsIgnoreCase(String txt, Pageable pageable) {
+        return eventosRepository.findByUbicacionContainsIgnoreCase(txt, pageable);
+    }
 }

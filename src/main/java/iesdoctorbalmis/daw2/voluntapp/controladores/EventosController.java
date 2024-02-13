@@ -23,6 +23,8 @@ import iesdoctorbalmis.daw2.voluntapp.util.pagination.PaginationLinksUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -265,6 +267,23 @@ public class EventosController {
                 .orElseThrow(() -> new EventosNotFoundException(id));
         evento.setEstado(estado);
         return ResponseEntity.ok(eventosService.editar(evento));
+    }
+
+    //Obtener los eventos entre dos fechas
+
+    @GetMapping("/eventos/disponibles-entre-fechas/{fInicio}/{fFin}")
+    public ResponseEntity<?> obtenerEventosDisponiblesEntreFechas(@PathVariable LocalDateTime fInicio, @PathVariable LocalDateTime fFin, Pageable pageable) {
+        Page<Eventos> eventos = eventosService.findByEstadoAndFechaInicioBetween("disponible", fInicio, fFin, pageable);
+        Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
+        return ResponseEntity.ok(eventosDTOPage);
+    }
+
+    //Obtener eventos por ubicacion
+    @GetMapping("/eventos/ubicacion/{nombreUbicacion}")
+    public ResponseEntity<?> obtenerEventosPorUbicacion(@PathVariable String nombreUbicacion, Pageable pageable) {
+        Page<Eventos> eventos = eventosService.findByUbicacionContainsIgnoreCase(nombreUbicacion, pageable);
+        Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
+        return ResponseEntity.ok(eventosDTOPage);
     }
 
 }
