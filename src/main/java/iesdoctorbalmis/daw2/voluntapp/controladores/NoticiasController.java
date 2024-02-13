@@ -47,11 +47,11 @@ public class NoticiasController {
                 }
     }
     // Crear Noticias
-    // @PostMapping("/noticias/cearNoticias")
-    // public ResponseEntity<NoticiasDTO> crearNoticias(NoticiasDTO noticiasDTO) {
-    //     Noticias noticias = noticiasService.crearNoticias(noticiasDTO);
-    //     return ResponseEntity.status(HttpStatus.CREATED).body(noticiasDTOConverter.convertToDto(noticias));
+    @PostMapping("/noticias/cearNoticia")
+    public ResponseEntity<NoticiasDTO> crearNoticias(NoticiasDTO noticiasDTO) {
+        Noticias noticias = noticiasService.crearNoticias(noticiasDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(noticiasDTOConverter.convertToDto(noticias));
         
-    // }
+    }
     
 }

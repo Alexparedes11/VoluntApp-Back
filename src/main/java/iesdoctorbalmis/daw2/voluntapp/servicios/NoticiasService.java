@@ -27,14 +27,15 @@ public class NoticiasService {
         return noticiasRepository.findAll(pageable);
     }
 
-    // public Noticias crearNoticias(NoticiasDTO noticiasDTO) {
-    //     Noticias noticias = Noticias.builder()
-    //         .titulo(noticiasDTO.getTitulo())
-    //         .contenido(noticiasDTO.getContenido())
-    //         .fecha(noticiasDTO.getFecha())
-    //         .autor(noticiasDTO.getAutor())
-    //         .imagen(noticiasDTO.getImagen())
-    //         .build();
-    //     return save(noticias);
-    // }
+    //crear noticia
+    public Noticias crearNoticias(NoticiasDTO noticiasDTO) {
+        Noticias noticias = Noticias.builder()
+            .titulo(noticiasDTO.getTitulo())
+            .contenido(noticiasDTO.getContenido())
+            .fecha(noticiasDTO.getFecha())
+            .autor(noticiasDTO.getAutor())
+            .imagen(noticiasDTO.getImagen())
+            .build();
+        return noticiasRepository.save(noticias);
+    }
 }

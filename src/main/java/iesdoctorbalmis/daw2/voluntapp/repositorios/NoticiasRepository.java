@@ -13,7 +13,4 @@ public interface NoticiasRepository extends JpaRepository<Noticias, Long>{
     
     Optional<Noticias> findById(Long id);
 
-    //guardar noticias
-    Noticias guardar(Noticias noticias);
-
 }
