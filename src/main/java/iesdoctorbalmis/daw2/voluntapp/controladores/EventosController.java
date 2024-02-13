@@ -33,6 +33,7 @@ import org.apache.catalina.connector.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -298,4 +299,18 @@ public class EventosController {
         return ResponseEntity.ok(eventosDTOPage);
     }
 
+    // Obtener eventos filtrados por ubicacion y entre dos fechas
+    // @GetMapping("/entreFechasYUbicacion")
+    // public ResponseEntity<Page<EventosDTO>> obtenerEventosEntreFechasYUbicacion(
+    //         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fInicio,
+    //         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fFin,
+    //         @RequestParam String nombreUbicacion,
+    //         Pageable pageable) {
+
+    //     Page<Eventos> eventos = eventosService.findByFechaInicioBetweenAndUbicacionAndEstado(
+    //             fInicio, fFin, nombreUbicacion, "disponible", pageable);
+
+    //     Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
+    //     return ResponseEntity.ok(eventosDTOPage);
+    // }
 }

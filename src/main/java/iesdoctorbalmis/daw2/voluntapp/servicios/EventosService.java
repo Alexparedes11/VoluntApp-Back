@@ -79,4 +79,9 @@ public class EventosService {
     public Page<Eventos> findByEstadoAndUbicacionDisponible(String nombreUbicacion, Pageable pageable) {
         return eventosRepository.findByEstadoAndUbicacionDisponible(nombreUbicacion, pageable);
     }
+
+    // public Page<Eventos> findByFechaInicioBetweenAndUbicacionAndEstado(LocalDateTime fInicio, LocalDateTime fFin,
+    //             String nombreUbicacion, String estado, Pageable pageable) {
+    //     return eventosRepository.findByFechaInicioBetweenAndUbicacionAndEstado(fInicio, fFin, nombreUbicacion, estado, pageable);
+    // }
 }
