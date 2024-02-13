@@ -34,6 +34,7 @@ public class UsuarioDTOConverter {
             .rol(usu.getRol())
             .telefono(usu.getTelefono())
             .eventosNombre(eventos)
+            .direccion(usu.getDireccion())
             .build();
     }
 }

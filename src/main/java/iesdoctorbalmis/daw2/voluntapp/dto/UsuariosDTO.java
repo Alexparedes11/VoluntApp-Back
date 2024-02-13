@@ -38,6 +38,9 @@ public class UsuariosDTO {
     @NonNull
     private String telefono;
 
+    @NonNull
+    private String direccion;
+
     private Set<String> eventosNombre;
 
 }
