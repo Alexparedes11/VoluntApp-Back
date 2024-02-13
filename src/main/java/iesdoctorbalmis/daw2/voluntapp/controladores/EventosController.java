@@ -258,6 +258,14 @@ public class EventosController {
         return evento.getCreadoPorUsuarios().getId().equals(usuarioId);
     }
 
+    // Obtener eventos filtrados por búsqueda de texto
+    @GetMapping("/eventos/buscar/{texto}")
+    public ResponseEntity<?> buscarEventosPorTexto(@PathVariable String texto, Pageable pageable) {
+        Page<Eventos> eventos = eventosService.buscarPorTitulo(texto, pageable);
+        Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
+        return ResponseEntity.ok(eventosDTOPage);
+    }
+
     // Actualizar estado del evento
     @PutMapping("/eventos/{id}/estado")
     public ResponseEntity<Eventos> actualizarEstadoEvento(@PathVariable Long id, @RequestBody String estado) {
