@@ -40,6 +40,12 @@ public class UsuariosDTO {
     @NonNull
     private String telefono;
 
+    @NonNull
+    private String direccion;
+
+    @NonNull
+    private String contraseña;
+
     private Set<String> eventosNombre;
 
 }
