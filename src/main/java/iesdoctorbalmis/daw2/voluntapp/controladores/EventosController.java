@@ -277,19 +277,22 @@ public class EventosController {
         return ResponseEntity.ok(eventosService.editar(evento));
     }
 
-    //Obtener los eventos entre dos fechas
+    // Obtener los eventos entre dos fechas
 
     @GetMapping("/eventos/disponibles-entre-fechas/{fInicio}/{fFin}")
-    public ResponseEntity<?> obtenerEventosDisponiblesEntreFechas(@PathVariable LocalDateTime fInicio, @PathVariable LocalDateTime fFin, Pageable pageable) {
+    public ResponseEntity<?> obtenerEventosDisponiblesEntreFechas(@PathVariable LocalDateTime fInicio,
+            @PathVariable LocalDateTime fFin, Pageable pageable) {
         Page<Eventos> eventos = eventosService.findByEstadoAndFechaInicioBetween("disponible", fInicio, fFin, pageable);
         Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
         return ResponseEntity.ok(eventosDTOPage);
     }
 
-    //Obtener eventos por ubicacion
-    @GetMapping("/eventos/ubicacion/{nombreUbicacion}")
-    public ResponseEntity<?> obtenerEventosPorUbicacion(@PathVariable String nombreUbicacion, Pageable pageable) {
-        Page<Eventos> eventos = eventosService.findByUbicacionContainsIgnoreCase(nombreUbicacion, pageable);
+    // Obtener eventos por ubicacion con estado disponible
+    @GetMapping("/eventos/ubicacion/disponibles/{nombreUbicacion}")
+    public ResponseEntity<?> obtenerEventosDisponiblesPorUbicacion(@RequestParam String nombreUbicacion,
+            Pageable pageable) {
+        Page<Eventos> eventos = eventosService.findByEstadoAndUbicacionContainsIgnoreCase("disponible", nombreUbicacion,
+                pageable);
         Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
         return ResponseEntity.ok(eventosDTOPage);
     }

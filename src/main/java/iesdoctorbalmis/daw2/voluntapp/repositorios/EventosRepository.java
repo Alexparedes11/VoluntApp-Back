@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.antlr.v4.runtime.atn.SemanticContext.AND;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,37 +13,36 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
+import iesdoctorbalmis.daw2.voluntapp.modelos.Ubicacion;
 
 public interface EventosRepository extends JpaRepository<Eventos, Long> {
-    
+
         Page<Eventos> findByTituloContainsIgnoreCase(String txt, Pageable pageable);
 
         @Query("select p from Eventos p LEFT JOIN FETCH p.usuarios WHERE p.id = :id")
-	Optional<Eventos> findByIdJoinFetch(Long id);
+        Optional<Eventos> findByIdJoinFetch(Long id);
 
-        List <Eventos> findByCreadoPorUsuariosId(Long id);
+        List<Eventos> findByCreadoPorUsuariosId(Long id);
 
         Page<Eventos> findByEstado(String estado, Pageable pageable);
 
         @Query("SELECT e FROM Eventos e WHERE e.fInicio BETWEEN :fechaInicio AND :fechaFin")
-    Page<Eventos> findByFechaInicioBetween(
-            @Param("fechaInicio") LocalDateTime fechaInicio,
-            @Param("fechaFin") LocalDateTime fechaFin,
-            Pageable pageable
-    );
+        Page<Eventos> findByFechaInicioBetween(
+                        @Param("fechaInicio") LocalDateTime fechaInicio,
+                        @Param("fechaFin") LocalDateTime fechaFin,
+                        Pageable pageable);
 
         @Query("SELECT e FROM Eventos e WHERE e.estado = :estado AND e.fInicio BETWEEN :fechaInicio AND :fechaFin")
         Page<Eventos> findByEstadoAndFechaInicioBetween(
-                @Param("estado") String estado,
-                @Param("fechaInicio") LocalDateTime fechaInicio,
-                @Param("fechaFin") LocalDateTime fechaFin,
-                Pageable pageable
-        );
+                        @Param("estado") String estado,
+                        @Param("fechaInicio") LocalDateTime fechaInicio,
+                        @Param("fechaFin") LocalDateTime fechaFin,
+                        Pageable pageable);
 
-        //Obtener ventos por ubicacion
-        @Query("SELECT e FROM Eventos e WHERE e.ubicacion = :ubicacion")
-        Page<Eventos> findByUbicacionContainsIgnoreCase(
-                @Param("ubicacion") String ubicacion,
-                Pageable pageable
-        );
+        // Obtener evntos por ubicacion y estado
+        @Query("SELECT e FROM Eventos e JOIN e.ubicacion u WHERE e.estado = :estado AND u.nombre LIKE %:nombreUbicacion%")
+        Page<Eventos> findByEstadoAndUbicacionContainsIgnoreCase(
+                        @Param("estado") String estado,
+                        @Param("nombreUbicacion") String nombreUbicacion,
+                        Pageable pageable);
 }
