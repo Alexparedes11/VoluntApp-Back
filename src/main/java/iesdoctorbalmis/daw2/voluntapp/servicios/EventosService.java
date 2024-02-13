@@ -76,7 +76,7 @@ public class EventosService {
     }
 
     //obtener eventos por ubicacion
-    public Page<Eventos> findByEstadoAndUbicacionContainsIgnoreCase(String estado,String nombreUbicacion, Pageable pageable) {
-        return eventosRepository.findByEstadoAndUbicacionContainsIgnoreCase(estado, nombreUbicacion, pageable);
+    public Page<Eventos> findByEstadoAndUbicacionDisponible(String nombreUbicacion, Pageable pageable) {
+        return eventosRepository.findByEstadoAndUbicacionDisponible(nombreUbicacion, pageable);
     }
 }

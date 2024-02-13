@@ -288,10 +288,11 @@ public class EventosController {
     }
 
     // Obtener eventos por ubicacion con estado disponible
+    
     @GetMapping("/eventos/ubicacion/disponibles/{nombreUbicacion}")
-    public ResponseEntity<?> obtenerEventosDisponiblesPorUbicacion(@RequestParam String nombreUbicacion,
+    public ResponseEntity<?> obtenerEventosDisponiblesPorUbicacion(@PathVariable String nombreUbicacion,
             Pageable pageable) {
-        Page<Eventos> eventos = eventosService.findByEstadoAndUbicacionContainsIgnoreCase("disponible", nombreUbicacion,
+        Page<Eventos> eventos = eventosService.findByEstadoAndUbicacionDisponible(nombreUbicacion,
                 pageable);
         Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
         return ResponseEntity.ok(eventosDTOPage);
