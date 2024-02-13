@@ -6,7 +6,12 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -44,6 +49,29 @@ public class NoticiasController {
                         .header("link", paginationLinksUtils.createLinkHeader(dtoList, uriBuilder))
                         .body(dtoList);
                 }
+    }
+
+    
+    // Crear Noticias
+    @PostMapping("/noticias/crearNoticia")
+    public ResponseEntity<NoticiasDTO> crearNoticias(@RequestBody NoticiasDTO noticiasDTO) {
+        Noticias noticias = noticiasService.crearNoticias(noticiasDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(noticiasDTOConverter.convertToDto(noticias));
+        
+    }
+
+    //Eliminar noticia
+     @DeleteMapping("/noticias/eliminarNoticia/{id}")
+    public ResponseEntity<Void> eliminarNoticia(@PathVariable Long id) {
+        noticiasService.eliminarNoticias(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    //Editar noticia
+    @PutMapping("/noticias/editarNoticia/{id}")
+    public ResponseEntity<NoticiasDTO> editarNoticia(@PathVariable Long id, @RequestBody NoticiasDTO noticiasDTO) {
+        Noticias noticias = noticiasService.editarNoticias(id, noticiasDTO);
+        return ResponseEntity.ok(noticiasDTOConverter.convertToDto(noticias));
     }
     
 }

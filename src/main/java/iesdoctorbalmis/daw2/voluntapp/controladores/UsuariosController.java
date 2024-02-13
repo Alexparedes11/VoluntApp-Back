@@ -161,19 +161,5 @@ public class UsuariosController {
             return ResponseEntity.ok(usuariosService.editar(usuario));
         }).orElseThrow(() -> new UsuariosNotFoundException(usuario.getId()));
     }
-
-    // Obtener eventos de un Usuario
-    @GetMapping("/eventos/usuario/{id}")
-    public ResponseEntity<?> obtenerEventos(@PathVariable Long id) {
-        Usuarios usuario = usuariosService.buscarPorId(id)
-                .orElseThrow(() -> new UsuariosNotFoundException(id));
-        return ResponseEntity.ok(usuario.getEventos());
-    }
-    //Obtener eventos creados por un usuario
-    @GetMapping("/eventos/usuario/creados/{id}")
-    public ResponseEntity<?> obtenerEventosCreados(@PathVariable Long id) {
-        Usuarios usuario = usuariosService.buscarPorId(id)
-                .orElseThrow(() -> new UsuariosNotFoundException(id));
-        return ResponseEntity.ok(usuario.getEventos());
-    }
+    
 }

@@ -51,6 +51,10 @@ public class EventosService {
     public Page<Eventos> ObtenerTodosPageable(Pageable pageable) {
         return eventosRepository.findAll(pageable);
     }
+    //obtenerEventos por estado
+    public Page<Eventos> findByEstado(String estado, Pageable pageable) {
+        return eventosRepository.findByEstado(estado, pageable);
+    }
 
     public Optional<Eventos> findByIdConUsuarios(Long id) {
         return eventosRepository.findByIdJoinFetch(id);
@@ -59,4 +63,5 @@ public class EventosService {
     public List<Eventos> findByCreadoPorUsuariosId(Long id) {
         return eventosRepository.findByCreadoPorUsuariosId(id);
     }
+
 }

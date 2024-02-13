@@ -18,6 +18,8 @@ import lombok.Setter;
 @Builder
 public class UsuariosDTO {
 
+    private Long id;
+
     @NonNull
     private String nombre;
 

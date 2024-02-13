@@ -12,4 +12,7 @@ public interface NoticiasRepository extends JpaRepository<Noticias, Long>{
     Page<Noticias> findByTituloContainsIgnoreCase(String txt, Pageable pageable);
     
     Optional<Noticias> findById(Long id);
+    
+    Noticias findByTitulo(String titulo);
+
 }

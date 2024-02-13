@@ -27,6 +27,7 @@ public class UsuarioDTOConverter {
         }
                         
         return UsuariosDTO.builder()
+            .id(usu.getId())
             .nombre(usu.getNombre())
             .apellidos(usu.getApellidos())
             .dni(usu.getDni())
