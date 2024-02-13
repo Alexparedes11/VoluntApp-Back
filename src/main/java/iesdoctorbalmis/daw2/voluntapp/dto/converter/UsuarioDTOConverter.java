@@ -37,6 +37,7 @@ public class UsuarioDTOConverter {
             .direccion(usu.getDireccion())
             .contraseña(usu.getPassword())
             .eventosNombre(eventos)
+            .direccion(usu.getDireccion())
             .build();
     }
 }
