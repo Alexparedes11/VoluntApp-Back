@@ -293,24 +293,21 @@ public class EventosController {
     @GetMapping("/eventos/ubicacion/disponibles/{nombreUbicacion}")
     public ResponseEntity<?> obtenerEventosDisponiblesPorUbicacion(@PathVariable String nombreUbicacion,
             Pageable pageable) {
-        Page<Eventos> eventos = eventosService.findByEstadoAndUbicacionDisponible(nombreUbicacion,
+        Page<Eventos> eventos = eventosService.findByEstadoAndUbicacionDisponible(nombreUbicacion.toLowerCase(),
                 pageable);
         Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
         return ResponseEntity.ok(eventosDTOPage);
     }
 
     // Obtener eventos filtrados por ubicacion y entre dos fechas
-    // @GetMapping("/entreFechasYUbicacion")
-    // public ResponseEntity<Page<EventosDTO>> obtenerEventosEntreFechasYUbicacion(
-    //         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fInicio,
-    //         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fFin,
-    //         @RequestParam String nombreUbicacion,
-    //         Pageable pageable) {
+    @GetMapping("eventos/disponibles-entre-fechas-y-ubicacion/{fInicio}/{fFin}/{nombreUbicacion}")
+    public ResponseEntity<Page<EventosDTO>> obtenerEventosEntreFechasYUbicacion(@PathVariable LocalDateTime fInicio,
+    @PathVariable LocalDateTime fFin, @PathVariable String nombreUbicacion,Pageable pageable) {
 
-    //     Page<Eventos> eventos = eventosService.findByFechaInicioBetweenAndUbicacionAndEstado(
-    //             fInicio, fFin, nombreUbicacion, "disponible", pageable);
+        Page<Eventos> eventos = eventosService.findByFechaInicioBetweenAndUbicacionAndEstado(
+                fInicio, fFin, nombreUbicacion.toLowerCase(), pageable);
 
-    //     Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
-    //     return ResponseEntity.ok(eventosDTOPage);
-    // }
+        Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
+        return ResponseEntity.ok(eventosDTOPage);
+    }
 }
