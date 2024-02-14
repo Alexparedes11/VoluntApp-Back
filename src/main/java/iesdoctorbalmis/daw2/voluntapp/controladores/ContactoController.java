@@ -31,7 +31,19 @@ public class ContactoController {
         return ResponseEntity.ok(response);
     } catch (Exception e) {
         e.printStackTrace();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);}
     }
+
+    @PostMapping("/enviarSolicitud")
+    public ResponseEntity<Map<String, String>> enviarSolicitud(@RequestBody Contacto contacto) {
+        try {
+            enviarCorreo.enviarSolicitud(contacto);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Correo enviado");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
 }
 }

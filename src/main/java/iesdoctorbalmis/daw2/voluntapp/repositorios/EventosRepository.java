@@ -44,4 +44,10 @@ public interface EventosRepository extends JpaRepository<Eventos, Long> {
                         @Param("ubicacion") String nombreUbicacion,
                         Pageable pageable);
 
+        @Query("SELECT e FROM Eventos e JOIN e.ubicacion u WHERE e.estado = 'disponible' AND e.fInicio BETWEEN :fInicio AND :fFin AND LOWER(u.nombre) LIKE %:nombreUbicacion%")
+    Page<Eventos> findByFechaInicioBetweenAndUbicacionAndEstado(
+            @Param("fInicio") LocalDateTime fInicio,
+            @Param("fFin") LocalDateTime fFin,
+            @Param("nombreUbicacion") String nombreUbicacion,
+            Pageable pageable);
 }

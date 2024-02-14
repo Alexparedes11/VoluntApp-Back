@@ -13,10 +13,12 @@ import org.springframework.context.annotation.Bean;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Categorias;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Instituciones;
+import iesdoctorbalmis.daw2.voluntapp.modelos.Noticias;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Ubicacion;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
 import iesdoctorbalmis.daw2.voluntapp.servicios.EventosService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.InstitucionesService;
+import iesdoctorbalmis.daw2.voluntapp.servicios.NoticiasService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.UbicacionService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.UsuariosService;
 
@@ -29,20 +31,13 @@ public class VoluntappApplication {
 
 	// @Bean
 	// CommandLineRunner init(UsuariosService usuariosService, InstitucionesService institucionesService,
-	// 		EventosService eventosService, UbicacionService ubicacionService) {
+	// 		EventosService eventosService, UbicacionService ubicacionService, NoticiasService noticiasService) {
 	// 	return (args) -> {
 
 	// 		Instituciones instituciones = new Instituciones(null, "Unicef@example.com",
 	// 		"12345678A", "Unicef ORG", "616 616 616", "Manolito", "Unicef", "123",
 	// 		"/assets/imagen", null);
 	// 		institucionesService.guardar(instituciones);
-
-	// 		Categorias Ayuda = new Categorias(null, "Ayuda humanitaria", null);
-	// 		Categorias Deportiva = new Categorias(null, "Deportiva", null);
-	// 		Categorias Ambiental = new Categorias(null, "Ambiental", null);
-	// 		Categorias Cultural = new Categorias(null, "Cultural", null);
-	// 		Categorias Educativa = new Categorias(null, "Educativa", null);
-	// 		Categorias Social = new Categorias(null, "Social", null);
 
 	// 		LocalDateTime fechaInicioEvento1 = LocalDateTime.of(2024, 2, 17, 9, 30);
 	// 		LocalDateTime fechaFinEvento1 = LocalDateTime.of(2024, 2, 17, 14, 0);
@@ -108,6 +103,15 @@ public class VoluntappApplication {
 	// 		Set<Categorias> listaCategorias = new HashSet<>();
 
 	// 		Set<Eventos> listaEventosUsuarios = new HashSet<>();
+
+	// 		Noticias noticias1 = Noticias.builder()
+	// 		.titulo("Limpieza masiva en el bosque de Alcoy")
+	// 		.contenido("¡Únete a nosotros para una limpieza masiva en el bosque de Alcoy! ¡Ayúdanos a mantener nuestro bosque limpio y seguro!")
+	// 		.imagen("/aseets/images/bosque.jpg")
+	// 		.fecha(Date.valueOf(LocalDateTime.now().toLocalDate()))
+	// 		.autor("VoluntApp")
+	// 		.build();
+	// 		noticiasService.guardar(noticias1);
 
 	// 		Eventos eventos1 = Eventos.builder()
 	// 		.fInicio(fechaInicioEvento1)

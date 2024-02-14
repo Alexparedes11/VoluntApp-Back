@@ -25,7 +25,9 @@ import lombok.RequiredArgsConstructor;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -33,6 +35,7 @@ import org.apache.catalina.connector.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -292,8 +295,20 @@ public class EventosController {
     @GetMapping("/eventos/ubicacion/disponibles/{nombreUbicacion}")
     public ResponseEntity<?> obtenerEventosDisponiblesPorUbicacion(@PathVariable String nombreUbicacion,
             Pageable pageable) {
-        Page<Eventos> eventos = eventosService.findByEstadoAndUbicacionDisponible(nombreUbicacion,
+        Page<Eventos> eventos = eventosService.findByEstadoAndUbicacionDisponible(nombreUbicacion.toLowerCase(),
                 pageable);
+        Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
+        return ResponseEntity.ok(eventosDTOPage);
+    }
+
+    // Obtener eventos filtrados por ubicacion y entre dos fechas
+    @GetMapping("eventos/disponibles-entre-fechas-y-ubicacion/{fInicio}/{fFin}/{nombreUbicacion}")
+    public ResponseEntity<Page<EventosDTO>> obtenerEventosEntreFechasYUbicacion(@PathVariable LocalDateTime fInicio,
+    @PathVariable LocalDateTime fFin, @PathVariable String nombreUbicacion,Pageable pageable) {
+
+        Page<Eventos> eventos = eventosService.findByFechaInicioBetweenAndUbicacionAndEstado(
+                fInicio, fFin, nombreUbicacion.toLowerCase(), pageable);
+
         Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
         return ResponseEntity.ok(eventosDTOPage);
     }

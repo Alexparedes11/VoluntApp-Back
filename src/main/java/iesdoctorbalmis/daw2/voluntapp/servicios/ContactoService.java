@@ -20,4 +20,13 @@ public class ContactoService {
         message.setText("Email: " + contacto.getEmail() + "\n"+ contacto.getMensaje());
         mailSender.send(message);
     }
+    
+    public void enviarSolicitud(Contacto contacto) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("voluntapp.management@gmail.com");
+        message.setTo("voluntapp.management@gmail.com");
+        message.setSubject(contacto.getEmail());
+        message.setText(contacto.getAsunto() +contacto.getMensaje());
+        mailSender.send(message);
+    }
 }
