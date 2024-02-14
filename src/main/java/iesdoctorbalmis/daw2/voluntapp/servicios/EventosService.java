@@ -54,7 +54,7 @@ public class EventosService {
         return eventosRepository.findAll(pageable);
     }
 
-    //obtenerEventos por estado
+    //obtener Eventos por estado
     public Page<Eventos> findByEstado(String estado, Pageable pageable) {
         return eventosRepository.findByEstado(estado, pageable);
     }
@@ -84,4 +84,5 @@ public class EventosService {
                 String nombreUbicacion, Pageable pageable) {
         return eventosRepository.findByFechaInicioBetweenAndUbicacionAndEstado(fInicio, fFin, nombreUbicacion, pageable);
     }
+
 }
