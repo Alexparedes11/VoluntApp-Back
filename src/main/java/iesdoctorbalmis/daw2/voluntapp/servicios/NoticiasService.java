@@ -17,6 +17,9 @@ public class NoticiasService {
     
     private final NoticiasRepository noticiasRepository;
     
+    public Noticias guardar(Noticias noticia) {
+        return noticiasRepository.save(noticia);
+    }
 
     public List<Noticias> obtenerTodos() {
         return noticiasRepository.findAll();
