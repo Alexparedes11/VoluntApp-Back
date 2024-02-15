@@ -53,8 +53,8 @@ public class Instituciones implements UserDetails{
     @ManyToMany
     @JoinTable(
         name = "institucion_eventos",
-        joinColumns = @JoinColumn(name = "eventos_id"),
-        inverseJoinColumns = @JoinColumn(name = "instituciones_id")
+        joinColumns = @JoinColumn(name = "instituciones_id"),
+        inverseJoinColumns = @JoinColumn(name = "eventos_id")
     )
     private Set<Eventos> eventos = new HashSet<>();
 

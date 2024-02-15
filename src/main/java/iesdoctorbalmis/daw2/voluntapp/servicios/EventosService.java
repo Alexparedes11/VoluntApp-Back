@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
+import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
 import iesdoctorbalmis.daw2.voluntapp.repositorios.EventosRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -83,6 +84,11 @@ public class EventosService {
     public Page<Eventos> findByFechaInicioBetweenAndUbicacionAndEstado(LocalDateTime fInicio, LocalDateTime fFin,
                 String nombreUbicacion, Pageable pageable) {
         return eventosRepository.findByFechaInicioBetweenAndUbicacionAndEstado(fInicio, fFin, nombreUbicacion, pageable);
+    }
+
+    
+    public List<Eventos> buscarPorEstadoYUsuario(String estado, Usuarios usu) {
+        return eventosRepository.findByEstadoAndUsuarios(estado, usu);
     }
 
 }

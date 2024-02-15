@@ -3,10 +3,12 @@ package iesdoctorbalmis.daw2.voluntapp.dto;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
+import iesdoctorbalmis.daw2.voluntapp.modelos.Instituciones;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Ubicacion;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
 import lombok.AllArgsConstructor;
@@ -45,5 +47,7 @@ public class EventosDTO {
     private int numVoluntarios;
 
     private int maxVoluntarios;
+
+    private Set<Instituciones> nombreInstituciones;
 
 }

@@ -6,6 +6,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import iesdoctorbalmis.daw2.voluntapp.dto.EventosDTO;
 import iesdoctorbalmis.daw2.voluntapp.dto.IdEventoUsuarioDTO;
+import iesdoctorbalmis.daw2.voluntapp.dto.NumeroDeEventosDTO;
 import iesdoctorbalmis.daw2.voluntapp.dto.converter.EventoDTOConverter;
 import iesdoctorbalmis.daw2.voluntapp.dto.converter.UsuarioDTOConverter;
 import iesdoctorbalmis.daw2.voluntapp.dto.create.CreateEventoDTO;
@@ -97,6 +98,22 @@ public class EventosController {
 
         return eventoDTOConverter.convertToDto(eventos);
     }
+
+    // Devuelve la cantidad de eventos a los que esta creado, apuntado y realizado el usuario
+    @GetMapping("/eventos/profile/{id}")
+    public NumeroDeEventosDTO obtenerEventosPerfil(@PathVariable Long id ) {
+        
+        Optional<Usuarios> usu = usuariosService.buscarPorId(id);
+        List<Eventos> realizado = eventosService.buscarPorEstadoYUsuario("realizado", usu.get());
+        List<Eventos> disponible = eventosService.buscarPorEstadoYUsuario("disponible", usu.get());
+        List<Eventos> creados = eventosService.findByCreadoPorUsuariosId(id);
+
+        NumeroDeEventosDTO numero = new NumeroDeEventosDTO(creados.size(), disponible.size(), realizado.size());
+
+        return numero;
+
+    }
+
 
     // Devolver booleano en caso de que el usuario logueado este en el apuntado en
     // el evento o no
@@ -225,7 +242,7 @@ public class EventosController {
     }
 
     // Eliminar evento de la base de datos
-    @DeleteMapping("/Eventos/{id}")
+    @DeleteMapping("/eventos/{id}")
     public ResponseEntity<?> eliminarevento(@PathVariable Long id) {
 
         Eventos evento = eventosService.buscarPorId(id)
