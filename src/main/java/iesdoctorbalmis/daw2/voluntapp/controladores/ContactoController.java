@@ -47,7 +47,7 @@ public class ContactoController {
         }
 }
 
-@PostMapping("/enviarRespuestDenegada")
+@PostMapping("/enviarRespuestaDenegada")
     public ResponseEntity<Map<String, String>> enviarRespuestaDenegada(@RequestBody Contacto contacto) {
         try {
             enviarCorreo.enviarRespuestaDenegada(contacto);
