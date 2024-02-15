@@ -46,4 +46,20 @@ public class ContactoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
 }
+
+@PostMapping("/enviarRespuestDenegada")
+    public ResponseEntity<Map<String, String>> enviarRespuestaDenegada(@RequestBody Contacto contacto) {
+        try {
+            enviarCorreo.enviarRespuestaDenegada(contacto);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Correo enviado");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+}
+
+
+
 }

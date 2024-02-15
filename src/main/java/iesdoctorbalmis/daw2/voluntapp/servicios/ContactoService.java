@@ -29,4 +29,11 @@ public class ContactoService {
         message.setText(contacto.getAsunto() +contacto.getMensaje());
         mailSender.send(message);
     }
+    public void enviarRespuestaDenegada(Contacto contacto) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("voluntapp.management@gmail.com");
+        message.setTo(contacto.getEmail());
+        message.setSubject("Respuesta a su solicitud");
+        message.setText(contacto.getAsunto() +contacto.getMensaje());
+    }
 }
