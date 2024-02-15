@@ -231,7 +231,7 @@ public class EventosController {
     }
 
     // Eliminar evento de la base de datos
-    @DeleteMapping("/Eventos/{id}")
+    @DeleteMapping("/eventos/{id}")
     public ResponseEntity<?> eliminarevento(@PathVariable Long id) {
 
         Eventos evento = eventosService.buscarPorId(id)

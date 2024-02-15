@@ -45,11 +45,14 @@ public class VoluntappApplication {
 	// NoticiasService noticiasService) {
 	// return (args) -> {
 
+	// Set<Instituciones> listaInstituciones = new HashSet<>();
+
 	// Instituciones instituciones = new Instituciones(null, "Unicef@example.com",
 	// "12345678A", "Unicef ORG", "616 616 616", "Manolito", "Unicef", "123",
 	// "/assets/imagen", null);
 	// institucionesService.guardar(instituciones);
-
+	// listaInstituciones.add(instituciones);
+	
 	// LocalDateTime fechaInicioEvento1 = LocalDateTime.of(2024, 2, 17, 9, 30);
 	// LocalDateTime fechaFinEvento1 = LocalDateTime.of(2024, 2, 17, 14, 0);
 
@@ -88,8 +91,7 @@ public class VoluntappApplication {
 	// -0.48590116945300316, 38.36322105571466);
 	// ubicacionService.guardar(ubicacion5);
 
-	// Ubicacion ubicacion6 = new Ubicacion(null, "C. 19 de Abril 34, San Miguel de
-	// Salinas, Alicante", -0.7887108508683476, 37.97922685104109);
+	// Ubicacion ubicacion6 = new Ubicacion(null, "C. 19 de Abril 34, San Miguel de Salinas, Alicante", -0.7887108508683476, 37.97922685104109);
 	// ubicacionService.guardar(ubicacion6);
 
 	// Set<Usuarios> listaUsuarios = new HashSet<>();
@@ -111,15 +113,13 @@ public class VoluntappApplication {
 	// usuariosService.guardar(usuario3);
 	// listaUsuarios.add(usuario3);
 
-	// Set<Instituciones> listaInstituciones = new HashSet<>();
 	// Set<Categorias> listaCategorias = new HashSet<>();
 
 	// Set<Eventos> listaEventosUsuarios = new HashSet<>();
 
 	// Noticias noticias1 = Noticias.builder()
 	// .titulo("Limpieza masiva en el bosque de Alcoy")
-	// .contenido("¡Únete a nosotros para una limpieza masiva en el bosque de Alcoy!
-	// ¡Ayúdanos a mantener nuestro bosque limpio y seguro!")
+	// .contenido("¡Únete a nosotros para una limpieza masiva en el bosque de Alcoy! ¡Ayúdanos a mantener nuestro bosque limpio y seguro!")
 	// .imagen("/aseets/images/bosque.jpg")
 	// .fecha(Date.valueOf(LocalDateTime.now().toLocalDate()))
 	// .autor("VoluntApp")
@@ -132,8 +132,7 @@ public class VoluntappApplication {
 	// .titulo("Taller para mayores")
 	// .imagen("/assets/images/mayores.jpg")
 	// .usuarios(listaUsuarios)
-	// .descripcion("¡Descubre nuevas experiencias y conexiones en nuestro evento de
-	// talleres para personas mayores!")
+	// .descripcion("¡Descubre nuevas experiencias y conexiones en nuestro evento de talleres para personas mayores!")
 	// .ubicacion(ubicacion)
 	// .estado("disponible")
 	// .instituciones(listaInstituciones)
@@ -144,14 +143,15 @@ public class VoluntappApplication {
 	// eventosService.guardar(eventos1);
 	// listaEventosUsuarios.add(eventos1);
 
+	// System.out.print("El primer evento es este: " + eventos1);
+
 	// Eventos eventos2 = Eventos.builder()
 	// .fInicio(fechaInicioEvento2)
 	// .fFin(fechaFinEvento2)
 	// .titulo("Recogida de basura")
 	// .imagen("/assets/images/limpiarbosque.jpg")
 	// .usuarios(listaUsuarios)
-	// .descripcion("Te invitamos a unirte a nosotros en un esfuerzo comunitario
-	// para recoger basura")
+	// .descripcion("Te invitamos a unirte a nosotros en un esfuerzo comunitario para recoger basura")
 	// .ubicacion(ubicacion2)
 	// .estado("disponible")
 	// .instituciones(listaInstituciones)
@@ -167,8 +167,7 @@ public class VoluntappApplication {
 	// .fFin(fechaFinEvento3)
 	// .titulo("Limpiar pellets de la playa")
 	// .imagen("/assets/images/pellets.jpg")
-	// .descripcion("¡Únete a nosotros en la playa Postiguet para un evento de
-	// recogida de pellets")
+	// .descripcion("¡Únete a nosotros en la playa Postiguet para un evento de recogida de pellets")
 	// .ubicacion(ubicacion3)
 	// .estado("disponible")
 	// .usuarios(listaUsuarios)
@@ -185,8 +184,7 @@ public class VoluntappApplication {
 	// .fFin(fechaFinEvento4)
 	// .titulo("Recogida de alimentos")
 	// .imagen("/assets/images/recogidaalimentos.jpg")
-	// .descripcion("¡Únete a nosotros en nuestra recogida de alimentos para
-	// apoyar")
+	// .descripcion("¡Únete a nosotros en nuestra recogida de alimentos para apoyar")
 	// .ubicacion(ubicacion4)
 	// .usuarios(listaUsuarios)
 	// .estado("disponible")
@@ -203,8 +201,7 @@ public class VoluntappApplication {
 	// .fFin(fechaFinEvento5)
 	// .titulo("Sonrisas para los pequeños")
 	// .imagen("/assets/images/sonrisas.jpg")
-	// .descripcion("¡Ven y únete a nosotros para un día lleno de risas y
-	// diversión")
+	// .descripcion("¡Ven y únete a nosotros para un día lleno de risas y diversión")
 	// .ubicacion(ubicacion)
 	// .estado("finalizado")
 	// .usuarios(listaUsuarios)
@@ -221,8 +218,7 @@ public class VoluntappApplication {
 	// .fFin(fechaFinEvento6)
 	// .titulo("Ayuda para limpiar las inundaciones")
 	// .imagen("/assets/images/inundacion.jpg")
-	// .descripcion("Únete a nosotros para un evento comunitario de apoyo y
-	// solidaridad frente a las inundaciones")
+	// .descripcion("Únete a nosotros para un evento comunitario de apoyo y solidaridad frente a las inundaciones")
 	// .ubicacion(ubicacion)
 	// .estado("denegado")
 	// .usuarios(listaUsuarios)

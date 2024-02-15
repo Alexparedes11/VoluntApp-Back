@@ -41,6 +41,7 @@ public class EventoDTOConverter {
             .id(eventos.getId())
             .estado(eventos.getEstado())
             .ubicacion(eventos.getUbicacion())
+            .nombreInstituciones(eventos.getInstituciones())
             .build();
     }
 }
