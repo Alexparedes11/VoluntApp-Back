@@ -89,9 +89,19 @@ public class EventosController {
         }
     }
 
-    // Encontrar al Eventos por la ID (con DTO)
+    // Encontrar al Eventos por la ID
     @GetMapping("/eventos/{id}")
-    public EventosDTO obtenerUno(@PathVariable Long id) {
+    public Eventos obtenerUno(@PathVariable Long id) {
+
+        Eventos eventos = eventosService.buscarPorId(id)
+                .orElseThrow(() -> new EventosNotFoundException(id));
+
+        return eventos;
+    }
+
+    // Encontrar al Eventos por la ID (con DTO)
+    @GetMapping("/eventosDTO/{id}")
+    public EventosDTO obtenerUnoDTO(@PathVariable Long id) {
 
         Eventos eventos = eventosService.buscarPorId(id)
                 .orElseThrow(() -> new EventosNotFoundException(id));
@@ -99,10 +109,11 @@ public class EventosController {
         return eventoDTOConverter.convertToDto(eventos);
     }
 
-    // Devuelve la cantidad de eventos a los que esta creado, apuntado y realizado el usuario
+    // Devuelve la cantidad de eventos a los que esta creado, apuntado y realizado
+    // el usuario
     @GetMapping("/eventos/profile/{id}")
-    public NumeroDeEventosDTO obtenerEventosPerfil(@PathVariable Long id ) {
-        
+    public NumeroDeEventosDTO obtenerEventosPerfil(@PathVariable Long id) {
+
         Optional<Usuarios> usu = usuariosService.buscarPorId(id);
         List<Eventos> realizado = eventosService.buscarPorEstadoYUsuario("realizado", usu.get());
         List<Eventos> disponible = eventosService.buscarPorEstadoYUsuario("disponible", usu.get());
@@ -113,7 +124,6 @@ public class EventosController {
         return numero;
 
     }
-
 
     // Devolver booleano en caso de que el usuario logueado este en el apuntado en
     // el evento o no
@@ -197,8 +207,6 @@ public class EventosController {
     @PostMapping("/eventos")
     public ResponseEntity<Eventos> nuevoEvento(@RequestBody CreateEventoDTO nuevo) throws AzureBlobStorageException {
 
-
-
         // Instituciones creadoPorInstituciones =
         // institucionesService.buscarPorNombre(nuevo.getCreadoPorUsuario());
         Usuarios creadoPorUsuarios = usuariosService.buscarPorId(nuevo.getUsuarioId()).orElse(null);
@@ -210,7 +218,8 @@ public class EventosController {
                 .lon(nuevo.getLon())
                 .build();
 
-        String ubicacionImagenAzure = "https://voluntapp.blob.core.windows.net/images/" + azureBlobStorageService.uploadFile("eventos", UUID.randomUUID().toString(), nuevo.getImagen());
+        String ubicacionImagenAzure = "https://voluntapp.blob.core.windows.net/images/"
+                + azureBlobStorageService.uploadFile("eventos", UUID.randomUUID().toString(), nuevo.getImagen());
 
         Eventos eventoNuevo = Eventos.builder()
                 .titulo(nuevo.getTitulo())
@@ -319,7 +328,7 @@ public class EventosController {
     }
 
     // Obtener eventos por ubicacion con estado disponible
-    
+
     @GetMapping("/eventos/ubicacion/disponibles/{nombreUbicacion}")
     public ResponseEntity<?> obtenerEventosDisponiblesPorUbicacion(@PathVariable String nombreUbicacion,
             Pageable pageable) {
@@ -332,7 +341,7 @@ public class EventosController {
     // Obtener eventos filtrados por ubicacion y entre dos fechas
     @GetMapping("eventos/disponibles-entre-fechas-y-ubicacion/{fInicio}/{fFin}/{nombreUbicacion}")
     public ResponseEntity<Page<EventosDTO>> obtenerEventosEntreFechasYUbicacion(@PathVariable LocalDateTime fInicio,
-    @PathVariable LocalDateTime fFin, @PathVariable String nombreUbicacion,Pageable pageable) {
+            @PathVariable LocalDateTime fFin, @PathVariable String nombreUbicacion, Pageable pageable) {
 
         Page<Eventos> eventos = eventosService.findByFechaInicioBetweenAndUbicacionAndEstado(
                 fInicio, fFin, nombreUbicacion.toLowerCase(), pageable);
