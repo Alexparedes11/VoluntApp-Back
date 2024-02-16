@@ -12,11 +12,14 @@ import iesdoctorbalmis.daw2.voluntapp.dto.converter.UsuarioDTOConverter;
 import iesdoctorbalmis.daw2.voluntapp.dto.create.CreateUsuarioDTO;
 import iesdoctorbalmis.daw2.voluntapp.error.usuarios.SearchUsuarioNoResultException;
 import iesdoctorbalmis.daw2.voluntapp.error.usuarios.UsuariosNotFoundException;
+import iesdoctorbalmis.daw2.voluntapp.excepciones.AzureBlobStorageException;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
 import iesdoctorbalmis.daw2.voluntapp.seguridad.jwt.JwtProvider;
 import iesdoctorbalmis.daw2.voluntapp.seguridad.jwt.model.JwtUserResponse;
 import iesdoctorbalmis.daw2.voluntapp.seguridad.jwt.model.LoginRequest;
+import iesdoctorbalmis.daw2.voluntapp.servicios.AzureBlobStorageImpl;
+import iesdoctorbalmis.daw2.voluntapp.servicios.AzureBlobStorageService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.EventosService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.UsuariosService;
 import iesdoctorbalmis.daw2.voluntapp.util.pagination.PaginationLinksUtils;
@@ -26,14 +29,13 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,6 +55,7 @@ public class UsuariosController {
     private final JwtProvider tokenProvider;
 
     private final EventosService eventosService;
+    private final AzureBlobStorageService azureBlobStorageService;
 
     // Obtencion de todos los usuarios
     @GetMapping("/usuarios")
@@ -100,7 +103,13 @@ public class UsuariosController {
 
     // Añadir usuarios a la base de datos
     @PostMapping("/usuarios")
-    public ResponseEntity<Usuarios> nuevoUsuario(@RequestBody CreateUsuarioDTO nuevo) {
+    public ResponseEntity<Usuarios> nuevoUsuario(@RequestBody CreateUsuarioDTO nuevo) throws AzureBlobStorageException {
+
+        String ubicacionImagenPerfilAzure = "https://voluntapp.blob.core.windows.net/images/"
+                + azureBlobStorageService.uploadFile("perfiles", UUID.randomUUID().toString(), nuevo.getFotoPerfil());
+
+        String ubicacionImagenBannerAzure = "https://voluntapp.blob.core.windows.net/images/"
+                + azureBlobStorageService.uploadFile("banners", UUID.randomUUID().toString(), nuevo.getFotoPerfil());
 
         Usuarios usuarioNuevo = Usuarios.builder()
                 .nombre(nuevo.getNombre())
@@ -111,8 +120,8 @@ public class UsuariosController {
                 .username(nuevo.getEmail())
                 .rol("Usuario")
                 .telefono(nuevo.getTelefono())
-                .fotoPerfil(nuevo.getFotoPerfil())
-                .fotoBanner(nuevo.getFotoBanner())
+                .fotoPerfil(ubicacionImagenPerfilAzure)
+                .fotoBanner(ubicacionImagenBannerAzure)
                 .build();
 
         Usuarios nuevoUsuario = usuariosService.guardar(usuarioNuevo);
@@ -162,5 +171,5 @@ public class UsuariosController {
             return ResponseEntity.ok(usuariosService.editar(usuario));
         }).orElseThrow(() -> new UsuariosNotFoundException(usuario.getId()));
     }
-    
+
 }
