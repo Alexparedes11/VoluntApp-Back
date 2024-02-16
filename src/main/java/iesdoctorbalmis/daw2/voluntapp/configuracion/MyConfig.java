@@ -8,58 +8,67 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class MyConfig {
-    
-    @Bean
-    protected ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
 
-    @Bean
-    protected WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                
-                registry.addMapping("/usuarios/**")
-                        .allowedOrigins("http://localhost:9000")
-                        .allowedOrigins("http://localhost:4200")
+        @Bean
+        protected ModelMapper modelMapper() {
+                return new ModelMapper();
+        }
 
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        .maxAge(3600);
+        @Bean
+        protected WebMvcConfigurer corsConfigurer() {
+                return new WebMvcConfigurer() {
 
-                registry.addMapping("/instituciones/**")
-                        .allowedOrigins("http://localhost:9000")
-                        .allowedOrigins("http://localhost:4200")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        .maxAge(3600);
+                        @Override
+                        public void addCorsMappings(CorsRegistry registry) {
 
-                registry.addMapping("/eventos/**")
-                        .allowedOrigins("http://localhost:9000")
-                        .allowedOrigins("http://localhost:4200")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        .maxAge(3600);
+                                registry.addMapping("/usuarios/**")
+                                                .allowedOrigins("http://localhost:9000", "http://localhost:4200",
+                                                                "http://localhost:5200", "http://localhost:4200",
+                                                                "http://localhost:5200")
 
-                registry.addMapping("/login/**")
-                        .allowedOrigins("http://localhost:9000")
-                        .allowedOrigins("http://localhost:4200")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        .maxAge(3600);
+                                                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                                                .maxAge(3600);
 
-                registry.addMapping("/noticias/**")
-                        .allowedOrigins("http://localhost:9000")
-                        .allowedOrigins("http://localhost:4200")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        .maxAge(3600);
+                                registry.addMapping("/instituciones/**")
+                                                .allowedOrigins("http://localhost:9000", "http://localhost:4200",
+                                                                "http://localhost:5200", "http://localhost:4200",
+                                                                "http://localhost:5200")
+                                                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                                                .maxAge(3600);
 
-                registry.addMapping("/contacto/**")
-                        .allowedOrigins("http://localhost:9000")
-                        .allowedOrigins("http://localhost:4200")
-                        .allowedMethods("POST")
-                        .maxAge(3600);
-            }
+                                registry.addMapping("/eventos/**")
+                                                .allowedOrigins("http://localhost:9000", "http://localhost:4200",
+                                                                "http://localhost:5200", "http://localhost:4200",
+                                                                "http://localhost:5200")
+                                                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                                                .maxAge(3600);
+                                registry.addMapping("/eventosDTO/**")
+                                                .allowedOrigins("http://localhost:9000", "http://localhost:4200",
+                                                                "http://localhost:5200", "http://localhost:4200",
+                                                                "http://localhost:5200")
+                                                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                                                .maxAge(3600);
 
-        };
-    }
-    
+                                registry.addMapping("/login/**")
+                                                .allowedOrigins("http://localhost:9000", "http://localhost:4200",
+                                                                "http://localhost:5200")
+                                                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                                                .maxAge(3600);
+
+                                registry.addMapping("/noticias/**")
+                                                .allowedOrigins("http://localhost:9000", "http://localhost:4200",
+                                                                "http://localhost:5200")
+                                                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                                                .maxAge(3600);
+
+                                registry.addMapping("/contacto/**")
+                                                .allowedOrigins("http://localhost:9000", "http://localhost:4200",
+                                                                "http://localhost:5200")
+                                                .allowedMethods("POST")
+                                                .maxAge(3600);
+                        }
+
+                };
+        }
+
 }

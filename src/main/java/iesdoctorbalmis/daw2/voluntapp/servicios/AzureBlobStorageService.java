@@ -1,6 +1,7 @@
 package iesdoctorbalmis.daw2.voluntapp.servicios;
 
 import java.io.ByteArrayInputStream;
+import java.util.Base64;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,20 +15,18 @@ public class AzureBlobStorageService {
     @Autowired
     AzureBlobStorageImpl storageImpl;
 
-    private Storage getStorage(String path, String fileName, String data) {
+    private Storage getStorage(String path, String fileName, byte[] bytes) {
         Storage storage = new Storage();
         storage.setPath(path);
         storage.setFileName(fileName);
-        if (StringUtils.isNotBlank(data)) {
-            storage.setInputStream(new ByteArrayInputStream(data.getBytes()));
-        }
+        storage.setInputStream(new ByteArrayInputStream(bytes));
 
         return storage;
     }
 
-    public void writeBlob() throws AzureBlobStorageException {
-        Storage storage = getStorage("events", "prueba.webp", "prueba");
-        storageImpl.write(storage);
+    public String uploadFile(String path, String fileName, String base64Data) throws AzureBlobStorageException {
+        byte[] decodedBytes = Base64.getDecoder().decode(base64Data.split(",")[1]); // Decodificar los datos directamente sin convertirlos a String
+        Storage storage = getStorage(path, fileName, decodedBytes);
+        return storageImpl.write(storage);
     }
-
 }

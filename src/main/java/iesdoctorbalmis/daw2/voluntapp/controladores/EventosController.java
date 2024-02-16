@@ -12,10 +12,12 @@ import iesdoctorbalmis.daw2.voluntapp.dto.converter.UsuarioDTOConverter;
 import iesdoctorbalmis.daw2.voluntapp.dto.create.CreateEventoDTO;
 import iesdoctorbalmis.daw2.voluntapp.error.eventos.EventosNotFoundException;
 import iesdoctorbalmis.daw2.voluntapp.error.usuarios.UsuariosNotFoundException;
+import iesdoctorbalmis.daw2.voluntapp.excepciones.AzureBlobStorageException;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Instituciones;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Ubicacion;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
+import iesdoctorbalmis.daw2.voluntapp.servicios.AzureBlobStorageService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.EventosService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.InstitucionesService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.UbicacionService;
@@ -30,15 +32,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.apache.catalina.connector.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,6 +62,7 @@ public class EventosController {
     private final UsuariosService usuariosService;
     private final InstitucionesService institucionesService;
     private final UbicacionService ubicacionService;
+    private final AzureBlobStorageService azureBlobStorageService;
 
     // Utils
     private final EventoDTOConverter eventoDTOConverter;
@@ -83,9 +89,19 @@ public class EventosController {
         }
     }
 
-    // Encontrar al Eventos por la ID (con DTO)
+    // Encontrar al Eventos por la ID
     @GetMapping("/eventos/{id}")
-    public EventosDTO obtenerUno(@PathVariable Long id) {
+    public Eventos obtenerUno(@PathVariable Long id) {
+
+        Eventos eventos = eventosService.buscarPorId(id)
+                .orElseThrow(() -> new EventosNotFoundException(id));
+
+        return eventos;
+    }
+
+    // Encontrar al Eventos por la ID (con DTO)
+    @GetMapping("/eventosDTO/{id}")
+    public EventosDTO obtenerUnoDTO(@PathVariable Long id) {
 
         Eventos eventos = eventosService.buscarPorId(id)
                 .orElseThrow(() -> new EventosNotFoundException(id));
@@ -93,10 +109,11 @@ public class EventosController {
         return eventoDTOConverter.convertToDto(eventos);
     }
 
-    // Devuelve la cantidad de eventos a los que esta creado, apuntado y realizado el usuario
+    // Devuelve la cantidad de eventos a los que esta creado, apuntado y realizado
+    // el usuario
     @GetMapping("/eventos/profile/{id}")
-    public NumeroDeEventosDTO obtenerEventosPerfil(@PathVariable Long id ) {
-        
+    public NumeroDeEventosDTO obtenerEventosPerfil(@PathVariable Long id) {
+
         Optional<Usuarios> usu = usuariosService.buscarPorId(id);
         List<Eventos> realizado = eventosService.buscarPorEstadoYUsuario("finalizado", usu.get());
         List<Eventos> disponible = eventosService.buscarPorEstadoYUsuario("disponible", usu.get());
@@ -107,7 +124,6 @@ public class EventosController {
         return numero;
 
     }
-
 
     // Devolver booleano en caso de que el usuario logueado este en el apuntado en
     // el evento o no
@@ -187,8 +203,9 @@ public class EventosController {
     // }
 
     // Añadir Eventos a la base de datos
+
     @PostMapping("/eventos")
-    public ResponseEntity<Eventos> nuevoEvento(@RequestBody CreateEventoDTO nuevo) {
+    public ResponseEntity<Eventos> nuevoEvento(@RequestBody CreateEventoDTO nuevo) throws AzureBlobStorageException {
 
         // Instituciones creadoPorInstituciones =
         // institucionesService.buscarPorNombre(nuevo.getCreadoPorUsuario());
@@ -201,9 +218,12 @@ public class EventosController {
                 .lon(nuevo.getLon())
                 .build();
 
+        String ubicacionImagenAzure = "https://voluntapp.blob.core.windows.net/images/"
+                + azureBlobStorageService.uploadFile("eventos", UUID.randomUUID().toString(), nuevo.getImagen());
+
         Eventos eventoNuevo = Eventos.builder()
                 .titulo(nuevo.getTitulo())
-                .imagen(nuevo.getImagen())
+                .imagen(ubicacionImagenAzure)
                 .descripcion(nuevo.getDescripcion())
                 .ubicacion(u)
                 .fInicio(nuevo.getFInicio())
@@ -308,7 +328,7 @@ public class EventosController {
     }
 
     // Obtener eventos por ubicacion con estado disponible
-    
+
     @GetMapping("/eventos/ubicacion/disponibles/{nombreUbicacion}")
     public ResponseEntity<?> obtenerEventosDisponiblesPorUbicacion(@PathVariable String nombreUbicacion,
             Pageable pageable) {
@@ -321,7 +341,7 @@ public class EventosController {
     // Obtener eventos filtrados por ubicacion y entre dos fechas
     @GetMapping("eventos/disponibles-entre-fechas-y-ubicacion/{fInicio}/{fFin}/{nombreUbicacion}")
     public ResponseEntity<Page<EventosDTO>> obtenerEventosEntreFechasYUbicacion(@PathVariable LocalDateTime fInicio,
-    @PathVariable LocalDateTime fFin, @PathVariable String nombreUbicacion,Pageable pageable) {
+            @PathVariable LocalDateTime fFin, @PathVariable String nombreUbicacion, Pageable pageable) {
 
         Page<Eventos> eventos = eventosService.findByFechaInicioBetweenAndUbicacionAndEstado(
                 fInicio, fFin, nombreUbicacion.toLowerCase(), pageable);
