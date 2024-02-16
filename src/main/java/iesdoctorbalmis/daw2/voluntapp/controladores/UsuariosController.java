@@ -112,6 +112,7 @@ public class UsuariosController {
                 .rol("Usuario")
                 .telefono(nuevo.getTelefono())
                 .fotoPerfil(nuevo.getFotoPerfil())
+                .fotoBanner(nuevo.getFotoBanner())
                 .build();
 
         Usuarios nuevoUsuario = usuariosService.guardar(usuarioNuevo);

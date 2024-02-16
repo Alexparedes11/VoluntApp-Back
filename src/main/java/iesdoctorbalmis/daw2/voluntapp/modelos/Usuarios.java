@@ -53,6 +53,8 @@ public class Usuarios implements UserDetails{
 
     private String fotoPerfil;
 
+    private String fotoBanner;
+
     @NonNull
     private String telefono;
 
