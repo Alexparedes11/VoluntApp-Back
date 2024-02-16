@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -52,6 +53,8 @@ public class Usuarios implements UserDetails{
 
     private String fotoPerfil;
 
+    private String fotoBanner;
+
     @NonNull
     private String telefono;
 
@@ -61,7 +64,7 @@ public class Usuarios implements UserDetails{
     @Builder.Default
     @EqualsAndHashCode.Exclude @ToString.Exclude
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "usuario_eventos",
         joinColumns = @JoinColumn(name = "usuarios_id"),

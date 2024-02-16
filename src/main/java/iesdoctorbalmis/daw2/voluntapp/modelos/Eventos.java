@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -55,26 +56,27 @@ public class Eventos {
     @Column(length = 1000000)
     private String imagen;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id")
     private Usuarios creadoPorUsuarios;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "intitucion_id")
     private Instituciones creadoPorInstituciones;
 
     @Builder.Default
     @JsonIgnore
-    @ManyToMany(mappedBy = "eventos")
+    @ManyToMany(mappedBy = "eventos", fetch = FetchType.EAGER)
     private Set<Usuarios> usuarios = new HashSet<>();
 
     @JsonBackReference
-    @ManyToMany(mappedBy = "eventos")
+    @JsonIgnore
+    @ManyToMany(mappedBy = "eventos", fetch = FetchType.EAGER)
     @Builder.Default
     private Set<Instituciones> instituciones = new HashSet<>();
 
     @JsonBackReference
-    @ManyToMany(mappedBy = "eventos")
+    @ManyToMany(mappedBy = "eventos", fetch = FetchType.EAGER)
     @Builder.Default
     private Set<Categorias> categorias = new HashSet<>();
 

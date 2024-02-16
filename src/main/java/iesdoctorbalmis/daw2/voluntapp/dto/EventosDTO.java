@@ -48,6 +48,6 @@ public class EventosDTO {
 
     private int maxVoluntarios;
 
-    private Set<Instituciones> nombreInstituciones;
+    private Set<String> nombreInstituciones;
 
 }

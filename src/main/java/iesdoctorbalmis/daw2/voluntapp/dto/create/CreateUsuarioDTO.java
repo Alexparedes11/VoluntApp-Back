@@ -33,6 +33,8 @@ public class CreateUsuarioDTO {
 
     private String fotoPerfil;
 
+    private String fotoBanner;
+
     @Column(unique = true)
     @NonNull
     private String email;
