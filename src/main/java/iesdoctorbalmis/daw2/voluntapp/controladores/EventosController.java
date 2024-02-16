@@ -98,7 +98,7 @@ public class EventosController {
     public NumeroDeEventosDTO obtenerEventosPerfil(@PathVariable Long id ) {
         
         Optional<Usuarios> usu = usuariosService.buscarPorId(id);
-        List<Eventos> realizado = eventosService.buscarPorEstadoYUsuario("realizado", usu.get());
+        List<Eventos> realizado = eventosService.buscarPorEstadoYUsuario("finalizado", usu.get());
         List<Eventos> disponible = eventosService.buscarPorEstadoYUsuario("disponible", usu.get());
         List<Eventos> creados = eventosService.findByCreadoPorUsuariosId(id);
 

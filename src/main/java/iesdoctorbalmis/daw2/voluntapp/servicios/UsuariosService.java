@@ -10,11 +10,12 @@ import org.springframework.stereotype.Service;
 
 import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
 import iesdoctorbalmis.daw2.voluntapp.repositorios.UsuariosRepository;
-
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class UsuariosService {
     
     private final PasswordEncoder passwordEncoder;
