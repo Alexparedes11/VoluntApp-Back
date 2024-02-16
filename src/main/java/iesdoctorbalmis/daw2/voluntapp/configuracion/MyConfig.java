@@ -24,6 +24,7 @@ public class MyConfig {
                                 registry.addMapping("/usuarios/**")
                                                 .allowedOrigins("http://localhost:9000")
                                                 .allowedOrigins("http://localhost:4200")
+                                                .allowedOrigins("http://localhost:5200")
 
                                                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                                                 .maxAge(3600);
@@ -31,35 +32,41 @@ public class MyConfig {
                                 registry.addMapping("/instituciones/**")
                                                 .allowedOrigins("http://localhost:9000")
                                                 .allowedOrigins("http://localhost:4200")
+                                                .allowedOrigins("http://localhost:5200")
                                                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                                                 .maxAge(3600);
 
                                 registry.addMapping("/eventos/**")
                                                 .allowedOrigins("http://localhost:9000")
                                                 .allowedOrigins("http://localhost:4200")
+                                                .allowedOrigins("http://localhost:5200")
                                                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                                                 .maxAge(3600);
                                 registry.addMapping("/eventosDTO/**")
                                                 .allowedOrigins("http://localhost:9000")
                                                 .allowedOrigins("http://localhost:4200")
+                                                .allowedOrigins("http://localhost:5200")
                                                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                                                 .maxAge(3600);
 
                                 registry.addMapping("/login/**")
                                                 .allowedOrigins("http://localhost:9000")
                                                 .allowedOrigins("http://localhost:4200")
+                                                .allowedOrigins("http://localhost:5200")
                                                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                                                 .maxAge(3600);
 
                                 registry.addMapping("/noticias/**")
                                                 .allowedOrigins("http://localhost:9000")
                                                 .allowedOrigins("http://localhost:4200")
+                                                .allowedOrigins("http://localhost:5200")
                                                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                                                 .maxAge(3600);
 
                                 registry.addMapping("/contacto/**")
                                                 .allowedOrigins("http://localhost:9000")
                                                 .allowedOrigins("http://localhost:4200")
+                                                .allowedOrigins("http://localhost:5200")
                                                 .allowedMethods("POST")
                                                 .maxAge(3600);
                         }
