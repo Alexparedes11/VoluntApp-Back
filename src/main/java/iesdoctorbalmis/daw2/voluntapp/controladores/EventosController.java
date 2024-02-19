@@ -5,9 +5,11 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import iesdoctorbalmis.daw2.voluntapp.dto.EventosDTO;
+import iesdoctorbalmis.daw2.voluntapp.dto.IdEventoInstitucionDTO;
 import iesdoctorbalmis.daw2.voluntapp.dto.IdEventoUsuarioDTO;
 import iesdoctorbalmis.daw2.voluntapp.dto.NumeroDeEventosDTO;
 import iesdoctorbalmis.daw2.voluntapp.dto.converter.EventoDTOConverter;
+import iesdoctorbalmis.daw2.voluntapp.dto.converter.InstitucionDTOConverter;
 import iesdoctorbalmis.daw2.voluntapp.dto.converter.UsuarioDTOConverter;
 import iesdoctorbalmis.daw2.voluntapp.dto.create.CreateEventoDTO;
 import iesdoctorbalmis.daw2.voluntapp.error.eventos.EventosNotFoundException;
@@ -67,6 +69,7 @@ public class EventosController {
     // Utils
     private final EventoDTOConverter eventoDTOConverter;
     private final UsuarioDTOConverter usuarioDTOConverter;
+    private final InstitucionDTOConverter institucionesDTOConverter;
     private final PaginationLinksUtils paginationLinksUtils;
 
     // Obtencion de todos los Eventos
@@ -147,6 +150,25 @@ public class EventosController {
 
     }
 
+    // Devolver booleano en caso de que la institucion este logueada y este apoyando
+    // el evento o no
+    @PostMapping("/eventos/isInstitutionInEvento")
+    public Boolean isInstitutionInEvento(@RequestBody IdEventoInstitucionDTO idEventoInstitucionDTO){
+
+        Optional<Eventos> evento = eventosService.buscarPorId(idEventoInstitucionDTO.getId_evento());
+        Optional<Instituciones> instituciones = institucionesService.buscarPorId(idEventoInstitucionDTO.getId_institucion());
+
+        if (evento.isPresent()) {
+            for (Instituciones ins : evento.get().getInstituciones()) {
+                if (ins.equals(instituciones.get())) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     // Añadir usuario al evento
     @PostMapping("/eventos/apuntar-usuario")
     public ResponseEntity<?> apuntarUsuarioEvento(@RequestBody IdEventoUsuarioDTO idEventoUsuarioDTO) {
@@ -166,6 +188,25 @@ public class EventosController {
         }
     }
 
+    // Apoyar evento
+    @PostMapping("/eventos/apuntar-institucion")
+    public ResponseEntity<?> apuntarInstitucionEvento(@RequestBody IdEventoInstitucionDTO idEventoInstitucionDTO) {
+
+        Optional<Eventos> evento = eventosService.buscarPorId(idEventoInstitucionDTO.getId_evento());
+        Optional<Instituciones> instituciones = institucionesService.buscarPorId(idEventoInstitucionDTO.getId_institucion());
+
+        if (evento.isPresent()) {
+
+            instituciones.get().addEventos(evento.get());
+            institucionesService.editar(instituciones.get());
+
+            return ResponseEntity.ok(institucionesDTOConverter.convertToDto(instituciones.get()));
+
+        } else {
+            throw new EventosNotFoundException(idEventoInstitucionDTO.getId_evento());
+        }
+    }
+
     // Desapuntar usuario del evento
     @PostMapping("/eventos/desapuntar-usuario")
     public ResponseEntity<?> desapuntarUsuarioEvento(@RequestBody IdEventoUsuarioDTO idEventoUsuarioDTO) {
@@ -182,6 +223,26 @@ public class EventosController {
 
         } else {
             throw new EventosNotFoundException(idEventoUsuarioDTO.getId_evento());
+        }
+
+    }
+
+    // Desapuntar institución del evento
+    @PostMapping("/eventos/desapuntar-institucion")
+    public ResponseEntity<?> desapuntarInstitucionEvento(@RequestBody IdEventoInstitucionDTO idEventoInstitucionDTO) {
+
+        Optional<Eventos> evento = eventosService.buscarPorId(idEventoInstitucionDTO.getId_evento());
+        Optional<Instituciones> instituciones = institucionesService.buscarPorId(idEventoInstitucionDTO.getId_institucion());
+
+        if (evento.isPresent()) {
+
+            instituciones.get().deleteEventos(evento.get());
+            institucionesService.editar(instituciones.get());
+
+            return ResponseEntity.ok(institucionesDTOConverter.convertToDto(instituciones.get()));
+
+        } else {
+            throw new EventosNotFoundException(idEventoInstitucionDTO.getId_evento());
         }
 
     }
@@ -334,12 +395,26 @@ public class EventosController {
         return ResponseEntity.ok(eventosDTOPage);
     }
 
-    // Obtener eventos ordenados por fecha de inicio
-    @GetMapping("/eventos/ordenarporfecha")
-    public ResponseEntity<?> obtenerEventosOrdenadosPorFechaInicio(Pageable pageable) {
-        Page<Eventos> eventos = eventosService.ObtenerTodosOrdenadosPorFechaInicioDesc(pageable);
+
+    // Obtener eventos ordenados por numero de voluntarios apuntados
+    @GetMapping("/eventos/ordenarporvoluntarios")
+    public ResponseEntity<?> obtenerEventosOrdenadosPorVoluntarios(Pageable pageable) {
+        Page<Eventos> eventos = eventosService.findAllByOrderByUsuariosDesc(pageable);
         Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
         return ResponseEntity.ok(eventosDTOPage);
     }
+    @GetMapping("/eventos/ordenarporfechaProxima")
+    public ResponseEntity<?> obtenerEventosOrdenadosPorFechaProxima(Pageable pageable) {
+        Page<Eventos> eventos = eventosService.obtenerEventosOrdenadosPorFechaProxima(pageable);
+        Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
+        return ResponseEntity.ok(eventosDTOPage);
+    }
+    @GetMapping("/eventos/ordenarporfechaAntigua")
+    public ResponseEntity<?> obtenerEventosOrdenadosPorFechaLejana(Pageable pageable) {
+        Page<Eventos> eventos = eventosService.obtenerEventosOrdenadosPorFechaLejana(pageable);
+        Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
+        return ResponseEntity.ok(eventosDTOPage);
+    }
+    
 
 }
