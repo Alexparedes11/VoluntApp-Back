@@ -104,12 +104,19 @@ public class UsuariosController {
     // Añadir usuarios a la base de datos
     @PostMapping("/usuarios")
     public ResponseEntity<Usuarios> nuevoUsuario(@RequestBody CreateUsuarioDTO nuevo) throws AzureBlobStorageException {
+        String ubicacionImagenPerfilAzure = "";
+        String ubicacionImagenBannerAzure = "";
+        if (nuevo.getFotoPerfil() != null) {
+            ubicacionImagenPerfilAzure = "https://voluntapp.blob.core.windows.net/images/"
+                    + azureBlobStorageService.uploadFile("perfiles", UUID.randomUUID().toString(),
+                            nuevo.getFotoPerfil());
 
-        String ubicacionImagenPerfilAzure = "https://voluntapp.blob.core.windows.net/images/"
-                + azureBlobStorageService.uploadFile("perfiles", UUID.randomUUID().toString(), nuevo.getFotoPerfil());
-
-        String ubicacionImagenBannerAzure = "https://voluntapp.blob.core.windows.net/images/"
-                + azureBlobStorageService.uploadFile("banners", UUID.randomUUID().toString(), nuevo.getFotoPerfil());
+        }
+        if (nuevo.getFotoPerfil() != null) {
+            ubicacionImagenBannerAzure = "https://voluntapp.blob.core.windows.net/images/"
+                    + azureBlobStorageService.uploadFile("banners", UUID.randomUUID().toString(),
+                            nuevo.getFotoBanner());
+        }
 
         Usuarios usuarioNuevo = Usuarios.builder()
                 .nombre(nuevo.getNombre())
