@@ -104,19 +104,6 @@ public class UsuariosController {
     // Añadir usuarios a la base de datos
     @PostMapping("/usuarios")
     public ResponseEntity<Usuarios> nuevoUsuario(@RequestBody CreateUsuarioDTO nuevo) throws AzureBlobStorageException {
-        String ubicacionImagenPerfilAzure = "";
-        String ubicacionImagenBannerAzure = "";
-        if (nuevo.getFotoPerfil() != null) {
-            ubicacionImagenPerfilAzure = "https://voluntapp.blob.core.windows.net/images/"
-                    + azureBlobStorageService.uploadFile("perfiles", UUID.randomUUID().toString(),
-                            nuevo.getFotoPerfil());
-
-        }
-        if (nuevo.getFotoPerfil() != null) {
-            ubicacionImagenBannerAzure = "https://voluntapp.blob.core.windows.net/images/"
-                    + azureBlobStorageService.uploadFile("banners", UUID.randomUUID().toString(),
-                            nuevo.getFotoBanner());
-        }
 
         Usuarios usuarioNuevo = Usuarios.builder()
                 .nombre(nuevo.getNombre())
@@ -127,8 +114,8 @@ public class UsuariosController {
                 .username(nuevo.getEmail())
                 .rol("Usuario")
                 .telefono(nuevo.getTelefono())
-                .fotoPerfil(ubicacionImagenPerfilAzure)
-                .fotoBanner(ubicacionImagenBannerAzure)
+                .fotoPerfil("https://voluntapp.blob.core.windows.net/images/perfiles/default.webp")
+                .fotoBanner("https://voluntapp.blob.core.windows.net/images/banners/default.webp")
                 .build();
 
         Usuarios nuevoUsuario = usuariosService.guardar(usuarioNuevo);
@@ -138,9 +125,34 @@ public class UsuariosController {
 
     // Editar usuario de la base de datos
     @PutMapping("/usuarios/{id}")
-    public ResponseEntity<Usuarios> editarUsuario(@RequestBody CreateUsuarioDTO editarUsuario, @PathVariable Long id) {
+    public ResponseEntity<Usuarios> editarUsuario(@RequestBody CreateUsuarioDTO editarUsuario, @PathVariable Long id)
+            throws AzureBlobStorageException {
 
         return usuariosService.buscarPorId(id).map(p -> {
+
+            String ubicacionImagenPerfilAzure = "";
+            String ubicacionImagenBannerAzure = "";
+            if (editarUsuario.getFotoPerfil() != null && editarUsuario.getFotoPerfil() != "") {
+                try {
+                    ubicacionImagenPerfilAzure = "https://voluntapp.blob.core.windows.net/images/"
+                            + azureBlobStorageService.uploadFile("perfiles", UUID.randomUUID().toString(),
+                                    editarUsuario.getFotoPerfil());
+                } catch (AzureBlobStorageException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+            if (editarUsuario.getFotoBanner() != null && editarUsuario.getFotoBanner() != "") {
+                try {
+                    ubicacionImagenBannerAzure = "https://voluntapp.blob.core.windows.net/images/"
+                            + azureBlobStorageService.uploadFile("banners", UUID.randomUUID().toString(),
+                                    editarUsuario.getFotoBanner());
+                } catch (AzureBlobStorageException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+
             p.setNombre(editarUsuario.getNombre());
             p.setApellidos(editarUsuario.getApellidos());
             p.setPassword(editarUsuario.getContraseña());
@@ -148,7 +160,8 @@ public class UsuariosController {
             p.setDni(editarUsuario.getDni());
             p.setUsername(editarUsuario.getEmail());
             p.setTelefono(editarUsuario.getTelefono());
-            p.setFotoPerfil(editarUsuario.getFotoPerfil());
+            p.setFotoPerfil(ubicacionImagenPerfilAzure);
+            p.setFotoBanner(ubicacionImagenBannerAzure);
             p.setEventos(p.getEventos());
             p.setRol(editarUsuario.getRol());
             return ResponseEntity.ok(usuariosService.editar(p));

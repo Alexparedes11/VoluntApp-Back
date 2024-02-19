@@ -36,6 +36,8 @@ public class UsuarioDTOConverter {
             .telefono(usu.getTelefono())
             .direccion(usu.getDireccion())
             .contraseña(usu.getPassword())
+            .fotoBanner(usu.getFotoBanner())
+            .fotoPerfil(usu.getFotoPerfil())
             .eventosNombre(eventos)
             .direccion(usu.getDireccion())
             .build();

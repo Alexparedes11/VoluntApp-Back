@@ -409,12 +409,12 @@ public class EventosController {
         Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
         return ResponseEntity.ok(eventosDTOPage);
     }
-    @GetMapping("/eventos/ordenarporfechaAntigua")
-    public ResponseEntity<?> obtenerEventosOrdenadosPorFechaLejana(Pageable pageable) {
-        Page<Eventos> eventos = eventosService.obtenerEventosOrdenadosPorFechaLejana(pageable);
-        Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
-        return ResponseEntity.ok(eventosDTOPage);
-    }
+    // @GetMapping("/eventos/ordenarporfechaAntigua")
+    // public ResponseEntity<?> obtenerEventosOrdenadosPorFechaLejana(Pageable pageable) {
+    //     Page<Eventos> eventos = eventosService.obtenerEventosOrdenadosPorFechaLejana(pageable);
+    //     Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
+    //     return ResponseEntity.ok(eventosDTOPage);
+    // }
     
 
 }

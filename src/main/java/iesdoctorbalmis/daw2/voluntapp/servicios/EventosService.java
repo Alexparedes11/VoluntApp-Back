@@ -102,7 +102,7 @@ public class EventosService {
         return eventosRepository.findAllByOrderByFechaInicioAsc(pageable);
     }
 
-    public Page<Eventos> obtenerEventosOrdenadosPorFechaLejana(Pageable pageable) {
-        return eventosRepository.findAllByOrderByFechaInicioDesc(pageable);
-    }
+    // public Page<Eventos> obtenerEventosOrdenadosPorFechaLejana(Pageable pageable) {
+    //     return eventosRepository.findAllByOrderByFechaInicioDesc(pageable);
+    // }
 }

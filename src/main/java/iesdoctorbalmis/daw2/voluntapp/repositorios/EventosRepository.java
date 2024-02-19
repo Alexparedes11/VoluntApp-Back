@@ -63,7 +63,7 @@ public interface EventosRepository extends JpaRepository<Eventos, Long> {
         Page<Eventos> findAllByOrderByFechaInicioAsc(Pageable pageable);
 
         //coger los eventos ordenados por fecha de inicio tardia:
-        @Query("SELECT e FROM Eventos e WHERE e.estado = 'disponible' ORDER BY e.fInicio DESC")
-        Page<Eventos> findAllByOrderByFechaInicioDesc(Pageable pageable);
+        // @Query("SELECT e FROM Eventos e WHERE e.estado = 'disponible' ORDER BY e.fInicio DESC")
+        // Page<Eventos> findAllByOrderByFechaInicioDesc(Pageable pageable);
 
 }
