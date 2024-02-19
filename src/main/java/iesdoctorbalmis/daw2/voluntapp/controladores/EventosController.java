@@ -247,22 +247,6 @@ public class EventosController {
 
     }
 
-    // Filtrado por el nombre del evento ( NO FUNCIONA )
-    // @CrossOrigin(origins = "http://localhost:9000")
-    // @GetMapping(value="/Eventos", params = "nombre")
-    // public ResponseEntity<?> buscarEventosPorNombre(@RequestParam("nombre")
-    // String txt, Pageable pageable, HttpServletRequest request) {
-    // Page<Eventos> listaEventos = eventosService.buscarPorNombre(txt, pageable);
-
-    // if (listaEventos.isEmpty()) {
-    // throw new SearchEventosNoResultException(txt);
-    // } else {
-    // Page<EventosDTO> dtoList =
-    // listaEventos.map(eventoDTOConverter::convertToDto);
-    // return ResponseEntity.ok(dtoList);
-    // }
-    // }
-
     // Añadir Eventos a la base de datos
 
     @PostMapping("/eventos")
@@ -371,7 +355,7 @@ public class EventosController {
 
     // Actualizar estado del evento
     @PutMapping("/eventos/{id}/estado")
-    public ResponseEntity<Eventos> actualizarEstadoEvento(@PathVariable Long id, @RequestBody String estado) {
+    public ResponseEntity<Eventos> actualizarEstadoEvento(@PathVariable Long id, @RequestBody String estado) throws AzureBlobStorageException {
         Eventos evento = eventosService.buscarPorId(id)
                 .orElseThrow(() -> new EventosNotFoundException(id));
         evento.setEstado(estado);
@@ -407,6 +391,14 @@ public class EventosController {
         Page<Eventos> eventos = eventosService.findByFechaInicioBetweenAndUbicacionAndEstado(
                 fInicio, fFin, nombreUbicacion.toLowerCase(), pageable);
 
+        Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
+        return ResponseEntity.ok(eventosDTOPage);
+    }
+
+    // Obtener eventos ordenados por fecha de inicio
+    @GetMapping("/eventos/ordenarporfecha")
+    public ResponseEntity<?> obtenerEventosOrdenadosPorFechaInicio(Pageable pageable) {
+        Page<Eventos> eventos = eventosService.ObtenerTodosOrdenadosPorFechaInicioDesc(pageable);
         Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
         return ResponseEntity.ok(eventosDTOPage);
     }

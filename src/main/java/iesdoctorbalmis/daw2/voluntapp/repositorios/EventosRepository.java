@@ -54,4 +54,7 @@ public interface EventosRepository extends JpaRepository<Eventos, Long> {
 
         List<Eventos> findByEstadoAndUsuarios(String estado, Usuarios usu);
 
+        
+        Page<Eventos> findAllByOrderByFechaInicioDesc(Pageable pageable);
+
 }

@@ -40,12 +40,12 @@ public class VoluntappApplication {
 	// };
 	// }
 
-	@Bean
-	@Transactional
-	CommandLineRunner init(UsuariosService usuariosService, InstitucionesService institucionesService,
-			EventosService eventosService, UbicacionService ubicacionService,
-			NoticiasService noticiasService) {
-		return (args) -> {
+	// @Bean
+	// @Transactional
+	// CommandLineRunner init(UsuariosService usuariosService, InstitucionesService institucionesService,
+	// 		EventosService eventosService, UbicacionService ubicacionService,
+	// 		NoticiasService noticiasService) {
+	// 	return (args) -> {
 
 			// LocalDateTime fechaInicioEvento1 = LocalDateTime.of(2024, 2, 17, 9, 30);
 			// LocalDateTime fechaFinEvento1 = LocalDateTime.of(2024, 2, 17, 14, 0);
@@ -288,6 +288,6 @@ public class VoluntappApplication {
 			// 	usuariosService.editar(usuarios.get());
 			// }
 
-		};
-	}
+	// 	};
+	// }
 }
