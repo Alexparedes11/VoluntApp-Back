@@ -54,7 +54,6 @@ public interface EventosRepository extends JpaRepository<Eventos, Long> {
 
         List<Eventos> findByEstadoAndUsuarios(String estado, Usuarios usu);
 
-
         //coger los eventos ordenados por numero de voluntarios apuntados:
         @Query("SELECT e FROM Eventos e JOIN e.usuarios u WHERE e.estado = 'disponible' GROUP BY e.id ORDER BY COUNT(u.id) DESC, e.id")
         Page<Eventos> findAllByOrderByUsuariosDesc(Pageable pageable);
