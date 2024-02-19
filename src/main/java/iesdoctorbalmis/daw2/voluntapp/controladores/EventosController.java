@@ -335,11 +335,32 @@ public class EventosController {
     }
 
     // Obtener eventos ordenados por fecha de inicio
-    @GetMapping("/eventos/ordenarporfecha")
-    public ResponseEntity<?> obtenerEventosOrdenadosPorFechaInicio(Pageable pageable) {
-        Page<Eventos> eventos = eventosService.ObtenerTodosOrdenadosPorFechaInicioDesc(pageable);
+    // @GetMapping("/eventos/ordenarporfecha")
+    // public ResponseEntity<?> obtenerEventosOrdenadosPorFechaInicio(Pageable pageable) {
+    //     Page<Eventos> eventos = eventosService.ObtenerTodosOrdenadosPorFechaInicioDesc(pageable);
+    //     Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
+    //     return ResponseEntity.ok(eventosDTOPage);
+    // }
+
+    // Obtener eventos ordenados por numero de voluntarios apuntados
+    @GetMapping("/eventos/ordenarporvoluntarios")
+    public ResponseEntity<?> obtenerEventosOrdenadosPorVoluntarios(Pageable pageable) {
+        Page<Eventos> eventos = eventosService.findAllByOrderByUsuariosDesc(pageable);
         Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
         return ResponseEntity.ok(eventosDTOPage);
     }
+    @GetMapping("/eventos/ordenarporfechaProxima")
+    public ResponseEntity<?> obtenerEventosOrdenadosPorFechaProxima(Pageable pageable) {
+        Page<Eventos> eventos = eventosService.obtenerEventosOrdenadosPorFechaProxima(pageable);
+        Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
+        return ResponseEntity.ok(eventosDTOPage);
+    }
+    @GetMapping("/eventos/ordenarporfechaAntigua")
+    public ResponseEntity<?> obtenerEventosOrdenadosPorFechaLejana(Pageable pageable) {
+        Page<Eventos> eventos = eventosService.obtenerEventosOrdenadosPorFechaLejana(pageable);
+        Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
+        return ResponseEntity.ok(eventosDTOPage);
+    }
+    
 
 }

@@ -54,7 +54,17 @@ public interface EventosRepository extends JpaRepository<Eventos, Long> {
 
         List<Eventos> findByEstadoAndUsuarios(String estado, Usuarios usu);
 
-        
+
+        //coger los eventos ordenados por numero de voluntarios apuntados:
+        @Query("SELECT e FROM Eventos e JOIN e.usuarios u WHERE e.estado = 'disponible' GROUP BY e.id ORDER BY COUNT(u.id) DESC, e.id")
+        Page<Eventos> findAllByOrderByUsuariosDesc(Pageable pageable);
+
+        //coger los eventos ordenados por fecha de inicio:
+        @Query("SELECT e FROM Eventos e WHERE e.estado = 'disponible' ORDER BY e.fInicio ASC")
+        Page<Eventos> findAllByOrderByFechaInicioAsc(Pageable pageable);
+
+        //coger los eventos ordenados por fecha de inicio tardia:
+        @Query("SELECT e FROM Eventos e WHERE e.estado = 'disponible' ORDER BY e.fInicio DESC")
         Page<Eventos> findAllByOrderByFechaInicioDesc(Pageable pageable);
 
 }
