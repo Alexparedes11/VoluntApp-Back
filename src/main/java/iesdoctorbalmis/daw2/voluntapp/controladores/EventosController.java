@@ -21,6 +21,7 @@ import iesdoctorbalmis.daw2.voluntapp.modelos.Instituciones;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Ubicacion;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
 import iesdoctorbalmis.daw2.voluntapp.servicios.AzureBlobStorageService;
+import iesdoctorbalmis.daw2.voluntapp.servicios.ComputerVisionService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.EventosService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.InstitucionesService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.UbicacionService;
@@ -54,7 +55,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequiredArgsConstructor
@@ -66,6 +66,7 @@ public class EventosController {
     private final InstitucionesService institucionesService;
     private final UbicacionService ubicacionService;
     private final AzureBlobStorageService azureBlobStorageService;
+    private final ComputerVisionService computerVisionService;
 
     // Utils
     private final EventoDTOConverter eventoDTOConverter;
@@ -199,10 +200,6 @@ public class EventosController {
         Optional<Instituciones> instituciones = institucionesService
                 .buscarPorId(idEventoInstitucionDTO.getId_institucion());
 
-        System.out.println("-------------------------------------");
-        System.out.println(evento.get().getId() + " " + instituciones.get().getId());
-        System.out.println("-------------------------------------");
-
         if (evento.isPresent()) {
 
             instituciones.get().addEventos(evento.get());
@@ -262,43 +259,50 @@ public class EventosController {
     // Añadir Eventos a la base de datos
 
     @PostMapping("/eventos")
-    public ResponseEntity<Eventos> nuevoEvento(@RequestBody CreateEventoDTO nuevo) throws AzureBlobStorageException {
-
-        Instituciones creadoPorInstituciones = null;
-        Usuarios creadoPorUsuarios = null;
-
-        if (nuevo.getInstitucionNombre() != null) {
-            creadoPorInstituciones = institucionesService.buscarPorId(nuevo.getUsuarioId()).orElse(null);
-        } else {
-            creadoPorUsuarios = usuariosService.buscarPorId(nuevo.getUsuarioId()).orElse(null);
+    public ResponseEntity<?> nuevoEvento(@RequestBody CreateEventoDTO nuevo) {
+        try {
+            Instituciones creadoPorInstituciones = null;
+            Usuarios creadoPorUsuarios = null;
+        
+            if (nuevo.getInstitucionNombre() != null) {
+                creadoPorInstituciones = institucionesService.buscarPorId(nuevo.getUsuarioId()).orElse(null);
+            } else {
+                creadoPorUsuarios = usuariosService.buscarPorId(nuevo.getUsuarioId()).orElse(null);
+            }
+        
+            Ubicacion u = Ubicacion.builder()
+                    .id(null)
+                    .nombre(nuevo.getNombreUbicacion())
+                    .lat(nuevo.getLat())
+                    .lon(nuevo.getLon())
+                    .build();
+        
+            String ubicacionImagenAzure = "https://voluntapp.blob.core.windows.net/images/"
+                    + azureBlobStorageService.uploadFile("eventos", UUID.randomUUID().toString(), nuevo.getImagen());
+        
+            if (!computerVisionService.isImageAppropriate(ubicacionImagenAzure)) {
+                throw new AzureBlobStorageException("La imagen no es apropiada");
+            }
+        
+            Eventos eventoNuevo = Eventos.builder()
+                    .titulo(nuevo.getTitulo())
+                    .imagen(ubicacionImagenAzure)
+                    .descripcion(nuevo.getDescripcion())
+                    .ubicacion(u)
+                    .fInicio(nuevo.getFInicio())
+                    .fFin(nuevo.getFFin())
+                    .creadoPorInstituciones(creadoPorInstituciones)
+                    .creadoPorUsuarios(creadoPorUsuarios)
+                    .estado("revision")
+                    .maxVoluntarios(nuevo.getMaxVoluntarios())
+                    .build();
+        
+            ubicacionService.guardar(u);
+            Eventos nuevoevento = eventosService.guardar(eventoNuevo);
+            return ResponseEntity.status(HttpStatus.CREATED).body(nuevoevento);
+        } catch (AzureBlobStorageException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-
-        Ubicacion u = Ubicacion.builder()
-                .id(null)
-                .nombre(nuevo.getNombreUbicacion())
-                .lat(nuevo.getLat())
-                .lon(nuevo.getLon())
-                .build();
-
-        String ubicacionImagenAzure = "https://voluntapp.blob.core.windows.net/images/"
-                + azureBlobStorageService.uploadFile("eventos", UUID.randomUUID().toString(), nuevo.getImagen());
-
-        Eventos eventoNuevo = Eventos.builder()
-                .titulo(nuevo.getTitulo())
-                .imagen(ubicacionImagenAzure)
-                .descripcion(nuevo.getDescripcion())
-                .ubicacion(u)
-                .fInicio(nuevo.getFInicio())
-                .fFin(nuevo.getFFin())
-                .creadoPorInstituciones(creadoPorInstituciones)
-                .creadoPorUsuarios(creadoPorUsuarios)
-                .estado("revision")
-                .maxVoluntarios(nuevo.getMaxVoluntarios())
-                .build();
-
-        ubicacionService.guardar(u);
-        Eventos nuevoevento = eventosService.guardar(eventoNuevo);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoevento);
 
     }
 
