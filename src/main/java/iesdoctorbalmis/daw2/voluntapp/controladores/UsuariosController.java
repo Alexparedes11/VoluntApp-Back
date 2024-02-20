@@ -130,8 +130,8 @@ public class UsuariosController {
 
         return usuariosService.buscarPorId(id).map(p -> {
 
-            String ubicacionImagenPerfilAzure = "";
-            String ubicacionImagenBannerAzure = "";
+            String ubicacionImagenPerfilAzure = editarUsuario.getFotoPerfil();
+            String ubicacionImagenBannerAzure = editarUsuario.getFotoBanner();
             if (editarUsuario.getFotoPerfil() != null && editarUsuario.getFotoPerfil() != "") {
                 try {
                     ubicacionImagenPerfilAzure = "https://voluntapp.blob.core.windows.net/images/"
@@ -160,8 +160,12 @@ public class UsuariosController {
             p.setDni(editarUsuario.getDni());
             p.setUsername(editarUsuario.getEmail());
             p.setTelefono(editarUsuario.getTelefono());
-            p.setFotoPerfil(ubicacionImagenPerfilAzure);
-            p.setFotoBanner(ubicacionImagenBannerAzure);
+            if (ubicacionImagenPerfilAzure != null) {
+                p.setFotoPerfil(ubicacionImagenPerfilAzure);
+            }
+            if (ubicacionImagenBannerAzure != null) {
+                p.setFotoBanner(ubicacionImagenBannerAzure);
+            }
             p.setEventos(p.getEventos());
             p.setRol(editarUsuario.getRol());
             return ResponseEntity.ok(usuariosService.editar(p));
