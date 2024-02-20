@@ -70,6 +70,10 @@ public class EventosService {
         return eventosRepository.findByCreadoPorUsuariosId(id);
     }
 
+    public List<Eventos> findByCreadoPorInstitucionesId(Long id) {
+        return eventosRepository.findByCreadoPorInstitucionesId(id);
+    }
+
     public Page<Eventos> findByFechaInicioBetween(LocalDateTime fInicio, LocalDateTime fFin, Pageable pageable) {
         return eventosRepository.findByFechaInicioBetween(fInicio, fFin, pageable);
     }

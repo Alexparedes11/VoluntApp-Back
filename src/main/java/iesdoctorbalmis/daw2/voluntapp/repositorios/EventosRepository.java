@@ -25,6 +25,8 @@ public interface EventosRepository extends JpaRepository<Eventos, Long> {
 
         List<Eventos> findByCreadoPorUsuariosId(Long id);
 
+        List<Eventos> findByCreadoPorInstitucionesId(Long id);
+
         Page<Eventos> findByEstado(String estado, Pageable pageable);
 
         @Query("SELECT e FROM Eventos e WHERE e.fInicio BETWEEN :fechaInicio AND :fechaFin")
