@@ -387,7 +387,7 @@ public class EventosController {
     // Obtener eventos filtrados por búsqueda de texto
     @GetMapping("/eventos/buscar/{texto}")
     public ResponseEntity<?> buscarEventosPorTexto(@PathVariable String texto, Pageable pageable) {
-        Page<Eventos> eventos = eventosService.buscarPorTitulo(texto, pageable);
+        Page<Eventos> eventos = eventosService.buscarPorTituloAndEstadoDisponible(texto, pageable);
         Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
         return ResponseEntity.ok(eventosDTOPage);
     }

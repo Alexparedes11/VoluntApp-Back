@@ -47,9 +47,8 @@ public class EventosService {
         return eventosRepository.findById(id);
     }
 
-    // buscar eventos por nombre
-    public Page<Eventos> buscarPorTitulo(String txt, Pageable pageable) {
-        return eventosRepository.findByTituloContainsIgnoreCase(txt, pageable);
+    public Page<Eventos> buscarPorTituloAndEstadoDisponible(String txt, Pageable pageable) {
+        return eventosRepository.findByTituloContainsIgnoreCaseAndEstado(txt, "disponible", pageable);
     }
 
     // obtener todos los usuarios pageable

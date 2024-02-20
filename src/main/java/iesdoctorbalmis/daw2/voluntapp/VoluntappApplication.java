@@ -17,7 +17,6 @@ import iesdoctorbalmis.daw2.voluntapp.modelos.Instituciones;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Noticias;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Ubicacion;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
-import iesdoctorbalmis.daw2.voluntapp.servicios.AzureBlobStorageService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.EventosService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.InstitucionesService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.NoticiasService;
