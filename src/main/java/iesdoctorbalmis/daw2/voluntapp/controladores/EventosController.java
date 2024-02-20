@@ -252,9 +252,14 @@ public class EventosController {
     @PostMapping("/eventos")
     public ResponseEntity<Eventos> nuevoEvento(@RequestBody CreateEventoDTO nuevo) throws AzureBlobStorageException {
 
-        // Instituciones creadoPorInstituciones =
-        // institucionesService.buscarPorNombre(nuevo.getCreadoPorUsuario());
-        Usuarios creadoPorUsuarios = usuariosService.buscarPorId(nuevo.getUsuarioId()).orElse(null);
+        Instituciones creadoPorInstituciones = null;
+        Usuarios creadoPorUsuarios = null;
+
+        if (nuevo.getInstitucionNombre() != null) {
+            creadoPorInstituciones = institucionesService.buscarPorId(nuevo.getUsuarioId()).orElse(null);
+        }else {
+            creadoPorUsuarios = usuariosService.buscarPorId(nuevo.getUsuarioId()).orElse(null);
+        }
 
         Ubicacion u = Ubicacion.builder()
                 .id(null)
@@ -273,7 +278,7 @@ public class EventosController {
                 .ubicacion(u)
                 .fInicio(nuevo.getFInicio())
                 .fFin(nuevo.getFFin())
-                .creadoPorInstituciones(null)
+                .creadoPorInstituciones(creadoPorInstituciones)
                 .creadoPorUsuarios(creadoPorUsuarios)
                 .estado("revision")
                 .maxVoluntarios(nuevo.getMaxVoluntarios())
@@ -396,11 +401,11 @@ public class EventosController {
     }
 
     // Obtener eventos ordenados por fecha de inicio
-    @GetMapping("/eventos/ordenarporfecha")
-    public ResponseEntity<?> obtenerEventosOrdenadosPorFechaInicio(Pageable pageable) {
-        Page<Eventos> eventos = eventosService.ObtenerTodosOrdenadosPorFechaInicioDesc(pageable);
-        Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
-        return ResponseEntity.ok(eventosDTOPage);
-    }
+    // @GetMapping("/eventos/ordenarporfecha")
+    // public ResponseEntity<?> obtenerEventosOrdenadosPorFechaInicio(Pageable pageable) {
+    //     Page<Eventos> eventos = eventosService.ObtenerTodosOrdenadosPorFechaInicioDesc(pageable);
+    //     Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
+    //     return ResponseEntity.ok(eventosDTOPage);
+    // }
 
 }

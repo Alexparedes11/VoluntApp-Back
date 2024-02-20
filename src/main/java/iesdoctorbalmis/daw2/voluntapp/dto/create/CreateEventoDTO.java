@@ -41,7 +41,7 @@ public class CreateEventoDTO {
 
     private Long usuarioId;
 
-    private String creadoPorIntitucion;
+    private String institucionNombre;
 
     private int maxVoluntarios;
 

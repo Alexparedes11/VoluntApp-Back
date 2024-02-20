@@ -93,8 +93,8 @@ public class EventosService {
         return eventosRepository.findByEstadoAndUsuarios(estado, usu);
     }
 
-    public Page<Eventos> ObtenerTodosOrdenadosPorFechaInicioDesc(Pageable pageable) {
-        return eventosRepository.findAllByOrderByFechaInicioDesc(pageable);
-    }
+    // public Page<Eventos> ObtenerTodosOrdenadosPorFechaInicioDesc(Pageable pageable) {
+    //     return eventosRepository.findAllByOrderByFechaInicioDesc(pageable);
+    // }
 
 }
