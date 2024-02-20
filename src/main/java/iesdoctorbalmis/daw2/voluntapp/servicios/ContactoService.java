@@ -43,4 +43,14 @@ public class ContactoService {
             throw e;
         }
     }
+
+    //correo de registro completado
+    public void enviarRegistro(Contacto contacto) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("voluntapp.management@gmail.com");
+        message.setTo(contacto.getEmail());
+        message.setSubject(contacto.getAsunto());
+        message.setText(contacto.getMensaje());
+        mailSender.send(message);
+    }
 }

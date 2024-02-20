@@ -60,6 +60,20 @@ public class ContactoController {
         }
 }
 
+//Mandar correo de registro completado
+@PostMapping("/enviarRegistro")
+    public ResponseEntity<Map<String, String>> enviarRegistro(@RequestBody Contacto contacto) {
+        try {
+            enviarCorreo.enviarRegistro(contacto);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Correo enviado");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+}
+
 
 
 }

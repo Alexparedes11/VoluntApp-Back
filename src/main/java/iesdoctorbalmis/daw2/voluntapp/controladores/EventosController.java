@@ -401,11 +401,11 @@ public class EventosController {
     }
 
     // Obtener eventos ordenados por fecha de inicio
-    // @GetMapping("/eventos/ordenarporfecha")
-    // public ResponseEntity<?> obtenerEventosOrdenadosPorFechaInicio(Pageable pageable) {
-    //     Page<Eventos> eventos = eventosService.ObtenerTodosOrdenadosPorFechaInicioDesc(pageable);
-    //     Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
-    //     return ResponseEntity.ok(eventosDTOPage);
-    // }
+    @GetMapping("/eventos/ordenarporfecha")
+    public ResponseEntity<?> obtenerEventosOrdenadosPorFechaInicio(Pageable pageable) {
+        Page<Eventos> eventos = eventosService.ObtenerTodosOrdenadosPorFechaInicioDesc(pageable);
+        Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
+        return ResponseEntity.ok(eventosDTOPage);
+    }
 
 }
