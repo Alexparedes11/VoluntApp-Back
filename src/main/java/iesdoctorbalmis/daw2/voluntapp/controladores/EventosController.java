@@ -154,10 +154,11 @@ public class EventosController {
     // Devolver booleano en caso de que la institucion este logueada y este apoyando
     // el evento o no
     @PostMapping("/eventos/isInstitutionInEvento")
-    public Boolean isInstitutionInEvento(@RequestBody IdEventoInstitucionDTO idEventoInstitucionDTO){
+    public Boolean isInstitutionInEvento(@RequestBody IdEventoInstitucionDTO idEventoInstitucionDTO) {
 
         Optional<Eventos> evento = eventosService.buscarPorId(idEventoInstitucionDTO.getId_evento());
-        Optional<Instituciones> instituciones = institucionesService.buscarPorId(idEventoInstitucionDTO.getId_institucion());
+        Optional<Instituciones> instituciones = institucionesService
+                .buscarPorId(idEventoInstitucionDTO.getId_institucion());
 
         if (evento.isPresent()) {
             for (Instituciones ins : evento.get().getInstituciones()) {
@@ -195,7 +196,8 @@ public class EventosController {
     public ResponseEntity<?> apuntarInstitucionEvento(@RequestBody IdEventoInstitucionDTO idEventoInstitucionDTO) {
 
         Optional<Eventos> evento = eventosService.buscarPorId(idEventoInstitucionDTO.getId_evento());
-        Optional<Instituciones> instituciones = institucionesService.buscarPorId(idEventoInstitucionDTO.getId_institucion());
+        Optional<Instituciones> instituciones = institucionesService
+                .buscarPorId(idEventoInstitucionDTO.getId_institucion());
 
         System.out.println("-------------------------------------");
         System.out.println(evento.get().getId() + " " + instituciones.get().getId());
@@ -240,7 +242,8 @@ public class EventosController {
     public ResponseEntity<?> desapuntarInstitucionEvento(@RequestBody IdEventoInstitucionDTO idEventoInstitucionDTO) {
 
         Optional<Eventos> evento = eventosService.buscarPorId(idEventoInstitucionDTO.getId_evento());
-        Optional<Instituciones> instituciones = institucionesService.buscarPorId(idEventoInstitucionDTO.getId_institucion());
+        Optional<Instituciones> instituciones = institucionesService
+                .buscarPorId(idEventoInstitucionDTO.getId_institucion());
 
         if (evento.isPresent()) {
 
@@ -266,7 +269,7 @@ public class EventosController {
 
         if (nuevo.getInstitucionNombre() != null) {
             creadoPorInstituciones = institucionesService.buscarPorId(nuevo.getUsuarioId()).orElse(null);
-        }else {
+        } else {
             creadoPorUsuarios = usuariosService.buscarPorId(nuevo.getUsuarioId()).orElse(null);
         }
 
@@ -391,7 +394,8 @@ public class EventosController {
 
     // Actualizar estado del evento
     @PutMapping("/eventos/{id}/estado")
-    public ResponseEntity<Eventos> actualizarEstadoEvento(@PathVariable Long id, @RequestBody String estado) throws AzureBlobStorageException {
+    public ResponseEntity<Eventos> actualizarEstadoEvento(@PathVariable Long id, @RequestBody String estado)
+            throws AzureBlobStorageException {
         Eventos evento = eventosService.buscarPorId(id)
                 .orElseThrow(() -> new EventosNotFoundException(id));
         evento.setEstado(estado);
@@ -427,6 +431,28 @@ public class EventosController {
         Page<Eventos> eventos = eventosService.findByFechaInicioBetweenAndUbicacionAndEstado(
                 fInicio, fFin, nombreUbicacion.toLowerCase(), pageable);
 
+        Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
+        return ResponseEntity.ok(eventosDTOPage);
+    }
+
+    // Obtener eventos ordenados por numero de voluntarios apuntados
+    @GetMapping("/eventos/ordenarporvoluntarios")
+    public ResponseEntity<?> obtenerEventosOrdenadosPorVoluntarios(Pageable pageable) {
+        Page<Eventos> eventos = eventosService.findAllByOrderByUsuariosDesc(pageable);
+        Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
+        return ResponseEntity.ok(eventosDTOPage);
+    }
+
+    @GetMapping("/eventos/ordenarporfechaProxima")
+    public ResponseEntity<?> obtenerEventosOrdenadosPorFechaProxima(Pageable pageable) {
+        Page<Eventos> eventos = eventosService.obtenerEventosOrdenadosPorFechaProxima(pageable);
+        Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
+        return ResponseEntity.ok(eventosDTOPage);
+    }
+
+    @GetMapping("/eventos/ordenarporfechaAntigua")
+    public ResponseEntity<?> obtenerEventosOrdenadosPorFechaLejana(Pageable pageable) {
+        Page<Eventos> eventos = eventosService.obtenerEventosOrdenadosPorFechaLejana(pageable);
         Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
         return ResponseEntity.ok(eventosDTOPage);
     }
