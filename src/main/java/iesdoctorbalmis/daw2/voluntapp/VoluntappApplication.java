@@ -32,14 +32,6 @@ public class VoluntappApplication {
 		SpringApplication.run(VoluntappApplication.class, args);
 	}
 
-	// ESTO ES PARA PROBAR AZURE
-	// @Bean
-	// CommandLineRunner init(AzureBlobStorageService azureBlobStorageService) {
-	// return (args) -> {
-	// azureBlobStorageService.writeBlob();
-	// };
-	// }
-
 	// @Bean
 	// @Transactional
 	// CommandLineRunner init(UsuariosService usuariosService, InstitucionesService institucionesService,
