@@ -13,6 +13,7 @@ import iesdoctorbalmis.daw2.voluntapp.dto.converter.InstitucionDTOConverter;
 import iesdoctorbalmis.daw2.voluntapp.dto.converter.UsuarioDTOConverter;
 import iesdoctorbalmis.daw2.voluntapp.dto.create.CreateEventoDTO;
 import iesdoctorbalmis.daw2.voluntapp.error.eventos.EventosNotFoundException;
+import iesdoctorbalmis.daw2.voluntapp.error.instituciones.InstitucionesNotFoundException;
 import iesdoctorbalmis.daw2.voluntapp.error.usuarios.UsuariosNotFoundException;
 import iesdoctorbalmis.daw2.voluntapp.excepciones.AzureBlobStorageException;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
@@ -180,6 +181,7 @@ public class EventosController {
         if (evento.isPresent()) {
 
             usuarios.get().addEventos(evento.get());
+            eventosService.guardar(evento.get());
             usuariosService.editar(usuarios.get());
 
             return ResponseEntity.ok(usuarioDTOConverter.convertToDto(usuarios.get()));
@@ -197,9 +199,14 @@ public class EventosController {
         Optional<Instituciones> instituciones = institucionesService
                 .buscarPorId(idEventoInstitucionDTO.getId_institucion());
 
+        System.out.println("-------------------------------------");
+        System.out.println(evento.get().getId() + " " + instituciones.get().getId());
+        System.out.println("-------------------------------------");
+
         if (evento.isPresent()) {
 
             instituciones.get().addEventos(evento.get());
+            eventosService.guardar(evento.get());
             institucionesService.editar(instituciones.get());
 
             return ResponseEntity.ok(institucionesDTOConverter.convertToDto(instituciones.get()));
@@ -219,6 +226,7 @@ public class EventosController {
         if (evento.isPresent()) {
 
             usuarios.get().deleteEventos(evento.get());
+            eventosService.guardar(evento.get());
             usuariosService.editar(usuarios.get());
 
             return ResponseEntity.ok(usuarioDTOConverter.convertToDto(usuarios.get()));
@@ -240,6 +248,7 @@ public class EventosController {
         if (evento.isPresent()) {
 
             instituciones.get().deleteEventos(evento.get());
+            eventosService.guardar(evento.get());
             institucionesService.editar(instituciones.get());
 
             return ResponseEntity.ok(institucionesDTOConverter.convertToDto(instituciones.get()));
@@ -325,12 +334,34 @@ public class EventosController {
         return ResponseEntity.ok(eventosDTOList);
     }
 
+        // Obtener un eventos de un usuario
+        @GetMapping("/eventos/institucion/{id}")
+        public ResponseEntity<?> obtenerEventosInstitucion(@PathVariable Long id) {
+            Instituciones instituciones = institucionesService.buscarPorId(id)
+                    .orElseThrow(() -> new InstitucionesNotFoundException(id));
+            List<EventosDTO> eventosDTOList = instituciones.getEventos().stream()
+                    .map(eventoDTOConverter::convertToDto)
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(eventosDTOList);
+        }
+
     // Obtener eventos creados por un usuario
     @GetMapping("/eventos/creadoPorUsuario/{usuarioId}")
     public ResponseEntity<?> obtenerEventosCreadosPorUsuario(@PathVariable Long usuarioId) {
         Usuarios usuario = usuariosService.buscarPorId(usuarioId)
                 .orElseThrow(() -> new UsuariosNotFoundException(usuarioId));
         List<Eventos> eventos = eventosService.findByCreadoPorUsuariosId(usuarioId);
+        List<EventosDTO> eventosDTOList = eventos.stream()
+                .map(eventoDTOConverter::convertToDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(eventosDTOList);
+    }
+
+    @GetMapping("/eventos/creadoPorInstitucion/{usuarioId}")
+    public ResponseEntity<?> obtenerEventosCreadosPorInstitucion(@PathVariable Long usuarioId) {
+        Instituciones instituciones = institucionesService.buscarPorId(usuarioId)
+                .orElseThrow(() -> new InstitucionesNotFoundException(usuarioId));
+        List<Eventos> eventos = eventosService.findByCreadoPorInstitucionesId(usuarioId);
         List<EventosDTO> eventosDTOList = eventos.stream()
                 .map(eventoDTOConverter::convertToDto)
                 .collect(Collectors.toList());

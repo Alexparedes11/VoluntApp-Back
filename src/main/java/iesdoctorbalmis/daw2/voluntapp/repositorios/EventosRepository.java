@@ -23,7 +23,10 @@ public interface EventosRepository extends JpaRepository<Eventos, Long> {
     @Query("select p from Eventos p LEFT JOIN FETCH p.usuarios WHERE p.id = :id")
     Optional<Eventos> findByIdJoinFetch(Long id);
 
-    List<Eventos> findByCreadoPorUsuariosId(Long id);
+        List<Eventos> findByCreadoPorUsuariosId(Long id);
+
+        List<Eventos> findByCreadoPorInstitucionesId(Long id);
+
 
     Page<Eventos> findByEstado(String estado, Pageable pageable);
 

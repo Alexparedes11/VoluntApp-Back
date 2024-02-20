@@ -53,4 +53,14 @@ public class ContactoService {
         message.setText(contacto.getMensaje());
         mailSender.send(message);
     }
+
+    //enviar correo con una contraserña nueva generada automaticamente
+    public void enviarContrasena(Contacto contacto) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("voluntapp.management@gmail.com");
+        message.setTo(contacto.getEmail());
+        message.setSubject(contacto.getAsunto());
+        message.setText(contacto.getMensaje());
+        mailSender.send(message);
+    }
 }

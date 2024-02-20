@@ -74,6 +74,18 @@ public class ContactoController {
         }
 }
 
-
+//Mandar correo con contraseña nueva
+@PostMapping("/passwordRecovery")
+    public ResponseEntity<Map<String, String>> enviarContrasena(@RequestBody Contacto contacto) {
+        try {
+            enviarCorreo.enviarContrasena(contacto);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Correo enviado");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
 
 }

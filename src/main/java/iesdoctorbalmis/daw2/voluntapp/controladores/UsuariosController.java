@@ -20,6 +20,7 @@ import iesdoctorbalmis.daw2.voluntapp.seguridad.jwt.model.JwtUserResponse;
 import iesdoctorbalmis.daw2.voluntapp.seguridad.jwt.model.LoginRequest;
 import iesdoctorbalmis.daw2.voluntapp.servicios.AzureBlobStorageImpl;
 import iesdoctorbalmis.daw2.voluntapp.servicios.AzureBlobStorageService;
+import iesdoctorbalmis.daw2.voluntapp.servicios.ContactoService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.EventosService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.UsuariosService;
 import iesdoctorbalmis.daw2.voluntapp.util.pagination.PaginationLinksUtils;
@@ -28,6 +29,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -50,6 +52,7 @@ public class UsuariosController {
 
     private final UsuariosService usuariosService;
     private final UsuarioDTOConverter usuarioDTOConverter;
+    private final ContactoService contactoService;
     private final PaginationLinksUtils paginationLinksUtils;
     private final AuthenticationManager authenticationManager;
     private final JwtProvider tokenProvider;
@@ -195,5 +198,28 @@ public class UsuariosController {
             return ResponseEntity.ok(usuariosService.editar(usuario));
         }).orElseThrow(() -> new UsuariosNotFoundException(usuario.getId()));
     }
+
+
+    //Comprobar email para recuperar contraseña
+    @GetMapping("/usuarios/username")
+public ResponseEntity<Boolean> buscarPorUsername(@RequestParam String email) {
+    boolean emailExists = usuariosService.emailExists(email);
+    return ResponseEntity.ok(emailExists);
+}
+
+//ediar la contraseña de un usuario
+@PutMapping("/usuarios/password/{email}")
+public ResponseEntity<Usuarios> editarContraseña(
+    @PathVariable String email,
+    @RequestBody Map<String, String> requestBody
+) {
+    String nuevaContraseña = requestBody.get("password");
+    return usuariosService.buscarPorUsername(email).map(p -> {
+        p.setPassword(nuevaContraseña);
+        return ResponseEntity.ok(usuariosService.guardar(p));
+    }).orElseThrow(() -> new UsuariosNotFoundException(email));
+}
+
+
 
 }
