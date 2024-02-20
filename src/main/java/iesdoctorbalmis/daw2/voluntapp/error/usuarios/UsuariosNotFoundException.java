@@ -17,7 +17,9 @@ public class UsuariosNotFoundException extends RuntimeException {
     public UsuariosNotFoundException(Long id) {
         super("No se puede encontrar el usuarios con la ID: " + id);
     }
-
+    public UsuariosNotFoundException(String email) {
+        super("No se puede encontrar el usuarios con el correo: " + email);
+    }
     @ExceptionHandler(UsuariosNotFoundException.class)
     public ResponseEntity<ApiError> handleUsuarioNoEncontrado(UsuariosNotFoundException ex) {
         ApiError apiError = new ApiError();
