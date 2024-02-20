@@ -61,7 +61,7 @@ public class Eventos {
     private Usuarios creadoPorUsuarios;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "intitucion_id")
+    @JoinColumn(name = "institucion_id")
     private Instituciones creadoPorInstituciones;
 
     @Builder.Default

@@ -46,6 +46,10 @@ public class UsuariosDTO {
     @NonNull
     private String contraseña;
 
+    private String fotoPerfil;
+
+    private String fotoBanner;
+
     private Set<String> eventosNombre;
 
 }

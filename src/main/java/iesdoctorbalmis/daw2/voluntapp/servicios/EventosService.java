@@ -93,7 +93,6 @@ public class EventosService {
         return eventosRepository.findByEstadoAndUsuarios(estado, usu);
     }
 
-
     public Page<Eventos> findAllByOrderByUsuariosDesc(Pageable pageable) {
         return eventosRepository.findAllByOrderByUsuariosDesc(pageable);
     }
@@ -105,4 +104,5 @@ public class EventosService {
     public Page<Eventos> obtenerEventosOrdenadosPorFechaLejana(Pageable pageable) {
         return eventosRepository.findAllByOrderByFechaInicioDesc(pageable);
     }
+
 }

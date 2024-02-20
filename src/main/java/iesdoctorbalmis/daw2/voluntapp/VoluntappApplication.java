@@ -32,14 +32,6 @@ public class VoluntappApplication {
 		SpringApplication.run(VoluntappApplication.class, args);
 	}
 
-	// ESTO ES PARA PROBAR AZURE
-	// @Bean
-	// CommandLineRunner init(AzureBlobStorageService azureBlobStorageService) {
-	// return (args) -> {
-	// azureBlobStorageService.writeBlob();
-	// };
-	// }
-
 	// @Bean
 	// @Transactional
 	// CommandLineRunner init(UsuariosService usuariosService, InstitucionesService institucionesService,
@@ -101,13 +93,13 @@ public class VoluntappApplication {
 			// Optional<Eventos> evento;
 			// Optional<Usuarios> usuarios;
 
-			// Instituciones instituciones = new Instituciones(null, "Unicef@example.com",
+			// Instituciones instituciones = new Instituciones(null, "unicef@example.com",
 			// 		"12345678A", "Unicef ORG", "616 616 616", "Manolito", "Unicef", "123",
 			// 		"/assets/imagen", listaEventosInstituciones);
 			// institucionesService.guardar(instituciones);
 			// listaInstituciones.add(instituciones);
 
-			// Instituciones instituciones2 = new Instituciones(null, "Cruz@example.com",
+			// Instituciones instituciones2 = new Instituciones(null, "cruz@example.com",
 			// "12345678B", "Cruz ORG", "616 616 616", "Manolito", "Cruz Roja", "123",
 			// "/assets/imagen", listaEventosInstituciones2);
 			// institucionesService.guardar(instituciones2);
