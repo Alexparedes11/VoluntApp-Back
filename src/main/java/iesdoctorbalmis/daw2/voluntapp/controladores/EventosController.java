@@ -124,8 +124,9 @@ public class EventosController {
         List<Eventos> disponible = eventosService.buscarPorEstadoYUsuario("disponible", usu.get());
         List<Eventos> creadosEstado = eventosService.findByCreadoPorUsuariosIdYEstado(id, "en revision");
         List<Eventos> creados = eventosService.findByCreadoPorUsuariosId(id);
+        List<Eventos> eliminado = eventosService.buscarPorEstadoYUsuario("eliminado", usu.get());
 
-        NumeroDeEventosDTO numero = new NumeroDeEventosDTO(creados.size() + creadosEstado.size(), disponible.size() + creados.size(), realizado.size());
+        NumeroDeEventosDTO numero = new NumeroDeEventosDTO(creados.size() + creadosEstado.size() - eliminado.size(), disponible.size() + creados.size() - eliminado.size(), realizado.size());
 
         return numero;
 
