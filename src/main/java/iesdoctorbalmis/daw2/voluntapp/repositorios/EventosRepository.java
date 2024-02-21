@@ -27,6 +27,8 @@ Page<Eventos> findByTituloContainsIgnoreCaseAndEstado(String txt, String estado,
 
         List<Eventos> findByCreadoPorUsuariosId(Long id);
 
+        List<Eventos> findByCreadoPorUsuariosIdAndEstado(Long id, String estado);
+
         List<Eventos> findByCreadoPorInstitucionesId(Long id);
 
 
