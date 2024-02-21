@@ -92,17 +92,17 @@ public class VoluntappApplication {
 	// 		Optional<Eventos> evento;
 	// 		Optional<Usuarios> usuarios;
 
-			Instituciones instituciones = new Instituciones(null, "unicef@example.com",
-					"12345678A", "Unicef ORG", "616 616 616", "https://voluntapp.blob.core.windows.net/images/banners/default.webp", "Manolito", "Unicef", "123",
-					"https://voluntapp.blob.core.windows.net/images/perfiles/default.webp", listaEventosInstituciones);
-			institucionesService.guardar(instituciones);
-			listaInstituciones.add(instituciones);
+	// 		Instituciones instituciones = new Instituciones(null, "unicef@example.com",
+	// 				"12345678A", "Unicef ORG", "616 616 616", "https://voluntapp.blob.core.windows.net/images/banners/default.webp", "Manolito", "Unicef", "123",
+	// 				"https://voluntapp.blob.core.windows.net/images/perfiles/default.webp", listaEventosInstituciones);
+	// 		institucionesService.guardar(instituciones);
+	// 		listaInstituciones.add(instituciones);
 
-			Instituciones instituciones2 = new Instituciones(null, "cruz@example.com",
-			"12345678B", "Cruz ORG", "616 616 616", "https://voluntapp.blob.core.windows.net/images/banners/default.webp","Manolo", "Cruz Roja", "123",
-			"https://voluntapp.blob.core.windows.net/images/perfiles/default.webp", listaEventosInstituciones2);
-			institucionesService.guardar(instituciones2);
-			listaInstituciones.add(instituciones2);
+	// 		Instituciones instituciones2 = new Instituciones(null, "cruz@example.com",
+	// 		"12345678B", "Cruz ORG", "616 616 616", "https://voluntapp.blob.core.windows.net/images/banners/default.webp","Manolo", "Cruz Roja", "123",
+	// 		"https://voluntapp.blob.core.windows.net/images/perfiles/default.webp", listaEventosInstituciones2);
+	// 		institucionesService.guardar(instituciones2);
+	// 		listaInstituciones.add(instituciones2);
 
 	// 		Usuarios usuario = new Usuarios(null, "Manuel", "manuel@example.com",
 	// 				"Rodriguez Martinez", "12345678A", "Calle Alfonso el sabio 1", "123",
@@ -124,15 +124,15 @@ public class VoluntappApplication {
 	// 		listaUsuarios.add(usuario3);
 
 
-			Noticias noticias1 = Noticias.builder()
-					.titulo("Limpieza masiva en el bosque de Alcoy")
-					.contenido(
-							"¡Únete a nosotros para una limpieza masiva en el bosque de Alcoy! ¡Ayúdanos a mantener nuestro bosque limpio y seguro!")
-					.imagen("/assets/images/bosque.jpg")
-					.fecha(Date.valueOf(LocalDateTime.now().toLocalDate()))
-					.autor("VoluntApp")
-					.build();
-			noticiasService.guardar(noticias1);
+	// 		Noticias noticias1 = Noticias.builder()
+	// 				.titulo("Limpieza masiva en el bosque de Alcoy")
+	// 				.contenido(
+	// 						"¡Únete a nosotros para una limpieza masiva en el bosque de Alcoy! ¡Ayúdanos a mantener nuestro bosque limpio y seguro!")
+	// 				.imagen("/assets/images/bosque.jpg")
+	// 				.fecha(Date.valueOf(LocalDateTime.now().toLocalDate()))
+	// 				.autor("VoluntApp")
+	// 				.build();
+	// 		noticiasService.guardar(noticias1);
 
 
 	// 		Eventos eventos1 = Eventos.builder()
