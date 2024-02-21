@@ -32,6 +32,10 @@ public class NoticiasService {
     public Page<Noticias> ObtenerTodosPageable(Pageable pageable) {
         return noticiasRepository.findAll(pageable);
     }
+    // obtener noticia por id
+    public Noticias obtenerNoticiasPorId(Long id) {
+        return noticiasRepository.findById(id).orElseThrow();
+    }
 
     // crear noticia
     public Noticias crearNoticias(NoticiasDTO noticiasDTO) throws AzureBlobStorageException {
