@@ -36,6 +36,10 @@ public class InstitucionesDTO {
 
     private Set<String> eventosNombre;
 
+    private String fotoInstitucion;
+
+    private String fotoBanner;
+
 
 
 }

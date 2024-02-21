@@ -93,13 +93,13 @@ public class VoluntappApplication {
 			Optional<Usuarios> usuarios;
 
 			Instituciones instituciones = new Instituciones(null, "unicef@example.com",
-					"12345678A", "Unicef ORG", "616 616 616", "Manolito", "Unicef", "123",
+					"12345678A", "Unicef ORG", "616 616 616", "https://voluntapp.blob.core.windows.net/images/banners/default.webp", "Manolito", "Unicef", "123",
 					"https://voluntapp.blob.core.windows.net/images/perfiles/default.webp", listaEventosInstituciones);
 			institucionesService.guardar(instituciones);
 			listaInstituciones.add(instituciones);
 
 			Instituciones instituciones2 = new Instituciones(null, "cruz@example.com",
-			"12345678B", "Cruz ORG", "616 616 616", "Manolito", "Cruz Roja", "123",
+			"12345678B", "Cruz ORG", "616 616 616", "https://voluntapp.blob.core.windows.net/images/banners/default.webp","Manolo", "Cruz Roja", "123",
 			"https://voluntapp.blob.core.windows.net/images/perfiles/default.webp", listaEventosInstituciones2);
 			institucionesService.guardar(instituciones2);
 			listaInstituciones.add(instituciones2);
@@ -128,7 +128,7 @@ public class VoluntappApplication {
 					.titulo("Limpieza masiva en el bosque de Alcoy")
 					.contenido(
 							"¡Únete a nosotros para una limpieza masiva en el bosque de Alcoy! ¡Ayúdanos a mantener nuestro bosque limpio y seguro!")
-					.imagen("/aseets/images/bosque.jpg")
+					.imagen("/assets/images/bosque.jpg")
 					.fecha(Date.valueOf(LocalDateTime.now().toLocalDate()))
 					.autor("VoluntApp")
 					.build();

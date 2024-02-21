@@ -92,10 +92,11 @@ public class InstitucionesController {
                                     .nombre(nuevo.getNombre())
                                     .cif(nuevo.getCif())
                                     .personaCargo(nuevo.getPersonaCargo())
-                                    .fotoInstitucion(nuevo.getFotoInstitucion())
+                                    .fotoInstitucion("https://voluntapp.blob.core.windows.net/images/perfiles/default.webp")
                                     .username(nuevo.getEmail())
                                     .password(nuevo.getPassword())
                                     .telefono(nuevo.getTelefono())
+                                    .fotoBanner("https://voluntapp.blob.core.windows.net/images/banners/default.webp")
                                     .nombreLegal(nuevo.getNombreLegal())
                                     .build();
 

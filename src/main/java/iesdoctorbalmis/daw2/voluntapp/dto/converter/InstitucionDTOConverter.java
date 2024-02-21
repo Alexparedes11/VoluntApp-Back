@@ -32,8 +32,10 @@ public class InstitucionDTOConverter {
             .nombreLegal(instituciones.getNombreLegal())
             .telefono(instituciones.getTelefono())
             .email(instituciones.getUsername())
+            .fotoInstitucion(instituciones.getFotoInstitucion())
             .cif(instituciones.getCif())
             .personaCargo(instituciones.getPersonaCargo())
+            .fotoBanner(instituciones.getFotoBanner())
             .eventosNombre(eventos)
             .build();
     }

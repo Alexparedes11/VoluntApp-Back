@@ -16,6 +16,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,12 +47,18 @@ public class Instituciones implements UserDetails{
     @NonNull
     private String telefono;
 
+    @Lob
+    @Column(length = 1000000)
+    private String fotoBanner;
+
     private String personaCargo;
 
     private String nombre;
 
     private String password;
 
+    @Lob
+    @Column(length = 1000000)
     private String fotoInstitucion;
 
     @Builder.Default

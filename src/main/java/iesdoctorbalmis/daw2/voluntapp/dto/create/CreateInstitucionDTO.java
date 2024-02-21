@@ -33,4 +33,6 @@ public class CreateInstitucionDTO {
     private String nombreLegal;
 
     private String password;
+
+    private String fotoBanner;
 }
