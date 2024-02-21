@@ -92,7 +92,7 @@ public class InstitucionesController {
                                     .nombre(nuevo.getNombre())
                                     .cif(nuevo.getCif())
                                     .personaCargo(nuevo.getPersonaCargo())
-                                    .fotoInstitucion("https://voluntapp.blob.core.windows.net/images/perfiles/default.webp")
+                                    .fotoPerfil("https://voluntapp.blob.core.windows.net/images/perfiles/default.webp")
                                     .username(nuevo.getEmail())
                                     .password(nuevo.getPassword())
                                     .telefono(nuevo.getTelefono())
@@ -116,7 +116,8 @@ public class InstitucionesController {
             p.setUsername(editaInstitucion.getEmail());
             p.setPassword(editaInstitucion.getPassword());
             p.setCif(editaInstitucion.getCif());
-            p.setFotoInstitucion(editaInstitucion.getFotoInstitucion());
+            p.setFotoPerfil(editaInstitucion.getFotoPerfil());
+            p.setFotoBanner(editaInstitucion.getFotoBanner());
             p.setPersonaCargo(editaInstitucion.getPersonaCargo());
             p.setEventos(p.getEventos());
 

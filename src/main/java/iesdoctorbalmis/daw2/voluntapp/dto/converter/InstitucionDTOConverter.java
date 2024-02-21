@@ -32,7 +32,7 @@ public class InstitucionDTOConverter {
             .nombreLegal(instituciones.getNombreLegal())
             .telefono(instituciones.getTelefono())
             .email(instituciones.getUsername())
-            .fotoInstitucion(instituciones.getFotoInstitucion())
+            .fotoPerfil(instituciones.getFotoPerfil())
             .cif(instituciones.getCif())
             .personaCargo(instituciones.getPersonaCargo())
             .fotoBanner(instituciones.getFotoBanner())

@@ -59,7 +59,7 @@ public class Instituciones implements UserDetails{
 
     @Lob
     @Column(length = 1000000)
-    private String fotoInstitucion;
+    private String fotoPerfil;
 
     @Builder.Default
     @EqualsAndHashCode.Exclude @ToString.Exclude
