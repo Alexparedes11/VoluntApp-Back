@@ -77,4 +77,11 @@ public class NoticiasController {
         return ResponseEntity.ok(noticiasDTOConverter.convertToDto(noticias));
     }
 
+    // Obtener noticia por id
+    @GetMapping("/noticias/{id}")
+    public ResponseEntity<NoticiasDTO> obtenerNoticiaPorId(@PathVariable Long id) {
+        Noticias noticias = noticiasService.obtenerNoticiasPorId(id);
+        return ResponseEntity.ok(noticiasDTOConverter.convertToDto(noticias));
+    }
+
 }

@@ -42,6 +42,7 @@ public class Eventos {
 
     private String titulo;
 
+    @Column(length = 1000000)
     private String descripcion;
 
     @JdbcTypeCode(SqlTypes.JSON)

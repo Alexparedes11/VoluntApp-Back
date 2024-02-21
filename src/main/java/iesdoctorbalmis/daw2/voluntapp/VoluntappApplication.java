@@ -31,72 +31,72 @@ public class VoluntappApplication {
 		SpringApplication.run(VoluntappApplication.class, args);
 	}
 
-	@Bean
-	@Transactional
-	CommandLineRunner init(UsuariosService usuariosService, InstitucionesService institucionesService,
-			EventosService eventosService, UbicacionService ubicacionService,
-			NoticiasService noticiasService) {
-		return (args) -> {
+	// @Bean
+	// @Transactional
+	// CommandLineRunner init(UsuariosService usuariosService, InstitucionesService institucionesService,
+	// 		EventosService eventosService, UbicacionService ubicacionService,
+	// 		NoticiasService noticiasService) {
+	// 	return (args) -> {
 
-			LocalDateTime fechaInicioEvento1 = LocalDateTime.of(2024, 2, 17, 9, 30);
-			LocalDateTime fechaFinEvento1 = LocalDateTime.of(2024, 2, 17, 14, 0);
+	// 		LocalDateTime fechaInicioEvento1 = LocalDateTime.of(2024, 2, 17, 9, 30);
+	// 		LocalDateTime fechaFinEvento1 = LocalDateTime.of(2024, 2, 17, 14, 0);
 
-			LocalDateTime fechaInicioEvento2 = LocalDateTime.of(2024, 3, 8, 8, 0);
-			LocalDateTime fechaFinEvento2 = LocalDateTime.of(2024, 3, 10, 20, 0);
+	// 		LocalDateTime fechaInicioEvento2 = LocalDateTime.of(2024, 3, 8, 8, 0);
+	// 		LocalDateTime fechaFinEvento2 = LocalDateTime.of(2024, 3, 10, 20, 0);
 
-			LocalDateTime fechaInicioEvento3 = LocalDateTime.of(2024, 4, 15, 9, 0);
-			LocalDateTime fechaFinEvento3 = LocalDateTime.of(2024, 4, 18, 14, 0);
+	// 		LocalDateTime fechaInicioEvento3 = LocalDateTime.of(2024, 4, 15, 9, 0);
+	// 		LocalDateTime fechaFinEvento3 = LocalDateTime.of(2024, 4, 18, 14, 0);
 
-			LocalDateTime fechaInicioEvento4 = LocalDateTime.of(2024, 3, 8, 8, 0);
-			LocalDateTime fechaFinEvento4 = LocalDateTime.of(2024, 3, 8, 20, 0);
+	// 		LocalDateTime fechaInicioEvento4 = LocalDateTime.of(2024, 3, 8, 8, 0);
+	// 		LocalDateTime fechaFinEvento4 = LocalDateTime.of(2024, 3, 8, 20, 0);
 
-			LocalDateTime fechaInicioEvento5 = LocalDateTime.of(2024, 2, 20, 9, 30);
-			LocalDateTime fechaFinEvento5 = LocalDateTime.of(2024, 2, 22, 19, 0);
+	// 		LocalDateTime fechaInicioEvento5 = LocalDateTime.of(2024, 2, 20, 9, 30);
+	// 		LocalDateTime fechaFinEvento5 = LocalDateTime.of(2024, 2, 22, 19, 0);
 
-			LocalDateTime fechaInicioEvento6 = LocalDateTime.of(2024, 3, 1, 9, 30);
-			LocalDateTime fechaFinEvento6 = LocalDateTime.of(2024, 3, 3, 22, 0);
+	// 		LocalDateTime fechaInicioEvento6 = LocalDateTime.of(2024, 3, 1, 9, 30);
+	// 		LocalDateTime fechaFinEvento6 = LocalDateTime.of(2024, 3, 3, 22, 0);
 
-			Ubicacion ubicacion = new Ubicacion(null, "Calle De San Olegario, Madrid",
-					-3.7602838, 40.3699524);
-			ubicacionService.guardar(ubicacion);
+	// 		Ubicacion ubicacion = new Ubicacion(null, "Calle De San Olegario, Madrid",
+	// 				-3.7602838, 40.3699524);
+	// 		ubicacionService.guardar(ubicacion);
 
-			Ubicacion ubicacion2 = new Ubicacion(null, "N-340, Pk 131, Alcoi, Alicante",
-					-0.47140612489073314, 38.683488155501855);
-			ubicacionService.guardar(ubicacion2);
+	// 		Ubicacion ubicacion2 = new Ubicacion(null, "N-340, Pk 131, Alcoi, Alicante",
+	// 				-0.47140612489073314, 38.683488155501855);
+	// 		ubicacionService.guardar(ubicacion2);
 
-			Ubicacion ubicacion3 = new Ubicacion(null, "Playa Postiguet, Alicante",
-					-0.47876710565513714, 38.3444807533824);
-			ubicacionService.guardar(ubicacion3);
+	// 		Ubicacion ubicacion3 = new Ubicacion(null, "Playa Postiguet, Alicante",
+	// 				-0.47876710565513714, 38.3444807533824);
+	// 		ubicacionService.guardar(ubicacion3);
 
-			Ubicacion ubicacion4 = new Ubicacion(null, "C. Escultor Bañuls 7, Alicante",
-					-0.4912633978169558, 38.35726809850449);
-			ubicacionService.guardar(ubicacion4);
+	// 		Ubicacion ubicacion4 = new Ubicacion(null, "C. Escultor Bañuls 7, Alicante",
+	// 				-0.4912633978169558, 38.35726809850449);
+	// 		ubicacionService.guardar(ubicacion4);
 
-			Ubicacion ubicacion5 = new Ubicacion(null, "Pintor Baeza 11, Alicante",
-					-0.48590116945300316, 38.36322105571466);
-			ubicacionService.guardar(ubicacion5);
+	// 		Ubicacion ubicacion5 = new Ubicacion(null, "Pintor Baeza 11, Alicante",
+	// 				-0.48590116945300316, 38.36322105571466);
+	// 		ubicacionService.guardar(ubicacion5);
 
-			Ubicacion ubicacion6 = new Ubicacion(null, "C. 19 de Abril 34, San Miguel de Salinas, Alicante",
-					-0.7887108508683476, 37.97922685104109);
-			ubicacionService.guardar(ubicacion6);
+	// 		Ubicacion ubicacion6 = new Ubicacion(null, "C. 19 de Abril 34, San Miguel de Salinas, Alicante",
+	// 				-0.7887108508683476, 37.97922685104109);
+	// 		ubicacionService.guardar(ubicacion6);
 
-			Set<Usuarios> listaUsuarios = new HashSet<>();
-			Set<Categorias> listaCategorias = new HashSet<>();
-			Set<Eventos> listaEventosUsuarios = new HashSet<>();
-			Set<Eventos> listaEventosUsuarios2 = new HashSet<>();
-			Set<Eventos> listaEventosUsuarios3 = new HashSet<>();
-			Set<Instituciones> listaInstituciones = new HashSet<>();
-			Set<Eventos> listaEventosInstituciones = new HashSet<>();
-			Set<Eventos> listaEventosInstituciones2 = new HashSet<>();
-			Optional<Instituciones> institucion;
-			Optional<Eventos> evento;
-			Optional<Usuarios> usuarios;
+	// 		Set<Usuarios> listaUsuarios = new HashSet<>();
+	// 		Set<Categorias> listaCategorias = new HashSet<>();
+	// 		Set<Eventos> listaEventosUsuarios = new HashSet<>();
+	// 		Set<Eventos> listaEventosUsuarios2 = new HashSet<>();
+	// 		Set<Eventos> listaEventosUsuarios3 = new HashSet<>();
+	// 		Set<Instituciones> listaInstituciones = new HashSet<>();
+	// 		Set<Eventos> listaEventosInstituciones = new HashSet<>();
+	// 		Set<Eventos> listaEventosInstituciones2 = new HashSet<>();
+	// 		Optional<Instituciones> institucion;
+	// 		Optional<Eventos> evento;
+	// 		Optional<Usuarios> usuarios;
 
-			Instituciones instituciones = new Instituciones(null, "unicef@example.com",
-					"12345678A", "Unicef ORG", "616 616 616", "Manolito", "Unicef", "123",
-					"https://voluntapp.blob.core.windows.net/images/perfiles/default.webp", listaEventosInstituciones);
-			institucionesService.guardar(instituciones);
-			listaInstituciones.add(instituciones);
+	// 		Instituciones instituciones = new Instituciones(null, "unicef@example.com",
+	// 				"12345678A", "Unicef ORG", "616 616 616", "https://voluntapp.blob.core.windows.net/images/banners/default.webp", "Manolito", "Unicef", "123",
+	// 				"https://voluntapp.blob.core.windows.net/images/perfiles/default.webp", listaEventosInstituciones);
+	// 		institucionesService.guardar(instituciones);
+	// 		listaInstituciones.add(instituciones);
 
 			Instituciones instituciones2 = new Instituciones(null, "cruz@example.com",
 					"12345678B", "Cruz ORG", "616 616 616", "Manolito", "Cruz Roja", "123",
@@ -311,6 +311,6 @@ public class VoluntappApplication {
 				usuariosService.editar(usuarios.get());
 			}
 
-		};
-	}
+	// 	};
+	// }
 }
