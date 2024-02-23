@@ -157,7 +157,7 @@ public class VoluntappApplication {
 				Optional<Usuarios> usuarios;
 
 				Instituciones instituciones = new Instituciones(null, "unicef@example.com",
-						"12345678A", "Unicef ORG", " 963 52 79 66",
+						"12345678A", "Unicef ORG", "963 527 966",
 						"https://voluntapp.blob.core.windows.net/images/banners/unicef.webp", "Maria Martinez", "Unicef",
 						"123",
 						"https://voluntapp.blob.core.windows.net/images/perfiles/unicef.webp",
@@ -166,7 +166,7 @@ public class VoluntappApplication {
 				listaInstituciones.add(instituciones);
 
 				Instituciones instituciones2 = new Instituciones(null, "cruz@example.com",
-						"12345678B", "Cruz Roja ORG", "963 80 22 24",
+						"12345678B", "Cruz Roja ORG", "963 802 224",
 						"https://voluntapp.blob.core.windows.net/images/banners/cruz.webp", "Lucas Lopez", "Cruz Roja",
 						"123",
 						"https://voluntapp.blob.core.windows.net/images/perfiles/cruz.webp",
