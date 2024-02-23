@@ -404,7 +404,7 @@ public class VoluntappApplication {
 						.fInicio(fechaInicioEvento7)
 						.fFin(fechaFinEvento7)
 						.titulo("Ayuda humanitaria por la inundaciones")
-						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event6.webp")
+						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event7.webp")
 						.descripcion(
 								"En momentos de crisis, la solidaridad y el apoyo comunitario son más importantes que nunca. Únete a nosotros en un esfuerzo conjunto para brindar ayuda y esperanza a las personas afectadas por las devastadoras inundaciones que han golpeado nuestra región.")
 						.ubicacion(ubicacion7)
@@ -425,7 +425,7 @@ public class VoluntappApplication {
 						.fInicio(fechaInicioEvento8)
 						.fFin(fechaFinEvento8)
 						.titulo("Limpieza del bosque de alcoi")
-						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event6.webp")
+						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event8.webp")
 						.descripcion(
 								"Únete a nosotros en una jornada dedicada a la preservación y protección de nuestro preciado bosque. En este evento de limpieza ambiental, nos uniremos como comunidad para devolverle su esplendor natural a este ecosistema vital.")
 						.ubicacion(ubicacion8)
@@ -446,7 +446,7 @@ public class VoluntappApplication {
 						.fInicio(fechaInicioEvento9)
 						.fFin(fechaFinEvento9)
 						.titulo("Taller de informatica para mayores")
-						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event6.webp")
+						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event9.webp")
 						.descripcion(
 								"¡Únete a nosotros en un taller de informática para mayores! En este evento especial, te invitamos a compartir tus habilidades tecnológicas con nuestros mayores, ayudándoles a navegar por el mundo digital y a conectarse con sus seres queridos.")
 						.ubicacion(ubicacion9)
@@ -467,7 +467,7 @@ public class VoluntappApplication {
 						.fInicio(fechaInicioEvento10)
 						.fFin(fechaFinEvento10)
 						.titulo("Limpieza de pellets en la playa de riazor")
-						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event6.webp")
+						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event10.webp")
 						.descripcion(
 								"¡Únete a nosotros en un evento de limpieza de pellets en la playa de Riazor! En este esfuerzo comunitario, nos uniremos para limpiar y preservar la belleza natural de nuestra costa, ayudando a devolverle su esplendor a este ecosistema vital.")
 						.ubicacion(ubicacion10)
@@ -488,7 +488,7 @@ public class VoluntappApplication {
 						.fInicio(fechaInicioEvento11)
 						.fFin(fechaFinEvento11)
 						.titulo("Taller de movilidad para mayores")
-						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event6.webp")
+						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event11.webp")
 						.descripcion(
 								"¡Únete a nosotros en un taller de movilidad para mayores! En este evento especial, te invitamos a compartir tus habilidades de movilidad con nuestros mayores, ayudándoles a mantenerse activos y saludables.")
 						.ubicacion(ubicacion11)
@@ -509,7 +509,7 @@ public class VoluntappApplication {
 						.fInicio(fechaInicioEvento12)
 						.fFin(fechaFinEvento12)
 						.titulo("Recogida de alimentos")
-						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event6.webp")
+						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event12.webp")
 						.descripcion(
 								"¡Únete a nosotros en un acto de solidaridad y generosidad mientras nos unimos para ayudar a aquellos que más lo necesitan en nuestra comunidad! Nuestro evento de recogida de alimentos es una oportunidad para marcar la diferencia y apoyar a las personas que enfrentan la inseguridad alimentaria.")
 						.ubicacion(ubicacion12)
@@ -530,7 +530,7 @@ public class VoluntappApplication {
 						.fInicio(fechaInicioEvento13)
 						.fFin(fechaFinEvento13)
 						.titulo("Sonrisas para los peques")
-						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event6.webp")
+						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event13.webp")
 						.descripcion(
 								"¡Únete a nosotros en un evento especial para llevar sonrisas a los más pequeños! En este evento, te invitamos a compartir tu tiempo y tu alegría con los niños, ayudándoles a disfrutar de un día lleno de diversión y entretenimiento.")
 						.ubicacion(ubicacion13)
@@ -551,7 +551,7 @@ public class VoluntappApplication {
 						.fInicio(fechaInicioEvento14)
 						.fFin(fechaFinEvento14)
 						.titulo("Voluntarios para la gran maratón")
-						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event6.webp")
+						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event14.webp")
 						.descripcion(
 								"¡Únete a nosotros en un evento especial para llevar sonrisas a los más pequeños! En este evento, te invitamos a compartir tu tiempo y tu alegría con los niños, ayudándoles a disfrutar de un día lleno de diversión y entretenimiento.")
 						.ubicacion(ubicacion14)
