@@ -22,48 +22,37 @@ public class MyConfig {
                         public void addCorsMappings(CorsRegistry registry) {
 
                                 registry.addMapping("/usuarios/**")
-                                                .allowedOrigins("http://localhost:9000", "http://localhost:4200",
-                                                                "http://localhost:5200, http://172.18.0.4:4200, http://4.180.125.221:9000", "http://localhost:4200",
-                                                                "http://localhost:5200")
-
+                                                .allowedOrigins("*")
                                                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                                                 .maxAge(3600);
 
                                 registry.addMapping("/instituciones/**")
-                                                .allowedOrigins("http://localhost:9000", "http://localhost:4200",
-                                                                "http://localhost:5200, http://172.18.0.4:4200, http://4.180.125.221:9000", "http://localhost:4200",
-                                                                "http://localhost:5200")
+                                                .allowedOrigins("*")
                                                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                                                 .maxAge(3600);
 
                                 registry.addMapping("/eventos/**")
-                                                .allowedOrigins("http://localhost:9000", "http://localhost:4200",
-                                                                "http://localhost:5200, http://172.18.0.4:4200, http://4.180.125.221:9000", "http://localhost:4200",
-                                                                "http://localhost:5200")
+                                                .allowedOrigins("*")
                                                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                                                 .maxAge(3600);
+
                                 registry.addMapping("/eventosDTO/**")
-                                                .allowedOrigins("http://localhost:9000", "http://localhost:4200",
-                                                                "http://localhost:5200, http://172.18.0.4:4200, http://4.180.125.221:9000", "http://localhost:4200",
-                                                                "http://localhost:5200")
+                                                .allowedOrigins("*")
                                                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                                                 .maxAge(3600);
 
                                 registry.addMapping("/login/**")
-                                                .allowedOrigins("http://localhost:9000", "http://localhost:4200",
-                                                                "http://localhost:5200, http://172.18.0.4:4200, http://4.180.125.221:9000")
+                                                .allowedOrigins("*")
                                                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                                                 .maxAge(3600);
 
                                 registry.addMapping("/noticias/**")
-                                                .allowedOrigins("http://localhost:9000", "http://localhost:4200",
-                                                                "http://localhost:5200, http://172.18.0.4:4200, http://4.180.125.221:9000")
+                                                .allowedOrigins("*")
                                                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                                                 .maxAge(3600);
 
                                 registry.addMapping("/contacto/**")
-                                                .allowedOrigins("http://localhost:9000", "http://localhost:4200",
-                                                                "http://localhost:5200, http://172.18.0.4:4200, http://4.180.125.221:9000")
+                                                .allowedOrigins("*")
                                                 .allowedMethods("POST")
                                                 .maxAge(3600);
                         }
