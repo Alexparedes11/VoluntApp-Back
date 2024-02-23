@@ -66,25 +66,25 @@ public class VoluntappApplication {
 
 				LocalDateTime fechaInicioEvento7 = LocalDateTime.of(2024, 4, 1, 10, 0);
 				LocalDateTime fechaFinEvento7 = LocalDateTime.of(2024, 4, 3, 18, 0);
-		
+
 				LocalDateTime fechaInicioEvento8 = LocalDateTime.of(2024, 5, 10, 9, 0);
 				LocalDateTime fechaFinEvento8 = LocalDateTime.of(2024, 5, 12, 17, 30);
-		
+
 				LocalDateTime fechaInicioEvento9 = LocalDateTime.of(2024, 6, 5, 8, 30);
 				LocalDateTime fechaFinEvento9 = LocalDateTime.of(2024, 6, 7, 16, 45);
-		
+
 				LocalDateTime fechaInicioEvento10 = LocalDateTime.of(2024, 7, 20, 11, 0);
 				LocalDateTime fechaFinEvento10 = LocalDateTime.of(2024, 7, 22, 20, 15);
-		
+
 				LocalDateTime fechaInicioEvento11 = LocalDateTime.of(2024, 8, 15, 9, 15);
 				LocalDateTime fechaFinEvento11 = LocalDateTime.of(2024, 8, 17, 15, 45);
-		
+
 				LocalDateTime fechaInicioEvento12 = LocalDateTime.of(2024, 9, 3, 8, 0);
 				LocalDateTime fechaFinEvento12 = LocalDateTime.of(2024, 9, 5, 19, 30);
-		
+
 				LocalDateTime fechaInicioEvento13 = LocalDateTime.of(2024, 10, 12, 10, 30);
 				LocalDateTime fechaFinEvento13 = LocalDateTime.of(2024, 10, 14, 18, 45);
-		
+
 				LocalDateTime fechaInicioEvento14 = LocalDateTime.of(2024, 11, 8, 9, 30);
 				LocalDateTime fechaFinEvento14 = LocalDateTime.of(2024, 11, 10, 17, 0);
 
@@ -93,7 +93,7 @@ public class VoluntappApplication {
 				ubicacionService.guardar(ubicacion); //
 
 				Ubicacion ubicacion2 = new Ubicacion(null, "C. Escultor Bañuls 7, Alicante",
-						-0.4912633978169558, 38.35726809850449); 
+						-0.4912633978169558, 38.35726809850449);
 				ubicacionService.guardar(ubicacion2); //
 
 				Ubicacion ubicacion3 = new Ubicacion(null, "Playa Postiguet, Alicante",
@@ -101,15 +101,15 @@ public class VoluntappApplication {
 				ubicacionService.guardar(ubicacion3); //
 
 				Ubicacion ubicacion4 = new Ubicacion(null, "02696 Hoya-Gonzalo, Albacete",
-				 -1.5938187933444825, 39.00886407161091); //
+						-1.5938187933444825, 39.00886407161091); //
 				ubicacionService.guardar(ubicacion4);
 
 				Ubicacion ubicacion5 = new Ubicacion(null, "Omet Carrer 17, 46229 Picassent, Valencia",
-				 -0.4715994343625013, 39.353950780131534);
+						-0.4715994343625013, 39.353950780131534);
 				ubicacionService.guardar(ubicacion5); //
 
 				Ubicacion ubicacion6 = new Ubicacion(null, "Ctra. Villalpando, Km 1.5, 49136 Villafáfila, Zamora",
-				 -5.590871042847749, 41.85154420630644);
+						-5.590871042847749, 41.85154420630644);
 				ubicacionService.guardar(ubicacion6); //
 
 				Ubicacion ubicacion7 = new Ubicacion(null, "C. 19 de Abril 34, San Miguel de Salinas, Alicante",
@@ -121,19 +121,20 @@ public class VoluntappApplication {
 				ubicacionService.guardar(ubicacion8); //
 
 				Ubicacion ubicacion9 = new Ubicacion(null, "Pr. Maior, 1, 27001 Lugo",
-				 -7.555675689392136, 43.009993935609494); 
+						-7.555675689392136, 43.009993935609494);
 				ubicacionService.guardar(ubicacion9); //
 
 				Ubicacion ubicacion10 = new Ubicacion(null, "Playa de Riazor (La Coruña)",
-				 -8.41043255583519, 43.36879639197843);
+						-8.41043255583519, 43.36879639197843);
 				ubicacionService.guardar(ubicacion10); //
 
 				Ubicacion ubicacion11 = new Ubicacion(null, "Av. de las Ciencias, s/n, 41020 Sevilla",
-				-5.926158165625714, 37.40044051828174 );
+						-5.926158165625714, 37.40044051828174);
 				ubicacionService.guardar(ubicacion11); //
 
-				Ubicacion ubicacion12 = new Ubicacion(null, "Carrer de Josep Torras I Bages, 50, 08401 Granollers, Barcelona",
-				 2.2868041855279686, 41.61087620523382);
+				Ubicacion ubicacion12 = new Ubicacion(null,
+						"Carrer de Josep Torras I Bages, 50, 08401 Granollers, Barcelona",
+						2.2868041855279686, 41.61087620523382);
 				ubicacionService.guardar(ubicacion12); //
 
 				Ubicacion ubicacion13 = new Ubicacion(null, "Pintor Baeza 11, Alicante",
@@ -141,7 +142,7 @@ public class VoluntappApplication {
 				ubicacionService.guardar(ubicacion13); //
 
 				Ubicacion ubicacion14 = new Ubicacion(null, "Pl. Redona, Ciutat Vella, 46001 València, Valencia",
-				 -0.37661300992725444, 39.47356680517395);
+						-0.37661300992725444, 39.47356680517395);
 				ubicacionService.guardar(ubicacion14); //
 
 				Set<Usuarios> listaUsuarios = new HashSet<>();
@@ -157,19 +158,19 @@ public class VoluntappApplication {
 				Optional<Usuarios> usuarios;
 
 				Instituciones instituciones = new Instituciones(null, "unicef@example.com",
-						"12345678A", "Unicef ORG", "963 527 966",
-						"https://voluntapp.blob.core.windows.net/images/banners/unicef.webp", "Maria Martinez", "Unicef",
+						"12345678A", "Unicef ORG", "616 616 616",
+						"https://voluntapp.blob.core.windows.net/images/banners/default.webp", "Manolito", "Unicef",
 						"123",
-						"https://voluntapp.blob.core.windows.net/images/perfiles/unicef.webp",
+						"https://voluntapp.blob.core.windows.net/images/perfiles/default.webp",
 						listaEventosInstituciones);
 				institucionesService.guardar(instituciones);
 				listaInstituciones.add(instituciones);
 
 				Instituciones instituciones2 = new Instituciones(null, "cruz@example.com",
-						"12345678B", "Cruz Roja ORG", "963 802 224",
-						"https://voluntapp.blob.core.windows.net/images/banners/cruz.webp", "Lucas Lopez", "Cruz Roja",
+						"12345678B", "Cruz ORG", "616 616 616",
+						"https://voluntapp.blob.core.windows.net/images/banners/default.webp", "Manolito", "Cruz Roja",
 						"123",
-						"https://voluntapp.blob.core.windows.net/images/perfiles/cruz.webp",
+						"https://voluntapp.blob.core.windows.net/images/perfiles/default.webp",
 						listaEventosInstituciones2);
 				institucionesService.guardar(instituciones2);
 				listaInstituciones.add(instituciones2);
@@ -288,7 +289,8 @@ public class VoluntappApplication {
 						.fFin(fechaFinEvento2)
 						.titulo("Recogida de alimentos")
 						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event2.webp")
-						.descripcion("¡Únete a nosotros en un acto de solidaridad y generosidad mientras nos unimos para ayudar a aquellos que más lo necesitan en nuestra comunidad! Nuestro evento de recogida de alimentos es una oportunidad para marcar la diferencia y apoyar a las personas que enfrentan la inseguridad alimentaria.")
+						.descripcion(
+								"¡Únete a nosotros en un acto de solidaridad y generosidad mientras nos unimos para ayudar a aquellos que más lo necesitan en nuestra comunidad! Nuestro evento de recogida de alimentos es una oportunidad para marcar la diferencia y apoyar a las personas que enfrentan la inseguridad alimentaria.")
 						.ubicacion(ubicacion2)
 						.estado("disponible")
 						.categorias(listaCategorias)
@@ -364,7 +366,8 @@ public class VoluntappApplication {
 						.fFin(fechaFinEvento5)
 						.titulo("Amor en Cuatro Patas: Adopción de Perros")
 						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event5.webp")
-						.descripcion("¡Únete a nosotros en un evento lleno de amor y compañerismo mientras ayudamos a perros necesitados a encontrar sus hogares para siempre! En \"Amor en Cuatro Patas\", te invitamos a considerar la adopción como la mejor opción al momento de agregar un nuevo miembro a tu familia.")
+						.descripcion(
+								"¡Únete a nosotros en un evento lleno de amor y compañerismo mientras ayudamos a perros necesitados a encontrar sus hogares para siempre! En \"Amor en Cuatro Patas\", te invitamos a considerar la adopción como la mejor opción al momento de agregar un nuevo miembro a tu familia.")
 						.ubicacion(ubicacion5)
 						.estado("revision")
 						.categorias(listaCategorias)
