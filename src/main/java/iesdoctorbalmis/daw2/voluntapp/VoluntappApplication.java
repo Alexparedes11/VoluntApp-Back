@@ -166,7 +166,7 @@ public class VoluntappApplication {
 				listaInstituciones.add(instituciones);
 
 				Instituciones instituciones2 = new Instituciones(null, "cruz@example.com",
-						"12345678B", "Cruz ORG", "963 80 22 24",
+						"12345678B", "Cruz Roja ORG", "963 80 22 24",
 						"https://voluntapp.blob.core.windows.net/images/banners/cruz.webp", "Lucas Lopez", "Cruz Roja",
 						"123",
 						"https://voluntapp.blob.core.windows.net/images/perfiles/cruz.webp",
@@ -261,17 +261,16 @@ public class VoluntappApplication {
 				Eventos eventos1 = Eventos.builder()
 						.fInicio(fechaInicioEvento1)
 						.fFin(fechaFinEvento1)
-						.titulo("Taller para mayores")
+						.titulo("Taller de primeros auxilios")
 						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event1.webp")
 						.descripcion(
-								"¡Descubre nuevas experiencias y conexiones en nuestro evento de talleres para personas mayores!")
+								"¡Atención, adolescentes! ¿Estás listo para ser un héroe en situaciones de emergencia? Únete a nosotros en nuestro evento especial de primeros auxilios diseñado exclusivamente para jóvenes como tú. En este emocionante taller, aprenderás habilidades vitales que podrían salvar vidas en momentos críticos.")
 						.ubicacion(ubicacion)
 						.estado("disponible")
 						.categorias(listaCategorias)
-						.creadoPorUsuarios(usuario2)
-						.maxVoluntarios(10)
+						.creadoPorInstituciones(instituciones2)
+						.maxVoluntarios(20)
 						.build();
-
 				eventosService.guardar(eventos1);
 				usuario.addEventos(eventos1);
 				usuariosService.editar(usuario);
@@ -289,7 +288,7 @@ public class VoluntappApplication {
 						.fFin(fechaFinEvento2)
 						.titulo("Recogida de alimentos")
 						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event2.webp")
-						.descripcion("¡Únete a nosotros en nuestra recogida de alimentos!")
+						.descripcion("¡Únete a nosotros en un acto de solidaridad y generosidad mientras nos unimos para ayudar a aquellos que más lo necesitan en nuestra comunidad! Nuestro evento de recogida de alimentos es una oportunidad para marcar la diferencia y apoyar a las personas que enfrentan la inseguridad alimentaria.")
 						.ubicacion(ubicacion2)
 						.estado("disponible")
 						.categorias(listaCategorias)
@@ -311,7 +310,7 @@ public class VoluntappApplication {
 				Eventos eventos3 = Eventos.builder()
 						.fInicio(fechaInicioEvento3)
 						.fFin(fechaFinEvento3)
-						.titulo("Limpiar pellets de la playa")
+						.titulo("Recogida de basura de la playa")
 						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event3.webp")
 						.descripcion("¡Únete a nosotros en la playa Postiguet para un evento de recogida de pellets!")
 						.ubicacion(ubicacion3)
@@ -331,7 +330,7 @@ public class VoluntappApplication {
 				Eventos eventos4 = Eventos.builder()
 						.fInicio(fechaInicioEvento4)
 						.fFin(fechaFinEvento4)
-						.titulo("Recogida de basura")
+						.titulo("Recogida de basura en el campo")
 						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event4.webp")
 						.descripcion("Te invitamos a unirte a nosotros en un esfuerzo comunitario para recoger basura")
 						.ubicacion(ubicacion4)
@@ -363,11 +362,11 @@ public class VoluntappApplication {
 				Eventos eventos5 = Eventos.builder()
 						.fInicio(fechaInicioEvento5)
 						.fFin(fechaFinEvento5)
-						.titulo("Sonrisas para los pequeños")
+						.titulo("Amor en Cuatro Patas: Adopción de Perros")
 						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event5.webp")
-						.descripcion("¡Ven y únete a nosotros para un día lleno de risas y diversión!")
-						.ubicacion(ubicacion)
-						.estado("finalizado")
+						.descripcion("¡Únete a nosotros en un evento lleno de amor y compañerismo mientras ayudamos a perros necesitados a encontrar sus hogares para siempre! En \"Amor en Cuatro Patas\", te invitamos a considerar la adopción como la mejor opción al momento de agregar un nuevo miembro a tu familia.")
+						.ubicacion(ubicacion5)
+						.estado("revision")
 						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario)
 						.maxVoluntarios(30)
@@ -383,18 +382,186 @@ public class VoluntappApplication {
 				Eventos eventos6 = Eventos.builder()
 						.fInicio(fechaInicioEvento6)
 						.fFin(fechaFinEvento6)
-						.titulo("Ayuda para limpiar las inundaciones")
+						.titulo("Recogida de cristales en el campo")
 						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event6.webp")
 						.descripcion(
-								"Únete a nosotros para un evento comunitario de apoyo y solidaridad frente a las inundaciones")
-						.ubicacion(ubicacion)
-						.estado("denegado")
+								"¡Únete a nosotros en una jornada de acción comunitaria para limpiar y preservar la belleza natural de nuestro campo mientras recogemos cristales tipo basura! En este evento especial, te invitamos a ser parte del cambio y ayudar a devolver la pureza a nuestros paisajes naturales.")
+						.ubicacion(ubicacion6)
+						.estado("disponible")
 						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
 						.maxVoluntarios(50)
 						.build();
 				eventosService.guardar(eventos6);
 				evento = eventosService.buscarPorId(eventos6.getId());
+				usuarios = usuariosService.buscarPorId(usuario2.getId());
+				if (evento.isPresent()) {
+					usuarios.get().addEventos(evento.get());
+					usuariosService.editar(usuarios.get());
+				}
+
+				Eventos eventos7 = Eventos.builder()
+						.fInicio(fechaInicioEvento7)
+						.fFin(fechaFinEvento7)
+						.titulo("Ayuda humanitaria por la inundaciones")
+						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event6.webp")
+						.descripcion(
+								"En momentos de crisis, la solidaridad y el apoyo comunitario son más importantes que nunca. Únete a nosotros en un esfuerzo conjunto para brindar ayuda y esperanza a las personas afectadas por las devastadoras inundaciones que han golpeado nuestra región.")
+						.ubicacion(ubicacion7)
+						.estado("disponible")
+						.categorias(listaCategorias)
+						.creadoPorUsuarios(usuario2)
+						.maxVoluntarios(50)
+						.build();
+				eventosService.guardar(eventos7);
+				evento = eventosService.buscarPorId(eventos7.getId());
+				usuarios = usuariosService.buscarPorId(usuario2.getId());
+				if (evento.isPresent()) {
+					usuarios.get().addEventos(evento.get());
+					usuariosService.editar(usuarios.get());
+				}
+
+				Eventos eventos8 = Eventos.builder()
+						.fInicio(fechaInicioEvento8)
+						.fFin(fechaFinEvento8)
+						.titulo("Limpieza del bosque de alcoi")
+						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event6.webp")
+						.descripcion(
+								"Únete a nosotros en una jornada dedicada a la preservación y protección de nuestro preciado bosque. En este evento de limpieza ambiental, nos uniremos como comunidad para devolverle su esplendor natural a este ecosistema vital.")
+						.ubicacion(ubicacion8)
+						.estado("disponible")
+						.categorias(listaCategorias)
+						.creadoPorUsuarios(usuario2)
+						.maxVoluntarios(50)
+						.build();
+				eventosService.guardar(eventos8);
+				evento = eventosService.buscarPorId(eventos8.getId());
+				usuarios = usuariosService.buscarPorId(usuario2.getId());
+				if (evento.isPresent()) {
+					usuarios.get().addEventos(evento.get());
+					usuariosService.editar(usuarios.get());
+				}
+
+				Eventos eventos9 = Eventos.builder()
+						.fInicio(fechaInicioEvento9)
+						.fFin(fechaFinEvento9)
+						.titulo("Taller de informatica para mayores")
+						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event6.webp")
+						.descripcion(
+								"¡Únete a nosotros en un taller de informática para mayores! En este evento especial, te invitamos a compartir tus habilidades tecnológicas con nuestros mayores, ayudándoles a navegar por el mundo digital y a conectarse con sus seres queridos.")
+						.ubicacion(ubicacion9)
+						.estado("disponible")
+						.categorias(listaCategorias)
+						.creadoPorUsuarios(usuario2)
+						.maxVoluntarios(50)
+						.build();
+				eventosService.guardar(eventos9);
+				evento = eventosService.buscarPorId(eventos9.getId());
+				usuarios = usuariosService.buscarPorId(usuario2.getId());
+				if (evento.isPresent()) {
+					usuarios.get().addEventos(evento.get());
+					usuariosService.editar(usuarios.get());
+				}
+
+				Eventos eventos10 = Eventos.builder()
+						.fInicio(fechaInicioEvento10)
+						.fFin(fechaFinEvento10)
+						.titulo("Limpieza de pellets en la playa de riazor")
+						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event6.webp")
+						.descripcion(
+								"¡Únete a nosotros en un evento de limpieza de pellets en la playa de Riazor! En este esfuerzo comunitario, nos uniremos para limpiar y preservar la belleza natural de nuestra costa, ayudando a devolverle su esplendor a este ecosistema vital.")
+						.ubicacion(ubicacion10)
+						.estado("disponible")
+						.categorias(listaCategorias)
+						.creadoPorUsuarios(usuario2)
+						.maxVoluntarios(50)
+						.build();
+				eventosService.guardar(eventos10);
+				evento = eventosService.buscarPorId(eventos10.getId());
+				usuarios = usuariosService.buscarPorId(usuario2.getId());
+				if (evento.isPresent()) {
+					usuarios.get().addEventos(evento.get());
+					usuariosService.editar(usuarios.get());
+				}
+
+				Eventos eventos11 = Eventos.builder()
+						.fInicio(fechaInicioEvento11)
+						.fFin(fechaFinEvento11)
+						.titulo("Taller de movilidad para mayores")
+						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event6.webp")
+						.descripcion(
+								"¡Únete a nosotros en un taller de movilidad para mayores! En este evento especial, te invitamos a compartir tus habilidades de movilidad con nuestros mayores, ayudándoles a mantenerse activos y saludables.")
+						.ubicacion(ubicacion11)
+						.estado("disponible")
+						.categorias(listaCategorias)
+						.creadoPorUsuarios(usuario2)
+						.maxVoluntarios(50)
+						.build();
+				eventosService.guardar(eventos11);
+				evento = eventosService.buscarPorId(eventos11.getId());
+				usuarios = usuariosService.buscarPorId(usuario2.getId());
+				if (evento.isPresent()) {
+					usuarios.get().addEventos(evento.get());
+					usuariosService.editar(usuarios.get());
+				}
+
+				Eventos eventos12 = Eventos.builder()
+						.fInicio(fechaInicioEvento12)
+						.fFin(fechaFinEvento12)
+						.titulo("Recogida de alimentos")
+						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event6.webp")
+						.descripcion(
+								"¡Únete a nosotros en un acto de solidaridad y generosidad mientras nos unimos para ayudar a aquellos que más lo necesitan en nuestra comunidad! Nuestro evento de recogida de alimentos es una oportunidad para marcar la diferencia y apoyar a las personas que enfrentan la inseguridad alimentaria.")
+						.ubicacion(ubicacion12)
+						.estado("disponible")
+						.categorias(listaCategorias)
+						.creadoPorUsuarios(usuario2)
+						.maxVoluntarios(50)
+						.build();
+				eventosService.guardar(eventos12);
+				evento = eventosService.buscarPorId(eventos12.getId());
+				usuarios = usuariosService.buscarPorId(usuario2.getId());
+				if (evento.isPresent()) {
+					usuarios.get().addEventos(evento.get());
+					usuariosService.editar(usuarios.get());
+				}
+
+				Eventos eventos13 = Eventos.builder()
+						.fInicio(fechaInicioEvento13)
+						.fFin(fechaFinEvento13)
+						.titulo("Sonrisas para los peques")
+						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event6.webp")
+						.descripcion(
+								"¡Únete a nosotros en un evento especial para llevar sonrisas a los más pequeños! En este evento, te invitamos a compartir tu tiempo y tu alegría con los niños, ayudándoles a disfrutar de un día lleno de diversión y entretenimiento.")
+						.ubicacion(ubicacion13)
+						.estado("revision")
+						.categorias(listaCategorias)
+						.creadoPorUsuarios(usuario2)
+						.maxVoluntarios(50)
+						.build();
+				eventosService.guardar(eventos13);
+				evento = eventosService.buscarPorId(eventos13.getId());
+				usuarios = usuariosService.buscarPorId(usuario2.getId());
+				if (evento.isPresent()) {
+					usuarios.get().addEventos(evento.get());
+					usuariosService.editar(usuarios.get());
+				}
+
+				Eventos eventos14 = Eventos.builder()
+						.fInicio(fechaInicioEvento14)
+						.fFin(fechaFinEvento14)
+						.titulo("Voluntarios para la gran maratón")
+						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event6.webp")
+						.descripcion(
+								"¡Únete a nosotros en un evento especial para llevar sonrisas a los más pequeños! En este evento, te invitamos a compartir tu tiempo y tu alegría con los niños, ayudándoles a disfrutar de un día lleno de diversión y entretenimiento.")
+						.ubicacion(ubicacion14)
+						.estado("denegado")
+						.categorias(listaCategorias)
+						.creadoPorUsuarios(usuario2)
+						.maxVoluntarios(50)
+						.build();
+				eventosService.guardar(eventos14);
+				evento = eventosService.buscarPorId(eventos14.getId());
 				usuarios = usuariosService.buscarPorId(usuario2.getId());
 				if (evento.isPresent()) {
 					usuarios.get().addEventos(evento.get());
