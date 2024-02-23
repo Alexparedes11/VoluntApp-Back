@@ -46,7 +46,6 @@ public class VoluntappApplication {
 			System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
 			if (runCommandLineRunner) {
 
-
 				LocalDateTime fechaInicioEvento1 = LocalDateTime.of(2024, 2, 17, 9, 30);
 				LocalDateTime fechaFinEvento1 = LocalDateTime.of(2024, 2, 17, 14, 0);
 
@@ -65,29 +64,85 @@ public class VoluntappApplication {
 				LocalDateTime fechaInicioEvento6 = LocalDateTime.of(2024, 3, 1, 9, 30);
 				LocalDateTime fechaFinEvento6 = LocalDateTime.of(2024, 3, 3, 22, 0);
 
+				LocalDateTime fechaInicioEvento7 = LocalDateTime.of(2024, 4, 1, 10, 0);
+				LocalDateTime fechaFinEvento7 = LocalDateTime.of(2024, 4, 3, 18, 0);
+		
+				LocalDateTime fechaInicioEvento8 = LocalDateTime.of(2024, 5, 10, 9, 0);
+				LocalDateTime fechaFinEvento8 = LocalDateTime.of(2024, 5, 12, 17, 30);
+		
+				LocalDateTime fechaInicioEvento9 = LocalDateTime.of(2024, 6, 5, 8, 30);
+				LocalDateTime fechaFinEvento9 = LocalDateTime.of(2024, 6, 7, 16, 45);
+		
+				LocalDateTime fechaInicioEvento10 = LocalDateTime.of(2024, 7, 20, 11, 0);
+				LocalDateTime fechaFinEvento10 = LocalDateTime.of(2024, 7, 22, 20, 15);
+		
+				LocalDateTime fechaInicioEvento11 = LocalDateTime.of(2024, 8, 15, 9, 15);
+				LocalDateTime fechaFinEvento11 = LocalDateTime.of(2024, 8, 17, 15, 45);
+		
+				LocalDateTime fechaInicioEvento12 = LocalDateTime.of(2024, 9, 3, 8, 0);
+				LocalDateTime fechaFinEvento12 = LocalDateTime.of(2024, 9, 5, 19, 30);
+		
+				LocalDateTime fechaInicioEvento13 = LocalDateTime.of(2024, 10, 12, 10, 30);
+				LocalDateTime fechaFinEvento13 = LocalDateTime.of(2024, 10, 14, 18, 45);
+		
+				LocalDateTime fechaInicioEvento14 = LocalDateTime.of(2024, 11, 8, 9, 30);
+				LocalDateTime fechaFinEvento14 = LocalDateTime.of(2024, 11, 10, 17, 0);
+
 				Ubicacion ubicacion = new Ubicacion(null, "Calle De San Olegario, Madrid",
 						-3.7602838, 40.3699524);
-				ubicacionService.guardar(ubicacion);
+				ubicacionService.guardar(ubicacion); //
 
-				Ubicacion ubicacion2 = new Ubicacion(null, "N-340, Pk 131, Alcoi, Alicante",
-						-0.47140612489073314, 38.683488155501855);
-				ubicacionService.guardar(ubicacion2);
+				Ubicacion ubicacion2 = new Ubicacion(null, "C. Escultor Bañuls 7, Alicante",
+						-0.4912633978169558, 38.35726809850449); 
+				ubicacionService.guardar(ubicacion2); //
 
 				Ubicacion ubicacion3 = new Ubicacion(null, "Playa Postiguet, Alicante",
 						-0.47876710565513714, 38.3444807533824);
-				ubicacionService.guardar(ubicacion3);
+				ubicacionService.guardar(ubicacion3); //
 
-				Ubicacion ubicacion4 = new Ubicacion(null, "C. Escultor Bañuls 7, Alicante",
-						-0.4912633978169558, 38.35726809850449);
+				Ubicacion ubicacion4 = new Ubicacion(null, "02696 Hoya-Gonzalo, Albacete",
+				 -1.5938187933444825, 39.00886407161091); //
 				ubicacionService.guardar(ubicacion4);
 
-				Ubicacion ubicacion5 = new Ubicacion(null, "Pintor Baeza 11, Alicante",
-						-0.48590116945300316, 38.36322105571466);
-				ubicacionService.guardar(ubicacion5);
+				Ubicacion ubicacion5 = new Ubicacion(null, "Omet Carrer 17, 46229 Picassent, Valencia",
+				 -0.4715994343625013, 39.353950780131534);
+				ubicacionService.guardar(ubicacion5); //
 
-				Ubicacion ubicacion6 = new Ubicacion(null, "C. 19 de Abril 34, San Miguel de Salinas, Alicante",
+				Ubicacion ubicacion6 = new Ubicacion(null, "Ctra. Villalpando, Km 1.5, 49136 Villafáfila, Zamora",
+				 -5.590871042847749, 41.85154420630644);
+				ubicacionService.guardar(ubicacion6); //
+
+				Ubicacion ubicacion7 = new Ubicacion(null, "C. 19 de Abril 34, San Miguel de Salinas, Alicante",
 						-0.7887108508683476, 37.97922685104109);
-				ubicacionService.guardar(ubicacion6);
+				ubicacionService.guardar(ubicacion7); //
+
+				Ubicacion ubicacion8 = new Ubicacion(null, "N-340, Pk 131, Alcoi, Alicante",
+						-0.47140612489073314, 38.683488155501855);
+				ubicacionService.guardar(ubicacion8); //
+
+				Ubicacion ubicacion9 = new Ubicacion(null, "Pr. Maior, 1, 27001 Lugo",
+				 -7.555675689392136, 43.009993935609494); 
+				ubicacionService.guardar(ubicacion9); //
+
+				Ubicacion ubicacion10 = new Ubicacion(null, "Playa de Riazor (La Coruña)",
+				 -8.41043255583519, 43.36879639197843);
+				ubicacionService.guardar(ubicacion10); //
+
+				Ubicacion ubicacion11 = new Ubicacion(null, "Av. de las Ciencias, s/n, 41020 Sevilla",
+				-5.926158165625714, 37.40044051828174 );
+				ubicacionService.guardar(ubicacion11); //
+
+				Ubicacion ubicacion12 = new Ubicacion(null, "Carrer de Josep Torras I Bages, 50, 08401 Granollers, Barcelona",
+				 2.2868041855279686, 41.61087620523382);
+				ubicacionService.guardar(ubicacion12); //
+
+				Ubicacion ubicacion13 = new Ubicacion(null, "Pintor Baeza 11, Alicante",
+						-0.48590116945300316, 38.36322105571466);
+				ubicacionService.guardar(ubicacion13); //
+
+				Ubicacion ubicacion14 = new Ubicacion(null, "Pl. Redona, Ciutat Vella, 46001 València, Valencia",
+				 -0.37661300992725444, 39.47356680517395);
+				ubicacionService.guardar(ubicacion14); //
 
 				Set<Usuarios> listaUsuarios = new HashSet<>();
 				Set<Categorias> listaCategorias = new HashSet<>();
@@ -102,26 +157,26 @@ public class VoluntappApplication {
 				Optional<Usuarios> usuarios;
 
 				Instituciones instituciones = new Instituciones(null, "unicef@example.com",
-						"12345678A", "Unicef ORG", "616 616 616",
-						"https://voluntapp.blob.core.windows.net/images/banners/default.webp", "Manolito", "Unicef",
+						"12345678A", "Unicef ORG", " 963 52 79 66",
+						"https://voluntapp.blob.core.windows.net/images/banners/unicef.webp", "Maria Martinez", "Unicef",
 						"123",
-						"https://voluntapp.blob.core.windows.net/images/perfiles/default.webp",
+						"https://voluntapp.blob.core.windows.net/images/perfiles/unicef.webp",
 						listaEventosInstituciones);
 				institucionesService.guardar(instituciones);
 				listaInstituciones.add(instituciones);
 
 				Instituciones instituciones2 = new Instituciones(null, "cruz@example.com",
-						"12345678B", "Cruz ORG", "616 616 616",
-						"https://voluntapp.blob.core.windows.net/images/banners/default.webp", "Manolito", "Cruz Roja",
+						"12345678B", "Cruz ORG", "963 80 22 24",
+						"https://voluntapp.blob.core.windows.net/images/banners/cruz.webp", "Lucas Lopez", "Cruz Roja",
 						"123",
-						"https://voluntapp.blob.core.windows.net/images/perfiles/default.webp",
+						"https://voluntapp.blob.core.windows.net/images/perfiles/cruz.webp",
 						listaEventosInstituciones2);
 				institucionesService.guardar(instituciones2);
 				listaInstituciones.add(instituciones2);
 
 				Usuarios usuario = new Usuarios(null, "Manuel", "manuel@example.com",
 						"Rodriguez Martinez", "12345678A", "Calle Alfonso el sabio 1", "123",
-						"https://voluntapp.blob.core.windows.net/images/perfiles/default.webp",
+						"https://voluntapp.blob.core.windows.net/images/perfiles/voluntario1.webp",
 						"https://voluntapp.blob.core.windows.net/images/banners/default.webp", "612 612 612", "Usuario",
 						listaEventosUsuarios);
 				usuariosService.guardar(usuario);
@@ -129,7 +184,7 @@ public class VoluntappApplication {
 
 				Usuarios usuario2 = new Usuarios(null, "Jose Miguel", "jose@example.com",
 						"Muñoz Vazquez", "21436587B", "Calle Teulada 10", "123",
-						"https://voluntapp.blob.core.windows.net/images/perfiles/default.webp",
+						"https://voluntapp.blob.core.windows.net/images/perfiles/voluntario2.webp",
 						"https://voluntapp.blob.core.windows.net/images/banners/default.webp",
 						"613 613 613", "Usuario", listaEventosUsuarios2);
 				usuariosService.guardar(usuario2);
@@ -144,44 +199,64 @@ public class VoluntappApplication {
 				listaUsuarios.add(usuario3);
 
 				Noticias noticias1 = Noticias.builder()
-						.titulo("Limpieza masiva en el bosque de Alcoy")
+						.titulo("Voluntarios con colador: cientos de personas se lanzan a las playas gallegas para luchar contra la marea de ‘pellets’ plásticos")
 						.contenido(
-								"¡Únete a nosotros para una limpieza masiva en el bosque de Alcoy! ¡Ayúdanos a mantener nuestro bosque limpio y seguro!")
-						.imagen("https://voluntapp.blob.core.windows.net/images/noticias/new1.webp")
+								"La Xunta y el Gobierno se enfrentan entre sí, mientras los particulares reclaman coordinación y medios para limpiar los millones de bolitas de un compuesto todavía desconocido extendido por la costa")
+						.imagen("https://voluntapp.blob.core.windows.net/images/noticias/news1.webp")
 						.fecha(Date.valueOf(LocalDateTime.now().toLocalDate()))
-						.autor("VoluntApp")
+						.autor("Silvia R. Pontevedra / La Voz de Galicia")
 						.build();
 				noticiasService.guardar(noticias1);
 
-				Noticias noticias2 = Noticias.builder()
-						.titulo("Inauguración del nuevo centro comunitario en Valencia")
+				Noticias noticias5 = Noticias.builder()
+						.titulo("UNICEF se Une a VoluntApp: Transformando Vidas Juntos")
 						.contenido(
-								"¡Ven y únete a la celebración de la inauguración del nuevo centro comunitario en Valencia! Habrá música en vivo, comida deliciosa y actividades para toda la familia.")
-						.imagen("https://voluntapp.blob.core.windows.net/images/noticias/new2.webp")
+								"Estamos emocionados de dar la bienvenida a UNICEF a VoluntApp. Su registro fortalece nuestra misión compartida de impactar positivamente en la vida de los niños en todo el mundo. Gracias a UNICEF por unirse a esta comunidad de voluntarios comprometidos. Juntos, estamos haciendo una diferencia significativa.")
+						.imagen("https://voluntapp.blob.core.windows.net/images/noticias/news5.webp")
 						.fecha(Date.valueOf(LocalDateTime.now().toLocalDate()))
-						.autor("Ayuntamiento de Valencia")
+						.autor("VoluntApp")
+						.build();
+				noticiasService.guardar(noticias5);
+
+				Noticias noticias2 = Noticias.builder()
+						.titulo("Voluntariado: ¿qué aporta al desarrollo de los niños y niñas?")
+						.contenido(
+								"Aunque no hay una edad determinada para implicarse en labores solidarias hacerlo desde edades tempranas promueve habilidades como la autonomía, la comunicación o la resiliencia. Además, fomenta los sentimientos de compromiso, el pensamiento crítico y el espíritu ciudadano")
+						.imagen("https://voluntapp.blob.core.windows.net/images/noticias/news2.webp")
+						.fecha(Date.valueOf(LocalDateTime.now().toLocalDate()))
+						.autor("Ana Camarero / El País")
 						.build();
 				noticiasService.guardar(noticias2);
 
 				Noticias noticias3 = Noticias.builder()
-						.titulo("Conferencia sobre conservación marina en Alicante")
+						.titulo("Ir como voluntario a África, abrazar niños y colgar la foto en Instagram. No, gracias")
 						.contenido(
-								"No te pierdas nuestra conferencia sobre la importancia de la conservación marina en Alicante. Expertos en el campo compartirán sus conocimientos y experiencias.")
-						.imagen("https://voluntapp.blob.core.windows.net/images/noticias/new3.webp")
+								"Las ONG aumentan los filtros y profesionalizan el altruismo para que sea efectivo y para limitar el turismo solidario")
+						.imagen("https://voluntapp.blob.core.windows.net/images/noticias/news3.webp")
 						.fecha(Date.valueOf(LocalDateTime.now().toLocalDate()))
-						.autor("Asociación de Conservación Marina")
+						.autor("Beatriz Lecumberri / El País")
 						.build();
 				noticiasService.guardar(noticias3);
 
 				Noticias noticias4 = Noticias.builder()
-						.titulo("Torneo benéfico de fútbol en Castellón")
+						.titulo("Jesús, exgerente comercial que vive en la calle: “No sabes adónde ir ni qué hacer” ")
 						.contenido(
-								"Participa en nuestro torneo benéfico de fútbol en Castellón para recaudar fondos para niños necesitados. ¡Únete a nosotros para una jornada llena de diversión y solidaridad!")
-						.imagen("https://voluntapp.blob.core.windows.net/images/noticias/new4.webp")
+								"Una noche con las personas sin hogar y los voluntarios de la Fundación Conciénciate en el barrio Carrús de Elche, uno de los más pobres de España")
+						.imagen("https://voluntapp.blob.core.windows.net/images/noticias/news4.webp")
 						.fecha(Date.valueOf(LocalDateTime.now().toLocalDate()))
-						.autor("Fundación Niños Felices")
+						.autor("Mario Abril / El País")
 						.build();
 				noticiasService.guardar(noticias4);
+
+				Noticias noticias6 = Noticias.builder()
+						.titulo("Cruz Roja Se Suma a VoluntApp: Solidaridad en Acción")
+						.contenido(
+								"Es un honor anunciar que Cruz Roja se ha unido a VoluntApp, nuestra plataforma dedicada a impulsar la solidaridad a través del voluntariado. Su participación fortalece nuestra red y amplía el alcance de nuestra labor humanitaria. Agradecemos a Cruz Roja por unirse a esta causa común de ayudar a quienes más lo necesitan. Juntos, llevaremos esperanza y asistencia a comunidades vulnerables en todo el mundo.")
+						.imagen("https://voluntapp.blob.core.windows.net/images/noticias/news6.webp")
+						.fecha(Date.valueOf(LocalDateTime.now().toLocalDate()))
+						.autor("VoluntApp")
+						.build();
+				noticiasService.guardar(noticias6);
 
 				Eventos eventos1 = Eventos.builder()
 						.fInicio(fechaInicioEvento1)
