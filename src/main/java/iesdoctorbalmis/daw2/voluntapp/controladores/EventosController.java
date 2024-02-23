@@ -376,7 +376,7 @@ public class EventosController {
 
     // Obtener eventos con un estado concreto
     @GetMapping("/eventos/buscaporestado/{estado}")
-    public ResponseEntity<?> obtenerEventosEnRevision(@PathVariable String estado, Pageable pageable) {
+    public ResponseEntity<?> obtenerEventosEnRevision(@PathVariable String estado, @PageableDefault(size = 9, page = 0) Pageable pageable) {
         Page<Eventos> eventos = eventosService.findByEstado(estado, pageable);
         Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
         return ResponseEntity.ok(eventosDTOPage);
