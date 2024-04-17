@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import iesdoctorbalmis.daw2.voluntapp.dto.EventosDTO;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Instituciones;
+import iesdoctorbalmis.daw2.voluntapp.modelos.Tag;
+import io.micrometer.core.instrument.Tags;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -38,6 +40,15 @@ public class EventoDTOConverter {
             instituciones.add(eventosNombre);
         }
 
+        Iterator<Tag> iteradorTags = eventos.getTags().iterator();
+        Set<String> tags = new HashSet<>();
+
+        while (iteradorTags.hasNext()) {
+            Tag elemento = iteradorTags.next();
+            String eventosNombre = elemento.getNombre();
+            tags.add(eventosNombre);
+        }
+
 
         System.out.println("                Descripcion del evento: " + instituciones);
                 
@@ -55,6 +66,7 @@ public class EventoDTOConverter {
             .estado(eventos.getEstado())
             .ubicacion(eventos.getUbicacion())
             .nombreInstituciones(instituciones)
+            .tags(tags)
             .build();
     }
 }

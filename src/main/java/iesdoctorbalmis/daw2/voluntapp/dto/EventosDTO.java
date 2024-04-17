@@ -50,4 +50,6 @@ public class EventosDTO {
 
     private Set<String> nombreInstituciones;
 
+    private Set<String> tags;
+
 }

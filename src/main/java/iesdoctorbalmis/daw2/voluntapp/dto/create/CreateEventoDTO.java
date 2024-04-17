@@ -2,6 +2,7 @@ package iesdoctorbalmis.daw2.voluntapp.dto.create;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import iesdoctorbalmis.daw2.voluntapp.modelos.Ubicacion;
 import lombok.AllArgsConstructor;
@@ -44,5 +45,7 @@ public class CreateEventoDTO {
     private String institucionNombre;
 
     private int maxVoluntarios;
+
+    private Set<String> tags;
 
 }
