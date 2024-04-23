@@ -56,7 +56,7 @@ public class EventosService {
         return eventosRepository.findAll(pageable);
     }
 
-    //obtener Eventos por estado
+    // obtener Eventos por estado
     public Page<Eventos> findByEstado(String estado, Pageable pageable) {
         return eventosRepository.findByEstado(estado, pageable);
     }
@@ -64,7 +64,7 @@ public class EventosService {
     public Optional<Eventos> findByIdConUsuarios(Long id) {
         return eventosRepository.findByIdJoinFetch(id);
     }
-    
+
     public List<Eventos> findByCreadoPorUsuariosIdYEstado(Long id, String estado) {
         return eventosRepository.findByCreadoPorUsuariosIdAndEstado(id, estado);
     }
@@ -81,21 +81,6 @@ public class EventosService {
         return eventosRepository.findByFechaInicioBetween(fInicio, fFin, pageable);
     }
 
-    public Page<Eventos> findByEstadoAndFechaInicioBetween (String estado, LocalDateTime fInicio, LocalDateTime fFin, Pageable pageable) {
-        return eventosRepository.findByEstadoAndFechaInicioBetween(estado, fInicio, fFin, pageable);
-    }
-
-    //obtener eventos por ubicacion
-    public Page<Eventos> findByEstadoAndUbicacionDisponible(String nombreUbicacion, Pageable pageable) {
-        return eventosRepository.findByEstadoAndUbicacionDisponible(nombreUbicacion, pageable);
-    }
-
-    public Page<Eventos> findByFechaInicioBetweenAndUbicacionAndEstado(LocalDateTime fInicio, LocalDateTime fFin,
-                String nombreUbicacion, Pageable pageable) {
-        return eventosRepository.findByFechaInicioBetweenAndUbicacionAndEstado(fInicio, fFin, nombreUbicacion, pageable);
-    }
-
-    
     public List<Eventos> buscarPorEstadoYUsuario(String estado, Usuarios usu) {
         return eventosRepository.findByEstadoAndUsuarios(estado, usu);
     }
@@ -112,4 +97,47 @@ public class EventosService {
         return eventosRepository.findAllByOrderByFechaInicioDesc(pageable);
     }
 
+    // Filtrado de eventos
+    public Page<Eventos> filtrarEventos(LocalDateTime finicio, LocalDateTime ffin, String ubicacionNombre,
+            List<String> tags, Pageable pageable) {
+        if (finicio != null && ffin != null && ubicacionNombre != null && tags != null) {
+            return eventosRepository.findByFInicioBetweenAndFFinBetweenAndUbicacionNombreContainsAndTagsNombreIn(
+                    finicio, ffin, ubicacionNombre, tags, pageable);
+        } else if (finicio != null && ffin != null && ubicacionNombre != null) {
+            return eventosRepository.findByFInicioBetweenAndFFinBetweenAndUbicacionNombreContains(finicio, ffin,
+                    ubicacionNombre, pageable);
+        } else if (finicio != null && ffin != null && tags != null) {
+            return eventosRepository.findByFInicioBetweenAndUbicacionNombreContainsAndTagsNombreIn(finicio, ffin,
+                    ubicacionNombre, tags, pageable);
+        } else if (finicio != null && ffin != null) {
+            return eventosRepository.findByFInicioBetweenAndFFinBetween(finicio, ffin, pageable);
+        } else if (finicio != null && ubicacionNombre != null && tags != null) {
+            return eventosRepository.findByFInicioAndUbicacionNombreContainsAndTagsNombreIn(finicio, ubicacionNombre,
+                    tags, pageable);
+        } else if (finicio != null && ubicacionNombre != null) {
+            return eventosRepository.findByFInicioAndUbicacionNombreContains(finicio, ubicacionNombre, pageable);
+        } else if (finicio != null && tags != null) {
+            return eventosRepository.findByFInicioAndTagsNombreIn(finicio, tags, pageable);
+        } else if (ffin != null && ubicacionNombre != null && tags != null) {
+            return eventosRepository.findByFFinAndUbicacionNombreContainsAndTagsNombreIn(ffin, ubicacionNombre, tags,
+                    pageable);
+        } else if (ffin != null && ubicacionNombre != null) {
+            return eventosRepository.findByFFinAndUbicacionNombreContains(ffin, ubicacionNombre, pageable);
+        } else if (ffin != null && tags != null) {
+            return eventosRepository.findByFFinAndTagsNombreIn(ffin, tags, pageable);
+        } else if (ubicacionNombre != null && tags != null) {
+            return eventosRepository.findByUbicacionNombreContainsAndTagsNombreIn(ubicacionNombre, tags, pageable);
+        } else if (finicio != null) {
+            return eventosRepository.findByFInicio(finicio, finicio.plusDays(1), pageable);
+        } else if (ffin != null) {
+            return eventosRepository.findByFFin(ffin, ffin.plusDays(1), pageable);
+        } else if (ubicacionNombre != null) {
+            return eventosRepository.findByUbicacionNombreContains(ubicacionNombre, pageable);
+        } else if (tags != null) {
+            return eventosRepository.findByTagsNombreIn(tags, pageable);
+        } else {
+            // Manejo de caso cuando no se proporcionan filtros
+            return eventosRepository.findByEstado("disponible", pageable);
+        }
+    }
 }

@@ -1,5 +1,7 @@
 package iesdoctorbalmis.daw2.voluntapp.servicios;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import iesdoctorbalmis.daw2.voluntapp.modelos.Tag;
@@ -17,5 +19,10 @@ public class TagService {
     // guardar tag
     public Tag guardar(Tag tag) {
         return tagRepository.save(tag);
+    }
+
+    // Buscar un tag por su nombre
+    public Optional<Tag> buscarPorNombre(String nombre) {
+        return tagRepository.findByNombre(nombre);
     }
 }

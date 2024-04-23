@@ -12,7 +12,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import iesdoctorbalmis.daw2.voluntapp.modelos.Categorias;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Instituciones;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Noticias;
@@ -150,7 +149,6 @@ public class VoluntappApplication {
 				ubicacionService.guardar(ubicacion14); //
 
 				Set<Usuarios> listaUsuarios = new HashSet<>();
-				Set<Categorias> listaCategorias = new HashSet<>();
 				Set<Eventos> listaEventosUsuarios = new HashSet<>();
 				Set<Eventos> listaEventosUsuarios2 = new HashSet<>();
 				Set<Eventos> listaEventosUsuarios3 = new HashSet<>();
@@ -268,9 +266,6 @@ public class VoluntappApplication {
 				Tag tag1 = Tag.builder().nombre("Solidaridad").build();
 				tagService.guardar(tag1);
 
-				Tag tag2 = Tag.builder().nombre("Voluntariado").build();
-				tagService.guardar(tag2);
-
 				Tag tag3 = Tag.builder().nombre("Ayuda").build();
 				tagService.guardar(tag3);
 
@@ -304,7 +299,6 @@ public class VoluntappApplication {
 								"¡Atención, adolescentes! ¿Estás listo para ser un héroe en situaciones de emergencia? Únete a nosotros en nuestro evento especial de primeros auxilios diseñado exclusivamente para jóvenes como tú. En este emocionante taller, aprenderás habilidades vitales que podrían salvar vidas en momentos críticos.")
 						.ubicacion(ubicacion)
 						.estado("disponible")
-						.categorias(listaCategorias)
 						.creadoPorInstituciones(instituciones2)
 						.maxVoluntarios(20)
 						.tags(Set.of(tag1, tag9))
@@ -330,7 +324,6 @@ public class VoluntappApplication {
 								"¡Únete a nosotros en un acto de solidaridad y generosidad mientras nos unimos para ayudar a aquellos que más lo necesitan en nuestra comunidad! Nuestro evento de recogida de alimentos es una oportunidad para marcar la diferencia y apoyar a las personas que enfrentan la inseguridad alimentaria.")
 						.ubicacion(ubicacion2)
 						.estado("disponible")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario)
 						.maxVoluntarios(100)
 						.tags(Set.of(tag3, tag8))
@@ -355,7 +348,6 @@ public class VoluntappApplication {
 						.descripcion("¡Únete a nosotros en la playa Postiguet para un evento de recogida de pellets!")
 						.ubicacion(ubicacion3)
 						.estado("disponible")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
 						.maxVoluntarios(50)
 						.tags(Set.of(tag6))
@@ -376,7 +368,6 @@ public class VoluntappApplication {
 						.descripcion("Te invitamos a unirte a nosotros en un esfuerzo comunitario para recoger basura")
 						.ubicacion(ubicacion4)
 						.estado("disponible")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
 						.maxVoluntarios(50)
 						.tags(Set.of(tag6))
@@ -410,7 +401,6 @@ public class VoluntappApplication {
 								"¡Únete a nosotros en un evento lleno de amor y compañerismo mientras ayudamos a perros necesitados a encontrar sus hogares para siempre! En \"Amor en Cuatro Patas\", te invitamos a considerar la adopción como la mejor opción al momento de agregar un nuevo miembro a tu familia.")
 						.ubicacion(ubicacion5)
 						.estado("revision")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario)
 						.maxVoluntarios(30)
 						.tags(Set.of(tag5))
@@ -432,7 +422,6 @@ public class VoluntappApplication {
 								"¡Únete a nosotros en una jornada de acción comunitaria para limpiar y preservar la belleza natural de nuestro campo mientras recogemos cristales tipo basura! En este evento especial, te invitamos a ser parte del cambio y ayudar a devolver la pureza a nuestros paisajes naturales.")
 						.ubicacion(ubicacion6)
 						.estado("disponible")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
 						.maxVoluntarios(50)
 						.tags(Set.of(tag6))
@@ -454,7 +443,6 @@ public class VoluntappApplication {
 								"En momentos de crisis, la solidaridad y el apoyo comunitario son más importantes que nunca. Únete a nosotros en un esfuerzo conjunto para brindar ayuda y esperanza a las personas afectadas por las devastadoras inundaciones que han golpeado nuestra región.")
 						.ubicacion(ubicacion7)
 						.estado("disponible")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
 						.maxVoluntarios(50)
 						.tags(Set.of(tag1, tag3))
@@ -476,7 +464,6 @@ public class VoluntappApplication {
 								"Únete a nosotros en una jornada dedicada a la preservación y protección de nuestro preciado bosque. En este evento de limpieza ambiental, nos uniremos como comunidad para devolverle su esplendor natural a este ecosistema vital.")
 						.ubicacion(ubicacion8)
 						.estado("disponible")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
 						.maxVoluntarios(50)
 						.tags(Set.of(tag6))
@@ -498,7 +485,6 @@ public class VoluntappApplication {
 								"¡Únete a nosotros en un taller de informática para mayores! En este evento especial, te invitamos a compartir tus habilidades tecnológicas con nuestros mayores, ayudándoles a navegar por el mundo digital y a conectarse con sus seres queridos.")
 						.ubicacion(ubicacion9)
 						.estado("disponible")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
 						.maxVoluntarios(50)
 						.tags(Set.of(tag7))
@@ -520,7 +506,6 @@ public class VoluntappApplication {
 								"¡Únete a nosotros en un evento de limpieza de pellets en la playa de Riazor! En este esfuerzo comunitario, nos uniremos para limpiar y preservar la belleza natural de nuestra costa, ayudando a devolverle su esplendor a este ecosistema vital.")
 						.ubicacion(ubicacion10)
 						.estado("disponible")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
 						.maxVoluntarios(50)
 						.tags(Set.of(tag6))
@@ -542,7 +527,6 @@ public class VoluntappApplication {
 								"¡Únete a nosotros en un taller de movilidad para mayores! En este evento especial, te invitamos a compartir tus habilidades de movilidad con nuestros mayores, ayudándoles a mantenerse activos y saludables.")
 						.ubicacion(ubicacion11)
 						.estado("disponible")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
 						.maxVoluntarios(50)
 						.tags(Set.of(tag7))
@@ -564,7 +548,6 @@ public class VoluntappApplication {
 								"¡Únete a nosotros en un acto de solidaridad y generosidad mientras nos unimos para ayudar a aquellos que más lo necesitan en nuestra comunidad! Nuestro evento de recogida de alimentos es una oportunidad para marcar la diferencia y apoyar a las personas que enfrentan la inseguridad alimentaria.")
 						.ubicacion(ubicacion12)
 						.estado("disponible")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
 						.maxVoluntarios(50)
 						.tags(Set.of(tag3, tag8))
@@ -586,7 +569,6 @@ public class VoluntappApplication {
 								"¡Únete a nosotros en un evento especial para llevar sonrisas a los más pequeños! En este evento, te invitamos a compartir tu tiempo y tu alegría con los niños, ayudándoles a disfrutar de un día lleno de diversión y entretenimiento.")
 						.ubicacion(ubicacion13)
 						.estado("revision")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
 						.maxVoluntarios(50)
 						.tags(Set.of(tag4))
@@ -608,7 +590,6 @@ public class VoluntappApplication {
 								"¡Únete a nosotros en un evento especial para llevar sonrisas a los más pequeños! En este evento, te invitamos a compartir tu tiempo y tu alegría con los niños, ayudándoles a disfrutar de un día lleno de diversión y entretenimiento.")
 						.ubicacion(ubicacion14)
 						.estado("denegado")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
 						.maxVoluntarios(50)
 						.tags(Set.of(tag10))

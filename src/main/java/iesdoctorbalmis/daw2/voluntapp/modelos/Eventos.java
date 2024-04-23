@@ -77,11 +77,6 @@ public class Eventos {
     @Builder.Default
     private Set<Instituciones> instituciones = new HashSet<>();
 
-    @JsonBackReference
-    @ManyToMany(mappedBy = "eventos", fetch = FetchType.EAGER)
-    @Builder.Default
-    private Set<Categorias> categorias = new HashSet<>();
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "evento_tags",
