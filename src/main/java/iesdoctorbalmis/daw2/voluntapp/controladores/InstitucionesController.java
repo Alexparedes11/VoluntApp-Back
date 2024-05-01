@@ -33,46 +33,44 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 public class InstitucionesController {
-    
+
     private final InstitucionesService institucionesService;
     private final InstitucionDTOConverter institucionDTOConverter;
     private final PaginationLinksUtils paginationLinksUtils;
 
-
     // Obtención de todos los Instituciones
-    @GetMapping("/instituciones") 
-    public ResponseEntity<?> todasLasInstituciones(@PageableDefault(size = 10, page = 0) Pageable pageable, HttpServletRequest request) {
+    @GetMapping("/instituciones")
+    public ResponseEntity<?> todasLasInstituciones(@PageableDefault(size = 10, page = 0) Pageable pageable,
+            HttpServletRequest request) {
         Page<Instituciones> listaInstituciones = institucionesService.ObtenerTodosPageable(pageable);
         if (listaInstituciones.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No hay instituciones registradas");
         } else {
             Page<InstitucionesDTO> dtoList = listaInstituciones.map(institucionDTOConverter::convertToDto);
 
-            UriComponentsBuilder uriBuilder =
-					UriComponentsBuilder.fromHttpUrl(request.getRequestURL().toString());
-			
-			return ResponseEntity.ok().header("link", 
-					paginationLinksUtils.createLinkHeader(dtoList, uriBuilder)).body(dtoList);
-            
+            UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(request.getRequestURL().toString());
+
+            return ResponseEntity.ok().header("link",
+                    paginationLinksUtils.createLinkHeader(dtoList, uriBuilder)).body(dtoList);
+
         }
     }
-
 
     // Encontrar al Instituciones por la ID (con DTO)
     @GetMapping("/instituciones/{id}")
     public InstitucionesDTO obtenerUno(@PathVariable Long id) {
 
         Instituciones instituciones = institucionesService.buscarPorId(id)
-            .orElseThrow(() -> // No lanza la excepción
-            new InstitucionesNotFoundException(id));
+                .orElseThrow(() -> // No lanza la excepción
+                new InstitucionesNotFoundException(id));
 
         return institucionDTOConverter.convertToDto(instituciones);
     }
 
-
     // Filtrado por el nombre de institución ( NO FUNCIONA )
-    @GetMapping(value="/instituciones", params = "nombre")
-        public ResponseEntity<?> buscarInstitucionesPorNombre(@RequestParam("nombre") String txt, Pageable pageable, HttpServletRequest request) {
+    @GetMapping(value = "/instituciones", params = "nombre")
+    public ResponseEntity<?> buscarInstitucionesPorNombre(@RequestParam("nombre") String txt, Pageable pageable,
+            HttpServletRequest request) {
         Page<Instituciones> listaInstituciones = institucionesService.buscarPorNombre(txt, pageable);
 
         if (listaInstituciones.isEmpty()) {
@@ -83,23 +81,22 @@ public class InstitucionesController {
         }
     }
 
-
     // Añadir Instituciones a la base de datos
     @PostMapping("/instituciones")
     public ResponseEntity<Instituciones> nuevoUsuario(@RequestBody CreateInstitucionDTO nuevo) {
 
-        Instituciones institucionesNuevo =  Instituciones.builder()
-                                    .nombre(nuevo.getNombre())
-                                    .cif(nuevo.getCif())
-                                    .personaCargo(nuevo.getPersonaCargo())
-                                    .fotoPerfil("https://voluntapp.blob.core.windows.net/images/perfiles/default.webp")
-                                    .username(nuevo.getEmail())
-                                    .password(nuevo.getPassword())
-                                    .telefono(nuevo.getTelefono())
-                                    .fotoBanner("https://voluntapp.blob.core.windows.net/images/banners/default.webp")
-                                    .nombreLegal(nuevo.getNombreLegal())
-                                    .estado("revision")
-                                    .build();
+        Instituciones institucionesNuevo = Instituciones.builder()
+                .nombre(nuevo.getNombre())
+                .cif(nuevo.getCif())
+                .personaCargo(nuevo.getPersonaCargo())
+                .fotoPerfil("https://voluntapp.blob.core.windows.net/images/perfiles/default.webp")
+                .username(nuevo.getEmail())
+                .password(nuevo.getPassword())
+                .telefono(nuevo.getTelefono())
+                .fotoBanner("https://voluntapp.blob.core.windows.net/images/banners/default.webp")
+                .nombreLegal(nuevo.getNombreLegal())
+                .estado("revision")
+                .build();
 
         Instituciones nuevaInstitucion = institucionesService.guardar(institucionesNuevo);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaInstitucion);
@@ -108,7 +105,8 @@ public class InstitucionesController {
 
     // Editar instituciones de la base de datos
     @PutMapping("/instituciones/{id}")
-    public ResponseEntity<Instituciones> editaInstitucion(@RequestBody CreateInstitucionDTO editaInstitucion, @PathVariable Long id) {
+    public ResponseEntity<Instituciones> editaInstitucion(@RequestBody CreateInstitucionDTO editaInstitucion,
+            @PathVariable Long id) {
 
         return institucionesService.buscarPorId(id).map(p -> {
             p.setNombre(editaInstitucion.getNombre());
@@ -131,16 +129,17 @@ public class InstitucionesController {
     public ResponseEntity<?> eliminarInstitucion(@PathVariable Long id) {
 
         Instituciones instituciones = institucionesService.buscarPorId(id)
-                            .orElseThrow(() -> new InstitucionesNotFoundException(id));
-        
+                .orElseThrow(() -> new InstitucionesNotFoundException(id));
+
         institucionesService.eliminar(instituciones);
         return ResponseEntity.noContent().build();
     }
 
     // Añadir evento a una Institución ( not works )
     @PostMapping("/instituciones/añadir-evento")
-    public ResponseEntity<Instituciones> añadirEvento(@RequestBody Eventos eventos, @RequestBody Instituciones instituciones) {
-        
+    public ResponseEntity<Instituciones> añadirEvento(@RequestBody Eventos eventos,
+            @RequestBody Instituciones instituciones) {
+
         Set<Eventos> eventoAñadir = instituciones.getEventos();
         eventoAñadir.add(eventos);
 
@@ -150,4 +149,20 @@ public class InstitucionesController {
         }).orElseThrow(() -> new InstitucionesNotFoundException(instituciones.getId()));
     }
 
+   
+    // Obtener instituciones con un estado concreto
+    @GetMapping("/instituciones/buscaporestado/{estado}")
+    public ResponseEntity<?> obtenerInstitucionesEnRevision(@PathVariable String estado, @PageableDefault(size = 9, page = 0) Pageable pageable) {
+        Page<Instituciones> eventos = institucionesService.findByEstado(estado, pageable);
+        Page<InstitucionesDTO> institucionesDTOPage = eventos.map(institucionDTOConverter::convertToDto);
+        return ResponseEntity.ok(institucionesDTOPage);
+    }
+    
+    @PutMapping("/instituciones/{id}/estado")
+    public ResponseEntity<Instituciones> actualizarEstadoEvento(@PathVariable Long id, @RequestBody String estado){
+        Instituciones institucion = institucionesService.buscarPorId(id)
+                .orElseThrow(() -> new InstitucionesNotFoundException(id));
+                institucion.setEstado(estado);
+        return ResponseEntity.ok(institucionesService.editar(institucion));
+    }
 }

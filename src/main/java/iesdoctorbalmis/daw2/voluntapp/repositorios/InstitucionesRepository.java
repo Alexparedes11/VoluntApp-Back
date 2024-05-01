@@ -16,4 +16,6 @@ public interface InstitucionesRepository extends JpaRepository<Instituciones, Lo
 
     Optional<Instituciones> findByUsername(String email);
 
+
+    Page<Instituciones> findByEstado(String estado, Pageable pageable);
 }
