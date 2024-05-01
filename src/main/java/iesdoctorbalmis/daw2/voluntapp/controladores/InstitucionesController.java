@@ -98,6 +98,7 @@ public class InstitucionesController {
                                     .telefono(nuevo.getTelefono())
                                     .fotoBanner("https://voluntapp.blob.core.windows.net/images/banners/default.webp")
                                     .nombreLegal(nuevo.getNombreLegal())
+                                    .estado("revision")
                                     .build();
 
         Instituciones nuevaInstitucion = institucionesService.guardar(institucionesNuevo);

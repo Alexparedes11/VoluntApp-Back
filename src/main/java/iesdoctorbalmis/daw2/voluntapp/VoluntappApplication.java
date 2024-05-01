@@ -159,7 +159,7 @@ public class VoluntappApplication {
 				Instituciones instituciones = new Instituciones(null, "unicef@example.com",
 						"12345678A", "Unicef ORG", "963 527 966",
 						"https://voluntapp.blob.core.windows.net/images/banners/unicef.webp", "Maria Martinez", "Unicef",
-						"123",
+						"123", "validado",
 						"https://voluntapp.blob.core.windows.net/images/perfiles/unicef.webp",
 						listaEventosInstituciones);
 				institucionesService.guardar(instituciones);
@@ -168,14 +168,14 @@ public class VoluntappApplication {
 				Instituciones instituciones2 = new Instituciones(null, "cruz@example.com",
 						"12345678B", "Cruz Roja ORG", "963 802 224",
 						"https://voluntapp.blob.core.windows.net/images/banners/cruz.webp", "Lucas Lopez", "Cruz Roja",
-						"123",
+						"123","validado",
 						"https://voluntapp.blob.core.windows.net/images/perfiles/cruz.webp",
 						listaEventosInstituciones2);
 				institucionesService.guardar(instituciones2);
 				listaInstituciones.add(instituciones2);
 
 				Usuarios usuario = new Usuarios(null, "Manuel", "manuel@example.com",
-						"Rodriguez Martinez", "12345678A", "Calle Alfonso el sabio 1", "123",
+						"Rodriguez Martinez", "12345678A", "Calle Alfonso el sabio 1", "123", 
 						"https://voluntapp.blob.core.windows.net/images/perfiles/voluntario1.webp",
 						"https://voluntapp.blob.core.windows.net/images/banners/default.webp", "612 612 612", "Usuario",
 						listaEventosUsuarios);

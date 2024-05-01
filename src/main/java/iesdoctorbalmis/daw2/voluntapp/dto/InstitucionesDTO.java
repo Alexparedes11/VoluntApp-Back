@@ -40,6 +40,6 @@ public class InstitucionesDTO {
 
     private String fotoBanner;
 
-
+    private String estado;
 
 }

@@ -57,6 +57,8 @@ public class Instituciones implements UserDetails{
 
     private String password;
 
+    private String estado;
+
     @Lob
     @Column(length = 1000000)
     private String fotoPerfil;

@@ -31,39 +31,42 @@ public class LoginController {
     private final AuthenticationManager authenticationManager;
     private final JwtProvider tokenProvider;
 
-     @PostMapping("/login")
+    @PostMapping("/login")
     public  ResponseEntity<?> login(@Valid @RequestBody LoginRequest  loginRequest) {
-        //TODO: process POST request
+        // Procesa la solicitud POST de inicio de sesión
         Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
         );
-
+    
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = null;
-
+    
         if (authentication != null) {
             Object principal = authentication.getPrincipal();
-
+    
             if (principal instanceof Usuarios) {
                 // El principal autenticado es una instancia de Usuarios
                 Usuarios usuario = (Usuarios) authentication.getPrincipal();
                 jwt = tokenProvider.generateUsuariosToken(authentication);
-                System.out.println("El principal autenticado no es una instancia de Usuarios");
                 return ResponseEntity.status(HttpStatus.CREATED)
                         .body(convertUsuariosAndTokenToJwtUserResponse(usuario, jwt)); 
             } else if (principal instanceof Instituciones) {
                 // El principal autenticado es una instancia de Instituciones
                 Instituciones institucion = (Instituciones) authentication.getPrincipal();
+                if ("revision".equals(institucion.getEstado())) {
+                    // Estado de la institución es "revision", enviar un mensaje de error personalizado
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                            .body("La institución está en revisión. Espere a que el administrador valide su cuenta.");
+                }
                 jwt = tokenProvider.generateInstitucionesToken(authentication);
-                System.out.println("El principal autenticado no es una instancia de Instituciones");
                 return ResponseEntity.status(HttpStatus.CREATED)
                         .body(convertInstitucionAndTokenToJwtUserResponse(institucion, jwt)); 
             }
         }
         
         return null;
-           
     }
+    
     
     private JwtUserResponse convertUsuariosAndTokenToJwtUserResponse(Usuarios usuario, String jwt) {
         return JwtUserResponse.jwtUserResponseBuilder()
