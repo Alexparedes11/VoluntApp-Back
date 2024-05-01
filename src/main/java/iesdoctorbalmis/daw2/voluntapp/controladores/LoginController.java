@@ -57,6 +57,10 @@ public class LoginController {
                     // Estado de la institución es "revision", enviar un mensaje de error personalizado
                     return ResponseEntity.status(HttpStatus.FORBIDDEN)
                             .body("La institución está en revisión. Espere a que el administrador valide su cuenta.");
+                } else if ("rechazado".equals(institucion.getEstado())) {
+                    // Estado de la institución es "rechazado", enviar un mensaje de error personalizado
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                            .body("La institución ha sido rechazada. Contacte con el administrador para más información.");
                 }
                 jwt = tokenProvider.generateInstitucionesToken(authentication);
                 return ResponseEntity.status(HttpStatus.CREATED)
