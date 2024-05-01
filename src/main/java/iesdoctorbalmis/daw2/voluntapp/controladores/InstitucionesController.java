@@ -157,7 +157,6 @@ public class InstitucionesController {
         Page<InstitucionesDTO> institucionesDTOPage = eventos.map(institucionDTOConverter::convertToDto);
         return ResponseEntity.ok(institucionesDTOPage);
     }
-    
     @PutMapping("/instituciones/{id}/estado")
     public ResponseEntity<Instituciones> actualizarEstadoEvento(@PathVariable Long id, @RequestBody String estado){
         Instituciones institucion = institucionesService.buscarPorId(id)

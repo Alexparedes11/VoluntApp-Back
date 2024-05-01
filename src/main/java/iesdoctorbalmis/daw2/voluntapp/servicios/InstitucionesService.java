@@ -65,21 +65,6 @@ public class InstitucionesService {
         return institucionesRepository.findByUsername(email);
     }
 
-    // Aprobar validación de institución por ID
-    public Optional<Instituciones> aprobarValidacion(Long id) {
-        return institucionesRepository.findById(id).map(institucion -> {
-            institucion.setEstado("validado");
-            return institucionesRepository.save(institucion);
-        });
-    }
-
-    // Rechazar validación de institución por ID
-    public Optional<Instituciones> rechazarValidacion(Long id) {
-        return institucionesRepository.findById(id).map(institucion -> {
-            institucion.setEstado("rechazado");
-            return institucionesRepository.save(institucion);
-        });
-    }
 
     public Page<Instituciones> findByEstado(String estado, Pageable pageable) {
         return institucionesRepository.findByEstado(estado, pageable);

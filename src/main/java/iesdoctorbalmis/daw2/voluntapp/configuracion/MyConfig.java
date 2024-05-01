@@ -25,8 +25,15 @@ public class MyConfig {
                                                 .allowedOrigins("*")
                                                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                                                 .maxAge(3600);
-
+                                registry.addMapping("/institucion/**")
+                                                .allowedOrigins("*")
+                                                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                                                .maxAge(3600);
                                 registry.addMapping("/instituciones/**")
+                                                .allowedOrigins("*")
+                                                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                                                .maxAge(3600);
+                                registry.addMapping("/institucionesDTO/**")
                                                 .allowedOrigins("*")
                                                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                                                 .maxAge(3600);

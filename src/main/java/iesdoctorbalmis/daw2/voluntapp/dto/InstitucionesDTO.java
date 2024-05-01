@@ -18,6 +18,8 @@ import lombok.Setter;
 @Builder
 public class InstitucionesDTO {
 
+
+    private Long id;
     @Column(unique = true)
     @NonNull
     private String cif;
