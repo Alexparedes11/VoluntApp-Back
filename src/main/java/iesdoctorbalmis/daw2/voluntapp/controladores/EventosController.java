@@ -1,5 +1,23 @@
 package iesdoctorbalmis.daw2.voluntapp.controladores;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -29,32 +47,6 @@ import iesdoctorbalmis.daw2.voluntapp.servicios.UsuariosService;
 import iesdoctorbalmis.daw2.voluntapp.util.pagination.PaginationLinksUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-
-import java.sql.Date;
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
-import org.apache.catalina.connector.Response;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequiredArgsConstructor
@@ -118,15 +110,21 @@ public class EventosController {
     // el usuario
     @GetMapping("/eventos/profile/{id}")
     public NumeroDeEventosDTO obtenerEventosPerfil(@PathVariable Long id) {
+        
+        Optional<Usuarios> usu = usuariosService.buscarPorId(id); // Obtenemos el usuario
+        Set<Eventos> eventosUsuarios = usu.get().getEventos(); // Obtenemos los eventos asociados al usuario
+        System.out.println(eventosUsuarios.size()); // Nº total de eventos en el usuario
+        List<Eventos> realizado = eventosService.buscarPorEstadoYUsuario("finalizado", usu.get()); // Eventos con el estado de finalizado
+        List<Eventos> denegado = eventosService.buscarPorEstadoYUsuario("denegado", usu.get()); // Eventos con el estado de denegado
+        List<Eventos> creados = eventosService.findByCreadoPorUsuariosId(id); // Eventos con el estado de creados
+        List<Eventos> eliminado = eventosService.buscarPorEstadoYUsuario("eliminado", usu.get()); // Eventos con el estado de eliminado
 
-        Optional<Usuarios> usu = usuariosService.buscarPorId(id);
-        List<Eventos> realizado = eventosService.buscarPorEstadoYUsuario("finalizado", usu.get());
-        List<Eventos> disponible = eventosService.buscarPorEstadoYUsuario("disponible", usu.get());
-        List<Eventos> creadosEstado = eventosService.findByCreadoPorUsuariosIdYEstado(id, "en revision");
-        List<Eventos> creados = eventosService.findByCreadoPorUsuariosId(id);
-        List<Eventos> eliminado = eventosService.buscarPorEstadoYUsuario("eliminado", usu.get());
+        // Operaciones para obtención de datos
+        int creadosUsuario = creados.size() - eliminado.size();
+        int apuntadosUsuario = eventosUsuarios.size() - eliminado.size() - realizado.size() - denegado.size();
+        int realizadosUsuario = realizado.size();
 
-        NumeroDeEventosDTO numero = new NumeroDeEventosDTO(creados.size() + creadosEstado.size() - eliminado.size(), disponible.size() + creados.size() - eliminado.size(), realizado.size());
+        NumeroDeEventosDTO numero = new NumeroDeEventosDTO(creadosUsuario, apuntadosUsuario, realizadosUsuario);
 
         return numero;
 
@@ -241,8 +239,7 @@ public class EventosController {
     public ResponseEntity<?> desapuntarInstitucionEvento(@RequestBody IdEventoInstitucionDTO idEventoInstitucionDTO) {
 
         Optional<Eventos> evento = eventosService.buscarPorId(idEventoInstitucionDTO.getId_evento());
-        Optional<Instituciones> instituciones = institucionesService
-                .buscarPorId(idEventoInstitucionDTO.getId_institucion());
+        Optional<Instituciones> instituciones = institucionesService.buscarPorId(idEventoInstitucionDTO.getId_institucion());
 
         if (evento.isPresent()) {
 

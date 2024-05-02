@@ -3,11 +3,11 @@ package iesdoctorbalmis.daw2.voluntapp.modelos;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import io.micrometer.common.lang.NonNull;
 import jakarta.persistence.Column;
@@ -70,11 +70,14 @@ public class Usuarios implements UserDetails {
     private String rol;
 
     @Builder.Default
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
+    @EqualsAndHashCode.Exclude @ToString.Exclude
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "usuario_eventos", joinColumns = @JoinColumn(name = "usuarios_id"), inverseJoinColumns = @JoinColumn(name = "eventos_id"))
+    @JoinTable(
+        name = "usuario_eventos", 
+        joinColumns = @JoinColumn(name = "usuarios_id"), 
+        inverseJoinColumns = @JoinColumn(name = "eventos_id")
+    )
     private Set<Eventos> eventos = new HashSet<>();
 
     /**

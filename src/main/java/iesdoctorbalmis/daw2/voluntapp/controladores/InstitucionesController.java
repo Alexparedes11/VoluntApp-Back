@@ -26,6 +26,7 @@ import iesdoctorbalmis.daw2.voluntapp.error.instituciones.SearchInstitucionesNoR
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Instituciones;
 import iesdoctorbalmis.daw2.voluntapp.servicios.InstitucionesService;
+import iesdoctorbalmis.daw2.voluntapp.servicios.NoticiasService;
 import iesdoctorbalmis.daw2.voluntapp.util.pagination.PaginationLinksUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,7 @@ public class InstitucionesController {
     private final InstitucionesService institucionesService;
     private final InstitucionDTOConverter institucionDTOConverter;
     private final PaginationLinksUtils paginationLinksUtils;
+    private final NoticiasService noticiasService;
 
 
     // Obtención de todos los Instituciones
@@ -101,6 +103,10 @@ public class InstitucionesController {
                                     .build();
 
         Instituciones nuevaInstitucion = institucionesService.guardar(institucionesNuevo);
+        
+        // Se crea una noticia acerca de la institución
+        noticiasService.crearNoticiasInstitucion(nuevo);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaInstitucion);
 
     }
