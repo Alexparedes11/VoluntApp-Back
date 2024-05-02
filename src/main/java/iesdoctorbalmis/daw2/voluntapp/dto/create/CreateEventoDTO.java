@@ -26,6 +26,8 @@ public class CreateEventoDTO {
 
     private String descripcion;
 
+    private String descripcionResumida;
+
     //private Ubicacion ubicacion;
 
     private String nombreUbicacion;

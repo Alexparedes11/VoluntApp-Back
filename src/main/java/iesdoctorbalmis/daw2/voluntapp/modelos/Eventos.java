@@ -46,6 +46,8 @@ public class Eventos {
     @Column(length = 1000000)
     private String descripcion;
 
+    private String descripcionResumida;
+
     @JdbcTypeCode(SqlTypes.JSON)
     @ManyToOne
     private Ubicacion ubicacion;

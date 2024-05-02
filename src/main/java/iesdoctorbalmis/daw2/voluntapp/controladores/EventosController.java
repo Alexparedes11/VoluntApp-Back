@@ -303,6 +303,7 @@ public class EventosController {
                     .titulo(nuevo.getTitulo())
                     .imagen(ubicacionImagenAzure)
                     .descripcion(nuevo.getDescripcion())
+                    .descripcionResumida(nuevo.getDescripcionResumida())
                     .ubicacion(u)
                     .fInicio(nuevo.getFInicio())
                     .fFin(nuevo.getFFin())

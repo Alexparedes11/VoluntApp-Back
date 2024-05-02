@@ -34,6 +34,8 @@ public class EventosDTO {
 
     private String descripcion;
 
+    private String descripcionResumida;
+
     private Ubicacion ubicacion;
 
     private String imagen;

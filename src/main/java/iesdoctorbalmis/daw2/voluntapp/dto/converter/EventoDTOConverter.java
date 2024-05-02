@@ -59,6 +59,7 @@ public class EventoDTOConverter {
             .creadoPorUsuario(usuario)
             .creadoPorInstitucion(institucion)
             .descripcion(eventos.getDescripcion())
+            .descripcionResumida(eventos.getDescripcionResumida())
             .maxVoluntarios(eventos.getMaxVoluntarios())
             .numVoluntarios(usuarariosNumber)
             .titulo(eventos.getTitulo())
