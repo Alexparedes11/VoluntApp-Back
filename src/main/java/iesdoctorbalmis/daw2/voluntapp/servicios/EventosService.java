@@ -4,11 +4,13 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import iesdoctorbalmis.daw2.voluntapp.error.eventos.EventosNotFoundException;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
 import iesdoctorbalmis.daw2.voluntapp.repositorios.EventosRepository;
@@ -111,5 +113,8 @@ public class EventosService {
     public Page<Eventos> obtenerEventosOrdenadosPorFechaLejana(Pageable pageable) {
         return eventosRepository.findAllByOrderByFechaInicioDesc(pageable);
     }
+
+    
+    
 
 }

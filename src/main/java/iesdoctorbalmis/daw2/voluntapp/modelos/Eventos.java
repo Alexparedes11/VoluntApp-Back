@@ -20,13 +20,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity @Data
 @NoArgsConstructor @AllArgsConstructor
@@ -66,8 +69,11 @@ public class Eventos {
     private Instituciones creadoPorInstituciones;
 
     @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @JsonIgnore
-    @ManyToMany(mappedBy = "eventos", fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "usuario_eventos", joinColumns = @JoinColumn(name = "eventos_id"), inverseJoinColumns = @JoinColumn(name = "usuarios_id"))
     private Set<Usuarios> usuarios = new HashSet<>();
 
     @JsonBackReference

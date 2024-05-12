@@ -8,6 +8,7 @@ import iesdoctorbalmis.daw2.voluntapp.dto.EventosDTO;
 import iesdoctorbalmis.daw2.voluntapp.dto.IdEventoInstitucionDTO;
 import iesdoctorbalmis.daw2.voluntapp.dto.IdEventoUsuarioDTO;
 import iesdoctorbalmis.daw2.voluntapp.dto.NumeroDeEventosDTO;
+import iesdoctorbalmis.daw2.voluntapp.dto.UsuariosDTO;
 import iesdoctorbalmis.daw2.voluntapp.dto.converter.EventoDTOConverter;
 import iesdoctorbalmis.daw2.voluntapp.dto.converter.InstitucionDTOConverter;
 import iesdoctorbalmis.daw2.voluntapp.dto.converter.UsuarioDTOConverter;
@@ -32,10 +33,12 @@ import lombok.RequiredArgsConstructor;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -55,6 +58,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -126,7 +131,8 @@ public class EventosController {
         List<Eventos> creados = eventosService.findByCreadoPorUsuariosId(id);
         List<Eventos> eliminado = eventosService.buscarPorEstadoYUsuario("eliminado", usu.get());
 
-        NumeroDeEventosDTO numero = new NumeroDeEventosDTO(creados.size() + creadosEstado.size() - eliminado.size(), disponible.size() + creados.size() - eliminado.size(), realizado.size());
+        NumeroDeEventosDTO numero = new NumeroDeEventosDTO(creados.size() + creadosEstado.size() - eliminado.size(),
+                disponible.size() + creados.size() - eliminado.size(), realizado.size());
 
         return numero;
 
@@ -265,27 +271,27 @@ public class EventosController {
         try {
             Instituciones creadoPorInstituciones = null;
             Usuarios creadoPorUsuarios = null;
-        
+
             if (nuevo.getInstitucionNombre() != null) {
                 creadoPorInstituciones = institucionesService.buscarPorId(nuevo.getUsuarioId()).orElse(null);
             } else {
                 creadoPorUsuarios = usuariosService.buscarPorId(nuevo.getUsuarioId()).orElse(null);
             }
-        
+
             Ubicacion u = Ubicacion.builder()
                     .id(null)
                     .nombre(nuevo.getNombreUbicacion())
                     .lat(nuevo.getLat())
                     .lon(nuevo.getLon())
                     .build();
-        
+
             String ubicacionImagenAzure = "https://voluntapp.blob.core.windows.net/images/"
                     + azureBlobStorageService.uploadFile("eventos", UUID.randomUUID().toString(), nuevo.getImagen());
-        
+
             if (!computerVisionService.isImageAppropriate(ubicacionImagenAzure)) {
                 throw new AzureBlobStorageException("La imagen no es apropiada");
             }
-        
+
             Eventos eventoNuevo = Eventos.builder()
                     .titulo(nuevo.getTitulo())
                     .imagen(ubicacionImagenAzure)
@@ -298,7 +304,7 @@ public class EventosController {
                     .estado("revision")
                     .maxVoluntarios(nuevo.getMaxVoluntarios())
                     .build();
-        
+
             ubicacionService.guardar(u);
             Eventos nuevoevento = eventosService.guardar(eventoNuevo);
             return ResponseEntity.status(HttpStatus.CREATED).body(nuevoevento);
@@ -340,16 +346,16 @@ public class EventosController {
         return ResponseEntity.ok(eventosDTOList);
     }
 
-        // Obtener un eventos de un usuario
-        @GetMapping("/eventos/institucion/{id}")
-        public ResponseEntity<?> obtenerEventosInstitucion(@PathVariable Long id) {
-            Instituciones instituciones = institucionesService.buscarPorId(id)
-                    .orElseThrow(() -> new InstitucionesNotFoundException(id));
-            List<EventosDTO> eventosDTOList = instituciones.getEventos().stream()
-                    .map(eventoDTOConverter::convertToDto)
-                    .collect(Collectors.toList());
-            return ResponseEntity.ok(eventosDTOList);
-        }
+    // Obtener un eventos de un usuario
+    @GetMapping("/eventos/institucion/{id}")
+    public ResponseEntity<?> obtenerEventosInstitucion(@PathVariable Long id) {
+        Instituciones instituciones = institucionesService.buscarPorId(id)
+                .orElseThrow(() -> new InstitucionesNotFoundException(id));
+        List<EventosDTO> eventosDTOList = instituciones.getEventos().stream()
+                .map(eventoDTOConverter::convertToDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(eventosDTOList);
+    }
 
     // Obtener eventos creados por un usuario
     @GetMapping("/eventos/creadoPorUsuario/{usuarioId}")
@@ -376,7 +382,8 @@ public class EventosController {
 
     // Obtener eventos con un estado concreto
     @GetMapping("/eventos/buscaporestado/{estado}")
-    public ResponseEntity<?> obtenerEventosEnRevision(@PathVariable String estado, @PageableDefault(size = 9, page = 0) Pageable pageable) {
+    public ResponseEntity<?> obtenerEventosEnRevision(@PathVariable String estado,
+            @PageableDefault(size = 9, page = 0) Pageable pageable) {
         Page<Eventos> eventos = eventosService.findByEstado(estado, pageable);
         Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
         return ResponseEntity.ok(eventosDTOPage);
@@ -462,5 +469,18 @@ public class EventosController {
         Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
         return ResponseEntity.ok(eventosDTOPage);
     }
+
+    @GetMapping("/eventos/{id}/listaParticipantes")
+    public ResponseEntity<?> obtenerListaParticipantes(@PathVariable Long id) {
+        Eventos evento = eventosService.buscarPorId(id)
+                .orElseThrow(() -> new EventosNotFoundException(id));
+        List<String> listaParticipantes = new ArrayList<>();
+        for (Usuarios usu : evento.getUsuarios()) {
+            listaParticipantes.add(usu.getNombre() + " " + usu.getApellidos());
+        }
+        return ResponseEntity.ok(listaParticipantes);
+    }
+    
+    
 
 }
