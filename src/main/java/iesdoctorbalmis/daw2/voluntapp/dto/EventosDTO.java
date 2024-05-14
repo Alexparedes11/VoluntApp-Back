@@ -40,6 +40,8 @@ public class EventosDTO {
 
     private String estado;
 
+    private String ods;
+
     private String creadoPorUsuario;
 
     private String creadoPorInstitucion;

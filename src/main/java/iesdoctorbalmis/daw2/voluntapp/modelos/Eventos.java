@@ -53,6 +53,8 @@ public class Eventos {
 
     private String estado;
 
+    private String ods;
+
     @Lob
     @Column(length = 1000000)
     private String imagen;

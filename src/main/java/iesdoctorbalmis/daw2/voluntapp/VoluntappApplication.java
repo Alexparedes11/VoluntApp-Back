@@ -266,6 +266,7 @@ public class VoluntappApplication {
 						.descripcion(
 								"¡Atención, adolescentes! ¿Estás listo para ser un héroe en situaciones de emergencia? Únete a nosotros en nuestro evento especial de primeros auxilios diseñado exclusivamente para jóvenes como tú. En este emocionante taller, aprenderás habilidades vitales que podrían salvar vidas en momentos críticos.")
 						.ubicacion(ubicacion)
+						.ods("Este evento esta relacionado con la ODS 1 - Fin de la pobreza")
 						.estado("disponible")
 						.categorias(listaCategorias)
 						.creadoPorInstituciones(instituciones2)
@@ -290,6 +291,7 @@ public class VoluntappApplication {
 						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event2.webp")
 						.descripcion("¡Únete a nosotros en un acto de solidaridad y generosidad mientras nos unimos para ayudar a aquellos que más lo necesitan en nuestra comunidad! Nuestro evento de recogida de alimentos es una oportunidad para marcar la diferencia y apoyar a las personas que enfrentan la inseguridad alimentaria.")
 						.ubicacion(ubicacion2)
+						.ods("Este evento esta relacionado con la ODS 1 - Fin de la pobreza")
 						.estado("disponible")
 						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario)
@@ -314,6 +316,7 @@ public class VoluntappApplication {
 						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event3.webp")
 						.descripcion("¡Únete a nosotros en la playa Postiguet para un evento de recogida de pellets!")
 						.ubicacion(ubicacion3)
+						.ods("Este evento esta relacionado con la ODS 1 - Fin de la pobreza")
 						.estado("disponible")
 						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
@@ -334,6 +337,7 @@ public class VoluntappApplication {
 						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event4.webp")
 						.descripcion("Te invitamos a unirte a nosotros en un esfuerzo comunitario para recoger basura")
 						.ubicacion(ubicacion4)
+						.ods("Este evento esta relacionado con la ODS 1 - Fin de la pobreza")
 						.estado("disponible")
 						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
@@ -366,6 +370,7 @@ public class VoluntappApplication {
 						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event5.webp")
 						.descripcion("¡Únete a nosotros en un evento lleno de amor y compañerismo mientras ayudamos a perros necesitados a encontrar sus hogares para siempre! En \"Amor en Cuatro Patas\", te invitamos a considerar la adopción como la mejor opción al momento de agregar un nuevo miembro a tu familia.")
 						.ubicacion(ubicacion5)
+						.ods("Este evento esta relacionado con la ODS 1 - Fin de la pobreza")
 						.estado("revision")
 						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario)
@@ -387,6 +392,7 @@ public class VoluntappApplication {
 						.descripcion(
 								"¡Únete a nosotros en una jornada de acción comunitaria para limpiar y preservar la belleza natural de nuestro campo mientras recogemos cristales tipo basura! En este evento especial, te invitamos a ser parte del cambio y ayudar a devolver la pureza a nuestros paisajes naturales.")
 						.ubicacion(ubicacion6)
+						.ods("Este evento esta relacionado con la ODS 1 - Fin de la pobreza")
 						.estado("disponible")
 						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
@@ -408,6 +414,7 @@ public class VoluntappApplication {
 						.descripcion(
 								"En momentos de crisis, la solidaridad y el apoyo comunitario son más importantes que nunca. Únete a nosotros en un esfuerzo conjunto para brindar ayuda y esperanza a las personas afectadas por las devastadoras inundaciones que han golpeado nuestra región.")
 						.ubicacion(ubicacion7)
+						.ods("Este evento esta relacionado con la ODS 1 - Fin de la pobreza")
 						.estado("disponible")
 						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
@@ -429,6 +436,7 @@ public class VoluntappApplication {
 						.descripcion(
 								"Únete a nosotros en una jornada dedicada a la preservación y protección de nuestro preciado bosque. En este evento de limpieza ambiental, nos uniremos como comunidad para devolverle su esplendor natural a este ecosistema vital.")
 						.ubicacion(ubicacion8)
+						.ods("Este evento esta relacionado con la ODS 1 - Fin de la pobreza")
 						.estado("disponible")
 						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
@@ -450,6 +458,7 @@ public class VoluntappApplication {
 						.descripcion(
 								"¡Únete a nosotros en un taller de informática para mayores! En este evento especial, te invitamos a compartir tus habilidades tecnológicas con nuestros mayores, ayudándoles a navegar por el mundo digital y a conectarse con sus seres queridos.")
 						.ubicacion(ubicacion9)
+						.ods("Este evento esta relacionado con la ODS 1 - Fin de la pobreza")
 						.estado("disponible")
 						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
@@ -471,6 +480,7 @@ public class VoluntappApplication {
 						.descripcion(
 								"¡Únete a nosotros en un evento de limpieza de pellets en la playa de Riazor! En este esfuerzo comunitario, nos uniremos para limpiar y preservar la belleza natural de nuestra costa, ayudando a devolverle su esplendor a este ecosistema vital.")
 						.ubicacion(ubicacion10)
+						.ods("Este evento esta relacionado con la ODS 1 - Fin de la pobreza")
 						.estado("disponible")
 						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
@@ -492,6 +502,7 @@ public class VoluntappApplication {
 						.descripcion(
 								"¡Únete a nosotros en un taller de movilidad para mayores! En este evento especial, te invitamos a compartir tus habilidades de movilidad con nuestros mayores, ayudándoles a mantenerse activos y saludables.")
 						.ubicacion(ubicacion11)
+						.ods("Este evento esta relacionado con la ODS 1 - Fin de la pobreza")
 						.estado("disponible")
 						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
@@ -513,6 +524,7 @@ public class VoluntappApplication {
 						.descripcion(
 								"¡Únete a nosotros en un acto de solidaridad y generosidad mientras nos unimos para ayudar a aquellos que más lo necesitan en nuestra comunidad! Nuestro evento de recogida de alimentos es una oportunidad para marcar la diferencia y apoyar a las personas que enfrentan la inseguridad alimentaria.")
 						.ubicacion(ubicacion12)
+						.ods("Este evento esta relacionado con la ODS 1 - Fin de la pobreza")
 						.estado("disponible")
 						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
@@ -534,6 +546,7 @@ public class VoluntappApplication {
 						.descripcion(
 								"¡Únete a nosotros en un evento especial para llevar sonrisas a los más pequeños! En este evento, te invitamos a compartir tu tiempo y tu alegría con los niños, ayudándoles a disfrutar de un día lleno de diversión y entretenimiento.")
 						.ubicacion(ubicacion13)
+						.ods("Este evento esta relacionado con la ODS 1 - Fin de la pobreza")
 						.estado("revision")
 						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
@@ -555,6 +568,7 @@ public class VoluntappApplication {
 						.descripcion(
 								"¡Únete a nosotros en un evento especial para llevar sonrisas a los más pequeños! En este evento, te invitamos a compartir tu tiempo y tu alegría con los niños, ayudándoles a disfrutar de un día lleno de diversión y entretenimiento.")
 						.ubicacion(ubicacion14)
+						.ods("Este evento esta relacionado con la ODS 1 - Fin de la pobreza")
 						.estado("denegado")
 						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)

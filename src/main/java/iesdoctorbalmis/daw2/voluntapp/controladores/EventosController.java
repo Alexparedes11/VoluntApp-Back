@@ -293,6 +293,7 @@ public class EventosController {
                     .ubicacion(u)
                     .fInicio(nuevo.getFInicio())
                     .fFin(nuevo.getFFin())
+                    .ods(nuevo.getOds())
                     .creadoPorInstituciones(creadoPorInstituciones)
                     .creadoPorUsuarios(creadoPorUsuarios)
                     .estado("revision")

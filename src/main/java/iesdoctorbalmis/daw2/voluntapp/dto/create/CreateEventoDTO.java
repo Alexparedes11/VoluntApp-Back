@@ -33,6 +33,8 @@ public class CreateEventoDTO {
 
     private double lon;
 
+    private String ods;
+
     private String imagen;
 
     private String estado;

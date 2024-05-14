@@ -52,6 +52,7 @@ public class EventoDTOConverter {
             .numVoluntarios(usuarariosNumber)
             .titulo(eventos.getTitulo())
             .id(eventos.getId())
+            .ods(eventos.getOds())
             .estado(eventos.getEstado())
             .ubicacion(eventos.getUbicacion())
             .nombreInstituciones(instituciones)
