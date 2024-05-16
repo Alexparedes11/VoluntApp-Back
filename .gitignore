@@ -17,3 +17,6 @@ HELP.md
 
 ### VS Code ###
 .vscode/
+
+### Target folder ###
+target/
