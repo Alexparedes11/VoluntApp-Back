@@ -18,43 +18,46 @@ import iesdoctorbalmis.daw2.voluntapp.error.usuarios.UsuariosNotFoundException;
 import iesdoctorbalmis.daw2.voluntapp.excepciones.AzureBlobStorageException;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Instituciones;
+import iesdoctorbalmis.daw2.voluntapp.modelos.Tag;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Ubicacion;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
 import iesdoctorbalmis.daw2.voluntapp.servicios.AzureBlobStorageService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.ComputerVisionService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.EventosService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.InstitucionesService;
+import iesdoctorbalmis.daw2.voluntapp.servicios.LocalStorageService;
+import iesdoctorbalmis.daw2.voluntapp.servicios.TagService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.UbicacionService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.UsuariosService;
 import iesdoctorbalmis.daw2.voluntapp.util.pagination.PaginationLinksUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
-import java.sql.Date;
+import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
+import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import org.apache.catalina.connector.Response;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequiredArgsConstructor
@@ -65,8 +68,10 @@ public class EventosController {
     private final UsuariosService usuariosService;
     private final InstitucionesService institucionesService;
     private final UbicacionService ubicacionService;
+    private final TagService tagService;
     private final AzureBlobStorageService azureBlobStorageService;
     private final ComputerVisionService computerVisionService;
+    private final LocalStorageService localStorageService;
 
     // Utils
     private final EventoDTOConverter eventoDTOConverter;
@@ -126,7 +131,8 @@ public class EventosController {
         List<Eventos> creados = eventosService.findByCreadoPorUsuariosId(id);
         List<Eventos> eliminado = eventosService.buscarPorEstadoYUsuario("eliminado", usu.get());
 
-        NumeroDeEventosDTO numero = new NumeroDeEventosDTO(creados.size() + creadosEstado.size() - eliminado.size(), disponible.size() + creados.size() - eliminado.size(), realizado.size());
+        NumeroDeEventosDTO numero = new NumeroDeEventosDTO(creados.size() + creadosEstado.size() - eliminado.size(),
+                disponible.size() + creados.size() - eliminado.size(), realizado.size());
 
         return numero;
 
@@ -261,50 +267,62 @@ public class EventosController {
     // Añadir Eventos a la base de datos
 
     @PostMapping("/eventos")
-    public ResponseEntity<?> nuevoEvento(@RequestBody CreateEventoDTO nuevo) {
-        try {
-            Instituciones creadoPorInstituciones = null;
-            Usuarios creadoPorUsuarios = null;
-        
-            if (nuevo.getInstitucionNombre() != null) {
-                creadoPorInstituciones = institucionesService.buscarPorId(nuevo.getUsuarioId()).orElse(null);
-            } else {
-                creadoPorUsuarios = usuariosService.buscarPorId(nuevo.getUsuarioId()).orElse(null);
-            }
-        
-            Ubicacion u = Ubicacion.builder()
-                    .id(null)
-                    .nombre(nuevo.getNombreUbicacion())
-                    .lat(nuevo.getLat())
-                    .lon(nuevo.getLon())
-                    .build();
-        
-            String ubicacionImagenAzure = "https://voluntapp.blob.core.windows.net/images/"
-                    + azureBlobStorageService.uploadFile("eventos", UUID.randomUUID().toString(), nuevo.getImagen());
-        
-            if (!computerVisionService.isImageAppropriate(ubicacionImagenAzure)) {
-                throw new AzureBlobStorageException("La imagen no es apropiada");
-            }
-        
-            Eventos eventoNuevo = Eventos.builder()
-                    .titulo(nuevo.getTitulo())
-                    .imagen(ubicacionImagenAzure)
-                    .descripcion(nuevo.getDescripcion())
-                    .ubicacion(u)
-                    .fInicio(nuevo.getFInicio())
-                    .fFin(nuevo.getFFin())
-                    .creadoPorInstituciones(creadoPorInstituciones)
-                    .creadoPorUsuarios(creadoPorUsuarios)
-                    .estado("revision")
-                    .maxVoluntarios(nuevo.getMaxVoluntarios())
-                    .build();
-        
-            ubicacionService.guardar(u);
-            Eventos nuevoevento = eventosService.guardar(eventoNuevo);
-            return ResponseEntity.status(HttpStatus.CREATED).body(nuevoevento);
-        } catch (AzureBlobStorageException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    public ResponseEntity<?> nuevoEvento(@RequestBody CreateEventoDTO nuevo) throws AzureBlobStorageException {
+
+        Instituciones creadoPorInstituciones = null;
+        Usuarios creadoPorUsuarios = null;
+
+        if (nuevo.getInstitucionNombre() != null) {
+            creadoPorInstituciones = institucionesService.buscarPorId(nuevo.getUsuarioId()).orElse(null);
+        } else {
+            creadoPorUsuarios = usuariosService.buscarPorId(nuevo.getUsuarioId()).orElse(null);
         }
+
+        Ubicacion u = Ubicacion.builder()
+                .id(null)
+                .nombre(nuevo.getNombreUbicacion())
+                .lat(nuevo.getLat())
+                .lon(nuevo.getLon())
+                .build();
+
+        String ubicacionImagenAzure = "https://voluntapp.blob.core.windows.net/images/"
+                + azureBlobStorageService.uploadFile("eventos", UUID.randomUUID().toString(), nuevo.getImagen());
+
+        if (!computerVisionService.isImageAppropriate(ubicacionImagenAzure)) {
+            throw new AzureBlobStorageException("La imagen no es apropiada");
+        }
+
+        // ALMACENAR LA IMAGEN EN LOCAL EN CASO DE QUE AZURE NO FUNCIONE
+        // String ubicacionImagenLocal = localStorageService.uploadFile("eventos", nuevo.getImagen());
+
+        Set<Tag> tags = new HashSet<>();
+        if (nuevo.getTags() != null) {
+            for (String tagName : nuevo.getTags()) {
+                Tag tag = tagService.buscarPorNombre(tagName).orElse(null);
+                if (tag != null) {
+                    tags.add(tag);
+                }
+            }
+        }
+
+        Eventos eventoNuevo = Eventos.builder()
+                .titulo(nuevo.getTitulo())
+                .imagen(ubicacionImagenAzure)
+                .descripcion(nuevo.getDescripcion())
+                .descripcionResumida(nuevo.getDescripcionResumida())
+                .ubicacion(u)
+                .fInicio(nuevo.getFInicio())
+                .fFin(nuevo.getFFin())
+                .creadoPorInstituciones(creadoPorInstituciones)
+                .creadoPorUsuarios(creadoPorUsuarios)
+                .estado("revision")
+                .maxVoluntarios(nuevo.getMaxVoluntarios())
+                .tags(tags)
+                .build();
+
+        ubicacionService.guardar(u);
+        Eventos nuevoevento = eventosService.guardar(eventoNuevo);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoevento);
 
     }
 
@@ -329,27 +347,38 @@ public class EventosController {
         return ResponseEntity.noContent().build();
     }
 
-    // Obtener un eventos de un usuario
-    @GetMapping("/eventos/usuario/{id}")
+    @GetMapping("/eventos/usuario/{id}") // PROBAR ESTO
     public ResponseEntity<?> obtenerEventos(@PathVariable Long id) {
         Usuarios usuario = usuariosService.buscarPorId(id)
                 .orElseThrow(() -> new UsuariosNotFoundException(id));
+
         List<EventosDTO> eventosDTOList = usuario.getEventos().stream()
+                .map(eventoDTOConverter::convertToDto)
+                .collect(Collectors.toList());
+
+        // Ordenar la lista de eventos por cercanía a la fecha actual
+        eventosDTOList.sort(Comparator.comparingLong(eventoDTO -> {
+            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime inicio = eventoDTO.getFInicio();
+            LocalDateTime fin = eventoDTO.getFFin();
+            long proximidadInicio = ChronoUnit.DAYS.between(now, inicio);
+            long proximidadFin = ChronoUnit.DAYS.between(now, fin);
+            return Math.min(Math.abs(proximidadInicio), Math.abs(proximidadFin));
+        }));
+
+        return ResponseEntity.ok(eventosDTOList);
+    }
+
+    // Obtener un eventos de un usuario
+    @GetMapping("/eventos/institucion/{id}")
+    public ResponseEntity<?> obtenerEventosInstitucion(@PathVariable Long id) {
+        Instituciones instituciones = institucionesService.buscarPorId(id)
+                .orElseThrow(() -> new InstitucionesNotFoundException(id));
+        List<EventosDTO> eventosDTOList = instituciones.getEventos().stream()
                 .map(eventoDTOConverter::convertToDto)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(eventosDTOList);
     }
-
-        // Obtener un eventos de un usuario
-        @GetMapping("/eventos/institucion/{id}")
-        public ResponseEntity<?> obtenerEventosInstitucion(@PathVariable Long id) {
-            Instituciones instituciones = institucionesService.buscarPorId(id)
-                    .orElseThrow(() -> new InstitucionesNotFoundException(id));
-            List<EventosDTO> eventosDTOList = instituciones.getEventos().stream()
-                    .map(eventoDTOConverter::convertToDto)
-                    .collect(Collectors.toList());
-            return ResponseEntity.ok(eventosDTOList);
-        }
 
     // Obtener eventos creados por un usuario
     @GetMapping("/eventos/creadoPorUsuario/{usuarioId}")
@@ -376,7 +405,8 @@ public class EventosController {
 
     // Obtener eventos con un estado concreto
     @GetMapping("/eventos/buscaporestado/{estado}")
-    public ResponseEntity<?> obtenerEventosEnRevision(@PathVariable String estado, @PageableDefault(size = 9, page = 0) Pageable pageable) {
+    public ResponseEntity<?> obtenerEventosEnRevision(@PathVariable String estado,
+            @PageableDefault(size = 9, page = 0) Pageable pageable) {
         Page<Eventos> eventos = eventosService.findByEstado(estado, pageable);
         Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
         return ResponseEntity.ok(eventosDTOPage);
@@ -408,39 +438,6 @@ public class EventosController {
         return ResponseEntity.ok(eventosService.editar(evento));
     }
 
-    // Obtener los eventos entre dos fechas
-
-    @GetMapping("/eventos/disponibles-entre-fechas/{fInicio}/{fFin}")
-    public ResponseEntity<?> obtenerEventosDisponiblesEntreFechas(@PathVariable LocalDateTime fInicio,
-            @PathVariable LocalDateTime fFin, Pageable pageable) {
-        Page<Eventos> eventos = eventosService.findByEstadoAndFechaInicioBetween("disponible", fInicio, fFin, pageable);
-        Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
-        return ResponseEntity.ok(eventosDTOPage);
-    }
-
-    // Obtener eventos por ubicacion con estado disponible
-
-    @GetMapping("/eventos/ubicacion/disponibles/{nombreUbicacion}")
-    public ResponseEntity<?> obtenerEventosDisponiblesPorUbicacion(@PathVariable String nombreUbicacion,
-            Pageable pageable) {
-        Page<Eventos> eventos = eventosService.findByEstadoAndUbicacionDisponible(nombreUbicacion.toLowerCase(),
-                pageable);
-        Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
-        return ResponseEntity.ok(eventosDTOPage);
-    }
-
-    // Obtener eventos filtrados por ubicacion y entre dos fechas
-    @GetMapping("eventos/disponibles-entre-fechas-y-ubicacion/{fInicio}/{fFin}/{nombreUbicacion}")
-    public ResponseEntity<Page<EventosDTO>> obtenerEventosEntreFechasYUbicacion(@PathVariable LocalDateTime fInicio,
-            @PathVariable LocalDateTime fFin, @PathVariable String nombreUbicacion, Pageable pageable) {
-
-        Page<Eventos> eventos = eventosService.findByFechaInicioBetweenAndUbicacionAndEstado(
-                fInicio, fFin, nombreUbicacion.toLowerCase(), pageable);
-
-        Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
-        return ResponseEntity.ok(eventosDTOPage);
-    }
-
     // Obtener eventos ordenados por numero de voluntarios apuntados
     @GetMapping("/eventos/ordenarporvoluntarios")
     public ResponseEntity<?> obtenerEventosOrdenadosPorVoluntarios(Pageable pageable) {
@@ -459,6 +456,22 @@ public class EventosController {
     @GetMapping("/eventos/ordenarporfechaAntigua")
     public ResponseEntity<?> obtenerEventosOrdenadosPorFechaLejana(Pageable pageable) {
         Page<Eventos> eventos = eventosService.obtenerEventosOrdenadosPorFechaLejana(pageable);
+        Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
+        return ResponseEntity.ok(eventosDTOPage);
+    }
+
+    @GetMapping("/eventos/filtrar")
+    public ResponseEntity<?> obtenerEventos(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate finicio,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate ffin,
+            @RequestParam(required = false) String ubicacion,
+            @RequestParam(required = false) List<String> categorias,
+            @PageableDefault(size = 9, page = 0) Pageable pageable) {
+
+        LocalDateTime inicio = finicio != null ? finicio.atStartOfDay() : null;
+        LocalDateTime fin = ffin != null ? ffin.atStartOfDay().plusDays(1).minusSeconds(1) : null;
+
+        Page<Eventos> eventos = eventosService.filtrarEventos(inicio, fin, ubicacion, categorias, pageable);
         Page<EventosDTO> eventosDTOPage = eventos.map(eventoDTOConverter::convertToDto);
         return ResponseEntity.ok(eventosDTOPage);
     }

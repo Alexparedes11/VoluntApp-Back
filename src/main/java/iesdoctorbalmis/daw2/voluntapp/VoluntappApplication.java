@@ -12,15 +12,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import iesdoctorbalmis.daw2.voluntapp.modelos.Categorias;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Eventos;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Instituciones;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Noticias;
+import iesdoctorbalmis.daw2.voluntapp.modelos.Tag;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Ubicacion;
 import iesdoctorbalmis.daw2.voluntapp.modelos.Usuarios;
 import iesdoctorbalmis.daw2.voluntapp.servicios.EventosService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.InstitucionesService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.NoticiasService;
+import iesdoctorbalmis.daw2.voluntapp.servicios.TagService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.UbicacionService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.UsuariosService;
 import jakarta.transaction.Transactional;
@@ -39,12 +40,14 @@ public class VoluntappApplication {
 	@Transactional
 	CommandLineRunner init(UsuariosService usuariosService, InstitucionesService institucionesService,
 			EventosService eventosService, UbicacionService ubicacionService,
-			NoticiasService noticiasService) {
+			NoticiasService noticiasService, TagService tagService) {
 		return (args) -> {
 			System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
 			System.out.println(runCommandLineRunner);
 			System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
 			if (runCommandLineRunner) {
+
+				System.out.println("Introduciendo datos en la bd...");
 
 				LocalDateTime fechaInicioEvento1 = LocalDateTime.of(2024, 2, 17, 9, 30);
 				LocalDateTime fechaFinEvento1 = LocalDateTime.of(2024, 2, 17, 14, 0);
@@ -66,25 +69,25 @@ public class VoluntappApplication {
 
 				LocalDateTime fechaInicioEvento7 = LocalDateTime.of(2024, 4, 1, 10, 0);
 				LocalDateTime fechaFinEvento7 = LocalDateTime.of(2024, 4, 3, 18, 0);
-		
+
 				LocalDateTime fechaInicioEvento8 = LocalDateTime.of(2024, 5, 10, 9, 0);
 				LocalDateTime fechaFinEvento8 = LocalDateTime.of(2024, 5, 12, 17, 30);
-		
+
 				LocalDateTime fechaInicioEvento9 = LocalDateTime.of(2024, 6, 5, 8, 30);
 				LocalDateTime fechaFinEvento9 = LocalDateTime.of(2024, 6, 7, 16, 45);
-		
+
 				LocalDateTime fechaInicioEvento10 = LocalDateTime.of(2024, 7, 20, 11, 0);
 				LocalDateTime fechaFinEvento10 = LocalDateTime.of(2024, 7, 22, 20, 15);
-		
+
 				LocalDateTime fechaInicioEvento11 = LocalDateTime.of(2024, 8, 15, 9, 15);
 				LocalDateTime fechaFinEvento11 = LocalDateTime.of(2024, 8, 17, 15, 45);
-		
+
 				LocalDateTime fechaInicioEvento12 = LocalDateTime.of(2024, 9, 3, 8, 0);
 				LocalDateTime fechaFinEvento12 = LocalDateTime.of(2024, 9, 5, 19, 30);
-		
+
 				LocalDateTime fechaInicioEvento13 = LocalDateTime.of(2024, 10, 12, 10, 30);
 				LocalDateTime fechaFinEvento13 = LocalDateTime.of(2024, 10, 14, 18, 45);
-		
+
 				LocalDateTime fechaInicioEvento14 = LocalDateTime.of(2024, 11, 8, 9, 30);
 				LocalDateTime fechaFinEvento14 = LocalDateTime.of(2024, 11, 10, 17, 0);
 
@@ -93,7 +96,7 @@ public class VoluntappApplication {
 				ubicacionService.guardar(ubicacion); //
 
 				Ubicacion ubicacion2 = new Ubicacion(null, "C. Escultor Bañuls 7, Alicante",
-						-0.4912633978169558, 38.35726809850449); 
+						-0.4912633978169558, 38.35726809850449);
 				ubicacionService.guardar(ubicacion2); //
 
 				Ubicacion ubicacion3 = new Ubicacion(null, "Playa Postiguet, Alicante",
@@ -101,15 +104,15 @@ public class VoluntappApplication {
 				ubicacionService.guardar(ubicacion3); //
 
 				Ubicacion ubicacion4 = new Ubicacion(null, "02696 Hoya-Gonzalo, Albacete",
-				 -1.5938187933444825, 39.00886407161091); //
+						-1.5938187933444825, 39.00886407161091); //
 				ubicacionService.guardar(ubicacion4);
 
 				Ubicacion ubicacion5 = new Ubicacion(null, "Omet Carrer 17, 46229 Picassent, Valencia",
-				 -0.4715994343625013, 39.353950780131534);
+						-0.4715994343625013, 39.353950780131534);
 				ubicacionService.guardar(ubicacion5); //
 
 				Ubicacion ubicacion6 = new Ubicacion(null, "Ctra. Villalpando, Km 1.5, 49136 Villafáfila, Zamora",
-				 -5.590871042847749, 41.85154420630644);
+						-5.590871042847749, 41.85154420630644);
 				ubicacionService.guardar(ubicacion6); //
 
 				Ubicacion ubicacion7 = new Ubicacion(null, "C. 19 de Abril 34, San Miguel de Salinas, Alicante",
@@ -121,19 +124,20 @@ public class VoluntappApplication {
 				ubicacionService.guardar(ubicacion8); //
 
 				Ubicacion ubicacion9 = new Ubicacion(null, "Pr. Maior, 1, 27001 Lugo",
-				 -7.555675689392136, 43.009993935609494); 
+						-7.555675689392136, 43.009993935609494);
 				ubicacionService.guardar(ubicacion9); //
 
 				Ubicacion ubicacion10 = new Ubicacion(null, "Playa de Riazor (La Coruña)",
-				 -8.41043255583519, 43.36879639197843);
+						-8.41043255583519, 43.36879639197843);
 				ubicacionService.guardar(ubicacion10); //
 
 				Ubicacion ubicacion11 = new Ubicacion(null, "Av. de las Ciencias, s/n, 41020 Sevilla",
-				-5.926158165625714, 37.40044051828174 );
+						-5.926158165625714, 37.40044051828174);
 				ubicacionService.guardar(ubicacion11); //
 
-				Ubicacion ubicacion12 = new Ubicacion(null, "Carrer de Josep Torras I Bages, 50, 08401 Granollers, Barcelona",
-				 2.2868041855279686, 41.61087620523382);
+				Ubicacion ubicacion12 = new Ubicacion(null,
+						"Carrer de Josep Torras I Bages, 50, 08401 Granollers, Barcelona",
+						2.2868041855279686, 41.61087620523382);
 				ubicacionService.guardar(ubicacion12); //
 
 				Ubicacion ubicacion13 = new Ubicacion(null, "Pintor Baeza 11, Alicante",
@@ -141,11 +145,10 @@ public class VoluntappApplication {
 				ubicacionService.guardar(ubicacion13); //
 
 				Ubicacion ubicacion14 = new Ubicacion(null, "Pl. Redona, Ciutat Vella, 46001 València, Valencia",
-				 -0.37661300992725444, 39.47356680517395);
+						-0.37661300992725444, 39.47356680517395);
 				ubicacionService.guardar(ubicacion14); //
 
 				Set<Usuarios> listaUsuarios = new HashSet<>();
-				Set<Categorias> listaCategorias = new HashSet<>();
 				Set<Eventos> listaEventosUsuarios = new HashSet<>();
 				Set<Eventos> listaEventosUsuarios2 = new HashSet<>();
 				Set<Eventos> listaEventosUsuarios3 = new HashSet<>();
@@ -158,7 +161,8 @@ public class VoluntappApplication {
 
 				Instituciones instituciones = new Instituciones(null, "unicef@example.com",
 						"12345678A", "Unicef ORG", "963 527 966",
-						"https://voluntapp.blob.core.windows.net/images/banners/unicef.webp", "Maria Martinez", "Unicef",
+						"https://voluntapp.blob.core.windows.net/images/banners/unicef.webp", "Maria Martinez",
+						"Unicef",
 						"123",
 						"https://voluntapp.blob.core.windows.net/images/perfiles/unicef.webp",
 						listaEventosInstituciones);
@@ -258,6 +262,34 @@ public class VoluntappApplication {
 						.build();
 				noticiasService.guardar(noticias6);
 
+				// Crear tags para los eventos
+				Tag tag1 = Tag.builder().nombre("Solidaridad").build();
+				tagService.guardar(tag1);
+
+				Tag tag3 = Tag.builder().nombre("Ayuda").build();
+				tagService.guardar(tag3);
+
+				Tag tag4 = Tag.builder().nombre("Niños").build();
+				tagService.guardar(tag4);
+
+				Tag tag5 = Tag.builder().nombre("Mascotas").build();
+				tagService.guardar(tag5);
+
+				Tag tag6 = Tag.builder().nombre("Medio Ambiente").build();
+				tagService.guardar(tag6);
+
+				Tag tag7 = Tag.builder().nombre("Mayores").build();
+				tagService.guardar(tag7);
+
+				Tag tag8 = Tag.builder().nombre("Alimentación").build();
+				tagService.guardar(tag8);
+
+				Tag tag9 = Tag.builder().nombre("Salud").build();
+				tagService.guardar(tag9);
+
+				Tag tag10 = Tag.builder().nombre("Deporte").build();
+				tagService.guardar(tag10);
+
 				Eventos eventos1 = Eventos.builder()
 						.fInicio(fechaInicioEvento1)
 						.fFin(fechaFinEvento1)
@@ -267,9 +299,9 @@ public class VoluntappApplication {
 								"¡Atención, adolescentes! ¿Estás listo para ser un héroe en situaciones de emergencia? Únete a nosotros en nuestro evento especial de primeros auxilios diseñado exclusivamente para jóvenes como tú. En este emocionante taller, aprenderás habilidades vitales que podrían salvar vidas en momentos críticos.")
 						.ubicacion(ubicacion)
 						.estado("disponible")
-						.categorias(listaCategorias)
 						.creadoPorInstituciones(instituciones2)
 						.maxVoluntarios(20)
+						.tags(Set.of(tag1, tag9))
 						.build();
 				eventosService.guardar(eventos1);
 				usuario.addEventos(eventos1);
@@ -288,12 +320,13 @@ public class VoluntappApplication {
 						.fFin(fechaFinEvento2)
 						.titulo("Recogida de alimentos")
 						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event2.webp")
-						.descripcion("¡Únete a nosotros en un acto de solidaridad y generosidad mientras nos unimos para ayudar a aquellos que más lo necesitan en nuestra comunidad! Nuestro evento de recogida de alimentos es una oportunidad para marcar la diferencia y apoyar a las personas que enfrentan la inseguridad alimentaria.")
+						.descripcion(
+								"¡Únete a nosotros en un acto de solidaridad y generosidad mientras nos unimos para ayudar a aquellos que más lo necesitan en nuestra comunidad! Nuestro evento de recogida de alimentos es una oportunidad para marcar la diferencia y apoyar a las personas que enfrentan la inseguridad alimentaria.")
 						.ubicacion(ubicacion2)
 						.estado("disponible")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario)
 						.maxVoluntarios(100)
+						.tags(Set.of(tag3, tag8))
 						.build();
 				eventosService.guardar(eventos2);
 				usuario2.addEventos(eventos2);
@@ -315,9 +348,9 @@ public class VoluntappApplication {
 						.descripcion("¡Únete a nosotros en la playa Postiguet para un evento de recogida de pellets!")
 						.ubicacion(ubicacion3)
 						.estado("disponible")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
 						.maxVoluntarios(50)
+						.tags(Set.of(tag6))
 						.build();
 				eventosService.guardar(eventos3);
 				evento = eventosService.buscarPorId(eventos3.getId());
@@ -335,9 +368,9 @@ public class VoluntappApplication {
 						.descripcion("Te invitamos a unirte a nosotros en un esfuerzo comunitario para recoger basura")
 						.ubicacion(ubicacion4)
 						.estado("disponible")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
 						.maxVoluntarios(50)
+						.tags(Set.of(tag6))
 						.build();
 				eventosService.guardar(eventos4);
 				evento = eventosService.buscarPorId(eventos4.getId());
@@ -364,12 +397,13 @@ public class VoluntappApplication {
 						.fFin(fechaFinEvento5)
 						.titulo("Amor en Cuatro Patas: Adopción de Perros")
 						.imagen("https://voluntapp.blob.core.windows.net/images/eventos/event5.webp")
-						.descripcion("¡Únete a nosotros en un evento lleno de amor y compañerismo mientras ayudamos a perros necesitados a encontrar sus hogares para siempre! En \"Amor en Cuatro Patas\", te invitamos a considerar la adopción como la mejor opción al momento de agregar un nuevo miembro a tu familia.")
+						.descripcion(
+								"¡Únete a nosotros en un evento lleno de amor y compañerismo mientras ayudamos a perros necesitados a encontrar sus hogares para siempre! En \"Amor en Cuatro Patas\", te invitamos a considerar la adopción como la mejor opción al momento de agregar un nuevo miembro a tu familia.")
 						.ubicacion(ubicacion5)
 						.estado("revision")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario)
 						.maxVoluntarios(30)
+						.tags(Set.of(tag5))
 						.build();
 				eventosService.guardar(eventos5);
 				evento = eventosService.buscarPorId(eventos5.getId());
@@ -388,9 +422,9 @@ public class VoluntappApplication {
 								"¡Únete a nosotros en una jornada de acción comunitaria para limpiar y preservar la belleza natural de nuestro campo mientras recogemos cristales tipo basura! En este evento especial, te invitamos a ser parte del cambio y ayudar a devolver la pureza a nuestros paisajes naturales.")
 						.ubicacion(ubicacion6)
 						.estado("disponible")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
 						.maxVoluntarios(50)
+						.tags(Set.of(tag6))
 						.build();
 				eventosService.guardar(eventos6);
 				evento = eventosService.buscarPorId(eventos6.getId());
@@ -409,9 +443,9 @@ public class VoluntappApplication {
 								"En momentos de crisis, la solidaridad y el apoyo comunitario son más importantes que nunca. Únete a nosotros en un esfuerzo conjunto para brindar ayuda y esperanza a las personas afectadas por las devastadoras inundaciones que han golpeado nuestra región.")
 						.ubicacion(ubicacion7)
 						.estado("disponible")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
 						.maxVoluntarios(50)
+						.tags(Set.of(tag1, tag3))
 						.build();
 				eventosService.guardar(eventos7);
 				evento = eventosService.buscarPorId(eventos7.getId());
@@ -430,9 +464,9 @@ public class VoluntappApplication {
 								"Únete a nosotros en una jornada dedicada a la preservación y protección de nuestro preciado bosque. En este evento de limpieza ambiental, nos uniremos como comunidad para devolverle su esplendor natural a este ecosistema vital.")
 						.ubicacion(ubicacion8)
 						.estado("disponible")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
 						.maxVoluntarios(50)
+						.tags(Set.of(tag6))
 						.build();
 				eventosService.guardar(eventos8);
 				evento = eventosService.buscarPorId(eventos8.getId());
@@ -451,9 +485,9 @@ public class VoluntappApplication {
 								"¡Únete a nosotros en un taller de informática para mayores! En este evento especial, te invitamos a compartir tus habilidades tecnológicas con nuestros mayores, ayudándoles a navegar por el mundo digital y a conectarse con sus seres queridos.")
 						.ubicacion(ubicacion9)
 						.estado("disponible")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
 						.maxVoluntarios(50)
+						.tags(Set.of(tag7))
 						.build();
 				eventosService.guardar(eventos9);
 				evento = eventosService.buscarPorId(eventos9.getId());
@@ -472,9 +506,9 @@ public class VoluntappApplication {
 								"¡Únete a nosotros en un evento de limpieza de pellets en la playa de Riazor! En este esfuerzo comunitario, nos uniremos para limpiar y preservar la belleza natural de nuestra costa, ayudando a devolverle su esplendor a este ecosistema vital.")
 						.ubicacion(ubicacion10)
 						.estado("disponible")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
 						.maxVoluntarios(50)
+						.tags(Set.of(tag6))
 						.build();
 				eventosService.guardar(eventos10);
 				evento = eventosService.buscarPorId(eventos10.getId());
@@ -493,9 +527,9 @@ public class VoluntappApplication {
 								"¡Únete a nosotros en un taller de movilidad para mayores! En este evento especial, te invitamos a compartir tus habilidades de movilidad con nuestros mayores, ayudándoles a mantenerse activos y saludables.")
 						.ubicacion(ubicacion11)
 						.estado("disponible")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
 						.maxVoluntarios(50)
+						.tags(Set.of(tag7))
 						.build();
 				eventosService.guardar(eventos11);
 				evento = eventosService.buscarPorId(eventos11.getId());
@@ -514,9 +548,9 @@ public class VoluntappApplication {
 								"¡Únete a nosotros en un acto de solidaridad y generosidad mientras nos unimos para ayudar a aquellos que más lo necesitan en nuestra comunidad! Nuestro evento de recogida de alimentos es una oportunidad para marcar la diferencia y apoyar a las personas que enfrentan la inseguridad alimentaria.")
 						.ubicacion(ubicacion12)
 						.estado("disponible")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
 						.maxVoluntarios(50)
+						.tags(Set.of(tag3, tag8))
 						.build();
 				eventosService.guardar(eventos12);
 				evento = eventosService.buscarPorId(eventos12.getId());
@@ -535,9 +569,9 @@ public class VoluntappApplication {
 								"¡Únete a nosotros en un evento especial para llevar sonrisas a los más pequeños! En este evento, te invitamos a compartir tu tiempo y tu alegría con los niños, ayudándoles a disfrutar de un día lleno de diversión y entretenimiento.")
 						.ubicacion(ubicacion13)
 						.estado("revision")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
 						.maxVoluntarios(50)
+						.tags(Set.of(tag4))
 						.build();
 				eventosService.guardar(eventos13);
 				evento = eventosService.buscarPorId(eventos13.getId());
@@ -556,9 +590,9 @@ public class VoluntappApplication {
 								"¡Únete a nosotros en un evento especial para llevar sonrisas a los más pequeños! En este evento, te invitamos a compartir tu tiempo y tu alegría con los niños, ayudándoles a disfrutar de un día lleno de diversión y entretenimiento.")
 						.ubicacion(ubicacion14)
 						.estado("denegado")
-						.categorias(listaCategorias)
 						.creadoPorUsuarios(usuario2)
 						.maxVoluntarios(50)
+						.tags(Set.of(tag10))
 						.build();
 				eventosService.guardar(eventos14);
 				evento = eventosService.buscarPorId(eventos14.getId());

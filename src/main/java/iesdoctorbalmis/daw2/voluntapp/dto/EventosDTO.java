@@ -34,6 +34,8 @@ public class EventosDTO {
 
     private String descripcion;
 
+    private String descripcionResumida;
+
     private Ubicacion ubicacion;
 
     private String imagen;
@@ -49,5 +51,7 @@ public class EventosDTO {
     private int maxVoluntarios;
 
     private Set<String> nombreInstituciones;
+
+    private Set<String> tags;
 
 }
