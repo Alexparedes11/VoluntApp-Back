@@ -25,6 +25,7 @@ import iesdoctorbalmis.daw2.voluntapp.servicios.AzureBlobStorageService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.ComputerVisionService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.EventosService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.InstitucionesService;
+import iesdoctorbalmis.daw2.voluntapp.servicios.LocalStorageService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.TagService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.UbicacionService;
 import iesdoctorbalmis.daw2.voluntapp.servicios.UsuariosService;
@@ -32,6 +33,7 @@ import iesdoctorbalmis.daw2.voluntapp.util.pagination.PaginationLinksUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -69,6 +71,7 @@ public class EventosController {
     private final TagService tagService;
     private final AzureBlobStorageService azureBlobStorageService;
     private final ComputerVisionService computerVisionService;
+    private final LocalStorageService localStorageService;
 
     // Utils
     private final EventoDTOConverter eventoDTOConverter;
@@ -264,62 +267,62 @@ public class EventosController {
     // Añadir Eventos a la base de datos
 
     @PostMapping("/eventos")
-    public ResponseEntity<?> nuevoEvento(@RequestBody CreateEventoDTO nuevo) {
-        try {
-            Instituciones creadoPorInstituciones = null;
-            Usuarios creadoPorUsuarios = null;
+    public ResponseEntity<?> nuevoEvento(@RequestBody CreateEventoDTO nuevo) throws AzureBlobStorageException {
 
-            if (nuevo.getInstitucionNombre() != null) {
-                creadoPorInstituciones = institucionesService.buscarPorId(nuevo.getUsuarioId()).orElse(null);
-            } else {
-                creadoPorUsuarios = usuariosService.buscarPorId(nuevo.getUsuarioId()).orElse(null);
-            }
+        Instituciones creadoPorInstituciones = null;
+        Usuarios creadoPorUsuarios = null;
 
-            Ubicacion u = Ubicacion.builder()
-                    .id(null)
-                    .nombre(nuevo.getNombreUbicacion())
-                    .lat(nuevo.getLat())
-                    .lon(nuevo.getLon())
-                    .build();
+        if (nuevo.getInstitucionNombre() != null) {
+            creadoPorInstituciones = institucionesService.buscarPorId(nuevo.getUsuarioId()).orElse(null);
+        } else {
+            creadoPorUsuarios = usuariosService.buscarPorId(nuevo.getUsuarioId()).orElse(null);
+        }
 
-            String ubicacionImagenAzure = "https://voluntapp.blob.core.windows.net/images/"
-                    + azureBlobStorageService.uploadFile("eventos", UUID.randomUUID().toString(), nuevo.getImagen());
+        Ubicacion u = Ubicacion.builder()
+                .id(null)
+                .nombre(nuevo.getNombreUbicacion())
+                .lat(nuevo.getLat())
+                .lon(nuevo.getLon())
+                .build();
 
-            if (!computerVisionService.isImageAppropriate(ubicacionImagenAzure)) {
-                throw new AzureBlobStorageException("La imagen no es apropiada");
-            }
+        String ubicacionImagenAzure = "https://voluntapp.blob.core.windows.net/images/"
+                + azureBlobStorageService.uploadFile("eventos", UUID.randomUUID().toString(), nuevo.getImagen());
 
-            Set<Tag> tags = new HashSet<>();
-            if (nuevo.getTags() != null) {
-                for (String tagName : nuevo.getTags()) {
-                    Tag tag = tagService.buscarPorNombre(tagName).orElse(null);
-                    if (tag != null) {
-                        tags.add(tag);
-                    }
+        if (!computerVisionService.isImageAppropriate(ubicacionImagenAzure)) {
+            throw new AzureBlobStorageException("La imagen no es apropiada");
+        }
+
+        // ALMACENAR LA IMAGEN EN LOCAL EN CASO DE QUE AZURE NO FUNCIONE
+        // String ubicacionImagenLocal = localStorageService.uploadFile("eventos", nuevo.getImagen());
+
+        Set<Tag> tags = new HashSet<>();
+        if (nuevo.getTags() != null) {
+            for (String tagName : nuevo.getTags()) {
+                Tag tag = tagService.buscarPorNombre(tagName).orElse(null);
+                if (tag != null) {
+                    tags.add(tag);
                 }
             }
-
-            Eventos eventoNuevo = Eventos.builder()
-                    .titulo(nuevo.getTitulo())
-                    .imagen(ubicacionImagenAzure)
-                    .descripcion(nuevo.getDescripcion())
-                    .descripcionResumida(nuevo.getDescripcionResumida())
-                    .ubicacion(u)
-                    .fInicio(nuevo.getFInicio())
-                    .fFin(nuevo.getFFin())
-                    .creadoPorInstituciones(creadoPorInstituciones)
-                    .creadoPorUsuarios(creadoPorUsuarios)
-                    .estado("revision")
-                    .maxVoluntarios(nuevo.getMaxVoluntarios())
-                    .tags(tags)
-                    .build();
-
-            ubicacionService.guardar(u);
-            Eventos nuevoevento = eventosService.guardar(eventoNuevo);
-            return ResponseEntity.status(HttpStatus.CREATED).body(nuevoevento);
-        } catch (AzureBlobStorageException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+
+        Eventos eventoNuevo = Eventos.builder()
+                .titulo(nuevo.getTitulo())
+                .imagen(ubicacionImagenAzure)
+                .descripcion(nuevo.getDescripcion())
+                .descripcionResumida(nuevo.getDescripcionResumida())
+                .ubicacion(u)
+                .fInicio(nuevo.getFInicio())
+                .fFin(nuevo.getFFin())
+                .creadoPorInstituciones(creadoPorInstituciones)
+                .creadoPorUsuarios(creadoPorUsuarios)
+                .estado("revision")
+                .maxVoluntarios(nuevo.getMaxVoluntarios())
+                .tags(tags)
+                .build();
+
+        ubicacionService.guardar(u);
+        Eventos nuevoevento = eventosService.guardar(eventoNuevo);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoevento);
 
     }
 
