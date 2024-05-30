@@ -62,6 +62,14 @@ public class NoticiasController {
 
     }
 
+    // Crear Noticias Institución
+    @PostMapping("/noticias/crearNoticiaInstitucion") 
+    public ResponseEntity<NoticiasDTO> crearNoticiasInstitucion(@RequestBody NoticiasDTO noticiasDTO) throws AzureBlobStorageException {
+        Noticias noticias = noticiasService.crearNoticiasInstitucion(noticiasDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(noticiasDTOConverter.convertToDto(noticias));
+    }
+    
+
     // Eliminar noticia
     @DeleteMapping("/noticias/eliminarNoticia/{id}")
     public ResponseEntity<Void> eliminarNoticia(@PathVariable Long id) {

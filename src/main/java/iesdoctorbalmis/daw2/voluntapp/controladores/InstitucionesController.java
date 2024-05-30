@@ -105,7 +105,7 @@ public class InstitucionesController {
         Instituciones nuevaInstitucion = institucionesService.guardar(institucionesNuevo);
         
         // Se crea una noticia acerca de la institución
-        noticiasService.crearNoticiasInstitucion(nuevo);
+        // noticiasService.crearNoticiasInstitucion(nuevo);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaInstitucion);
 

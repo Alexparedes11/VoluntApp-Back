@@ -268,7 +268,7 @@ public class VoluntappApplication {
 						.ubicacion(ubicacion)
 						.estado("disponible")
 						.categorias(listaCategorias)
-						.creadoPorInstituciones(instituciones2)
+						.creadoPorInstituciones(instituciones)
 						.maxVoluntarios(20)
 						.build();
 				eventosService.guardar(eventos1);

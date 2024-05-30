@@ -387,6 +387,15 @@ public class EventosController {
         return evento.getCreadoPorUsuarios().getId().equals(usuarioId);
     }
 
+    // Obtener booleano para ver si una institución es creadora de un evento
+    @GetMapping("/eventos/esCreadorInstitucion/{usuarioId}/{eventoId}")
+    public boolean esCreadorEventoInstitucion(@PathVariable Long usuarioId, @PathVariable Long eventoId) {
+        Eventos evento = eventosService.buscarPorId(eventoId)
+                .orElseThrow(() -> new EventosNotFoundException(eventoId));
+        return evento.getCreadoPorInstituciones().getId().equals(usuarioId);
+    }
+
+
     // Obtener eventos filtrados por búsqueda de texto
     @GetMapping("/eventos/buscar/{texto}")
     public ResponseEntity<?> buscarEventosPorTexto(@PathVariable String texto, Pageable pageable) {
